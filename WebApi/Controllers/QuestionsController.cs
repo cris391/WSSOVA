@@ -1,10 +1,12 @@
-﻿using DatabaseService;
+﻿using AutoMapper;
+using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
@@ -13,26 +15,28 @@ namespace WebApi.Controllers
   public class QuestionsController : ControllerBase
   {
     IDataService _dataService;
-    public QuestionsController(IDataService dataService)
+    private IMapper _mapper;
+    public QuestionsController(IDataService dataService, IMapper mapper)
     {
       _dataService = dataService;
+      _mapper = mapper;
     }
 
-      [HttpGet]
-      public IList<Question> GetQuestions()
-      {
-        return _dataService.GetQuestions();
-      }
+    [HttpGet]
+    public IList<Question> GetQuestions()
+    {
+      return _dataService.GetQuestions();
+    }
 
-      [HttpGet("{questionId}")]
-      public ActionResult<Question> GetQuestion(int questionId)
-      {
-        var question = _dataService.GetQuestion(questionId);
+    [HttpGet("{questionId}", Name = nameof(GetQuestion))]
+    public ActionResult<Question> GetQuestion(int questionId)
+    {
+      var question = _dataService.GetQuestion(questionId);
 
-        if (question == null) return NotFound();
+      if (question == null) return NotFound();
 
-        return Ok(question);
-      }
+      return Ok(CreateLink(question));
+    }
 
     //   [HttpPost]
     //   public ActionResult CreateCategory([FromBody] Category category)
@@ -66,5 +70,20 @@ namespace WebApi.Controllers
 
     //     return Ok();
     //   }
+
+    ///////////////////
+    //
+    // Helpers
+    //
+    //////////////////////
+
+    private QuestionDto CreateLink(Question question)
+    {
+      var dto = _mapper.Map<QuestionDto>(question);
+      dto.Link = Url.Link(
+              nameof(GetQuestion),
+              new { questionId = question.Id });
+      return dto;
+    }
   }
 }

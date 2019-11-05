@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatabaseService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,8 @@ namespace WebApi
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+
+      services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
       services.AddSingleton<IDataService, DataService>();
     }
