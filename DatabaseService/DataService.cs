@@ -7,18 +7,47 @@ using Microsoft.EntityFrameworkCore;
 namespace DatabaseService
 {
 
-  public class DataService: IDataService
+  public class DataService : IDataService
   {
-    public List<Question> GetQuestions()
+    public List<Question> GetQuestions(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
-      return db.Questions.ToList();
+      return db.Questions
+                .Include(q => q.Post)
+                .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
+                .Take(pagingAttributes.PageSize)
+                .ToList();
+    }
+    public void GetQuestionWithAnswers(int questionId)
+    {
+      using var db = new SOContext();
+      var question = db.Questions.Find(questionId);
+      var answers = db.Answers
+        .Where(p => p.ParentId == questionId)
+        .ToList();
+      Console.WriteLine("@@@@@@@@@@@@");
+      Console.WriteLine(answers.Count);
+    }
+
+    public int NumberOfQuestions()
+    {
+      using var db = new SOContext();
+      return db.Questions.Count();
     }
 
     public Question GetQuestion(int id)
     {
       using var db = new SOContext();
       return db.Questions.Find(id);
+    }
+
+    public List<Post> GetPosts()
+    {
+      using var db = new SOContext();
+
+      return db.Posts
+        // .Include(p => p.Question)
+        .Take(10).ToList();
     }
 
     // public Category CreateCategory(string name, string description)

@@ -22,10 +22,21 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
-    [HttpGet]
-    public IList<Question> GetQuestions()
+    [HttpGet(Name = nameof(GetQuestions))]
+    public ActionResult GetQuestions([FromQuery] PagingAttributes pagingAttributes)
     {
-      return _dataService.GetQuestions();
+      var questions = _dataService.GetQuestions(pagingAttributes);
+      var result = CreateResult(questions, pagingAttributes);
+
+      return Ok(result);
+    }
+    [HttpGet("answers")]
+    public void GetQuestionsWithAnswer()
+    {
+      // var questions = _dataService.GetQuestionWithAnswers(10662902);
+      _dataService.GetQuestionWithAnswers(10662902);
+
+      // return Ok(questions);
     }
 
     [HttpGet("{questionId}", Name = nameof(GetQuestion))]
@@ -35,7 +46,7 @@ namespace WebApi.Controllers
 
       if (question == null) return NotFound();
 
-      return Ok(CreateLink(question));
+      return Ok(CreateQuestionDto(question));
     }
 
     //   [HttpPost]
@@ -77,13 +88,40 @@ namespace WebApi.Controllers
     //
     //////////////////////
 
-    private QuestionDto CreateLink(Question question)
+    private QuestionDto CreateQuestionDto(Question question)
     {
       var dto = _mapper.Map<QuestionDto>(question);
       dto.Link = Url.Link(
               nameof(GetQuestion),
-              new { questionId = question.Id });
+              new { questionId = question.QuestionId });
       return dto;
+    }
+
+    private object CreateResult(IEnumerable<Question> questions, PagingAttributes attr)
+    {
+      var totalItems = _dataService.NumberOfQuestions();
+      var numberOfPages = Math.Ceiling((double)totalItems / attr.PageSize);
+
+      var prev = attr.Page > 0
+          ? CreatePagingLink(attr.Page - 1, attr.PageSize)
+          : null;
+      var next = attr.Page < numberOfPages - 1
+          ? CreatePagingLink(attr.Page + 1, attr.PageSize)
+          : null;
+
+      return new
+      {
+        totalItems,
+        numberOfPages,
+        prev,
+        next,
+        items = questions.Select(CreateQuestionDto)
+      };
+    }
+
+    private string CreatePagingLink(int page, int pageSize)
+    {
+      return Url.Link(nameof(GetQuestions), new { page, pageSize });
     }
   }
 }

@@ -5,8 +5,11 @@ namespace DatabaseService
 {
   public interface IDataService
   {
-    List<Question> GetQuestions();
+    List<Question> GetQuestions(PagingAttributes pagingAttributes);
     Question GetQuestion(int id);
+    int NumberOfQuestions();
+    List<Post> GetPosts();
+    void GetQuestionWithAnswers(int questionId);
     // Category CreateCategory(string name, string description);
     // // Category CreateCategory(Category category);
     // bool DeleteCategory(int id);

@@ -10,8 +10,10 @@ namespace DatabaseService
   {
     public static readonly ILoggerFactory MyLoggerFactory
             = LoggerFactory.Create(builder => { builder.AddConsole(); });
-            
+
     public DbSet<Question> Questions { get; set; }
+    public DbSet<Answer> Answers { get; set; }
+    public DbSet<Post> Posts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -22,6 +24,9 @@ namespace DatabaseService
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.CreateMap("Id");
+      // modelBuilder.Entity<Question>().HasOne(pt => pt.Answer)
+      //       .WithOne(p => p.Question)
+      //       .HasForeignKey<Answer>(pt => pt.QuestionForeignKey);
       // modelBuilder.Entity<Question>().ToTable("questions");
       // modelBuilder.Entity<Question>().Property(m => m.Id).HasColumnName("questionid");
       // modelBuilder.Entity<Question>().Property(m => m.ClosedDate).HasColumnName("closeddate");

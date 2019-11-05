@@ -7,5 +7,6 @@ public class QuestionProfile : Profile
   public QuestionProfile()
   {
     CreateMap<Question, QuestionDto>();
+    CreateMap<QuestionForCreation, Question>();
   }
 }
