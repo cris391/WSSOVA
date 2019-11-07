@@ -9,7 +9,13 @@ namespace DatabaseService
     Question GetQuestion(int id);
     int NumberOfQuestions();
     List<Post> GetPosts();
+    List<AnswerDto> GetAnswers();
     object GetQuestionWithAnswers(int questionId);
+    // List<Answer> GetAnswersForQuestion(int questionId);
+    // List<AnswerDto> GetAnswersForQuestion(int questionId);
+
+
+
     // Category CreateCategory(string name, string description);
     // // Category CreateCategory(Category category);
     // bool DeleteCategory(int id);

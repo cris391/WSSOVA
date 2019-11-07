@@ -12,22 +12,38 @@ namespace DatabaseService
     public List<Question> GetQuestions(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
-      return db.Questions
+      var questions = db.Questions
                 .Include(q => q.Post)
                 .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
                 .Take(pagingAttributes.PageSize)
                 .ToList();
+
+
+      return questions;
     }
     public object GetQuestionWithAnswers(int questionId)
     {
       using var db = new SOContext();
-      var question = db.Questions.Find(questionId);
+      var question = db.Questions
+        .Where(q => q.QuestionId == questionId)
+        .Include(q => q.Post).FirstOrDefault();
+        
       var answers = db.Answers
-        .Where(p => p.ParentId == questionId)
+        .Where(a => a.PostId == questionId)
+        // .Include(a => a.Post) // this gets body of post of type question(and not answer)
         .ToList();
-      Console.WriteLine("@@@@@@@@@@@@");
-      Console.WriteLine(answers.Count);
-      return new { Question = question, Answers = answers };
+        
+        var fullAnswers = new List<object>();
+        foreach (var answer in answers)
+        {
+            Console.WriteLine(answer.AnswerId);
+            var post = db.Posts.Find(answer.AnswerId);
+            fullAnswers.Add(post);
+        }
+        
+
+      // var answerDtos = Helpers.CreateAnswerDtos(answers);
+      return new { Question = question, Answers = fullAnswers };
     }
 
     public int NumberOfQuestions()
@@ -39,7 +55,10 @@ namespace DatabaseService
     public Question GetQuestion(int id)
     {
       using var db = new SOContext();
-      return db.Questions.Find(id);
+      return db.Questions
+                .Where(q => q.QuestionId == id)
+                .Include(q => q.Post)
+                .FirstOrDefault();
     }
 
     public List<Post> GetPosts()
@@ -50,6 +69,18 @@ namespace DatabaseService
         // .Include(p => p.Question)
         .Take(10).ToList();
     }
+    public List<AnswerDto> GetAnswers()
+    {
+      using var db = new SOContext();
+      var answers = db.Answers.Where(a => a.PostId == 104068)
+        .Include(a => a.Post)
+        .Take(10).ToList();
+
+      var answerDtos = Helpers.CreateAnswerDtos(answers);
+
+      return answerDtos;
+    }
+
 
     // public Category CreateCategory(string name, string description)
     // {
