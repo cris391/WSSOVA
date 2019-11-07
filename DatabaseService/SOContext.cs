@@ -17,6 +17,7 @@ namespace DatabaseService
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+      
       optionsBuilder
       .UseLoggerFactory(MyLoggerFactory)
       .UseNpgsql(connectionString: "host=localhost;db=stackoverflow;uid=postgres;pwd=root");

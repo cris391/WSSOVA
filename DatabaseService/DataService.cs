@@ -27,23 +27,34 @@ namespace DatabaseService
       var question = db.Questions
         .Where(q => q.QuestionId == questionId)
         .Include(q => q.Post).FirstOrDefault();
-        
-      var answers = db.Answers
-        .Where(a => a.PostId == questionId)
-        // .Include(a => a.Post) // this gets body of post of type question(and not answer)
-        .ToList();
-        
-        var fullAnswers = new List<object>();
-        foreach (var answer in answers)
-        {
-            Console.WriteLine(answer.AnswerId);
-            var post = db.Posts.Find(answer.AnswerId);
-            fullAnswers.Add(post);
-        }
-        
+
+      // var answers = db.Answers
+      //   .Where(a => a.PostId == questionId)
+      //   .Include(a => a.Post) // this gets body of post of type question(and not of type answer)
+      //   .ToList();
+
+      // var fullAnswers = new List<object>();
+      // foreach (var answer in answers)
+      // {
+      //   Console.WriteLine(answer.AnswerId);
+      //   var post = db.Posts.Find(answer.AnswerId);
+      //   fullAnswers.Add(post);
+      // }
+
+      var answers = (from a in db.Answers
+                    join p in db.Posts
+                    on a.AnswerId equals p.PostId
+                    where a.PostId == questionId
+                    select new
+                    {
+                      Id = p.PostId,
+                      p.CreationDate,
+                      p.Score,
+                      p.Body
+                    }).ToList();
 
       // var answerDtos = Helpers.CreateAnswerDtos(answers);
-      return new { Question = question, Answers = fullAnswers };
+      return new { Question = question, Answers = answers };
     }
 
     public int NumberOfQuestions()
@@ -77,6 +88,7 @@ namespace DatabaseService
         .Take(10).ToList();
 
       var answerDtos = Helpers.CreateAnswerDtos(answers);
+
 
       return answerDtos;
     }
