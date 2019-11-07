@@ -10,32 +10,61 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/annotation")]
-    public class AnnotationController
+    public class AnnotationController: ControllerBase
     {
-
-        /*
         IDataService _dataService;
 
         public AnnotationController(IDataService dataService)
         {
             _dataService = dataService;
         }
-        */
 
-        /*
-        [HttpGet]
-        public IList<Annotation> GetAnnotation()
+        [HttpGet("{userId}")]
+        public IList<Annotation> GetAnnotations(int userId)
         {
-            return _dataService.GetAnnotations();
+            return _dataService.GetAnnotations(userId);
         }
-        */
+
+        [HttpGet("{userId}/{questionId}")]
+        public Annotation GetAnnotation(int userId, int questionId)
+        {
+            return _dataService.GetAnnotation(userId, questionId);
+        }
+
 
         //[HttpPost]
-        //public ActionResult CreateAnnotation([FromBody] Annotation annotation)
+        //[Route("api/annotation/{userId}/{questionId}")]
+        //public ActionResult CreateAnnotation([FromBody] int userId, int questionId, string body, Annotation annotation)
         //{
-        //    var anno = _dataService.CreateAnnotation(annotation.Id, annotation.Body);
+        //   var anno = _dataService.CreateAnnotation(userId, questionId, "ssd");
 
-        //    return Created("annotation", anno);
+        //   return Created("post", anno);
+        //   //return Created("annotation", anno);
         //}
+
+
+        [HttpDelete("delete/{userId}/{questionId}")]
+        public ActionResult DeleteAnnotation(int userId, int questionId)
+        {
+            if (_dataService.DeleteAnnotation(userId, questionId))
+            {
+                return NoContent();
+            }
+
+            return NotFound();
+        }
+
+
+        [HttpPut("update/{userId}/{questionId}")]
+        public ActionResult UpdateAnnotation([FromBody] Annotation annotation, int userId, int questionId, string body)
+        {
+            var anno = _dataService.UpdateAnnotation(userId, questionId, body);
+
+            if (anno == false)
+            {
+                return NotFound();
+            }
+            return Ok(anno);
+        }
     }
 }

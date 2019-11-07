@@ -57,14 +57,62 @@ namespace DatabaseService
       return questionDto;
     }
 
+     public List<Annotation> GetAnnotations(int userId)
+     {
+        using var db = new SOContext();
+        var userAnnotations = db.Annotation.Where(x => x.UserId == userId); 
+        return userAnnotations.ToList();
+     }
 
-            /*
-       public Annotation GetAnnotation(int id)
-       {
-          using var db = new SOContext();
-          return db.Annotation.Find(id);
-       }
-       */
+     public Annotation GetAnnotation(int userId, int questionId)
+      {
+         using var db = new SOContext();
+         var userAnnotation = db.Annotation.Where(x => x.UserId == userId && x.QuestionId == questionId);
+
+         return userAnnotation.First();
+      }
+
+      public Annotation CreateAnnotation(int userId, int questionId, string body)
+      {
+         using var db = new SOContext();
+         var annotation = new Annotation { UserId = userId, QuestionId = questionId, Body = body };
+         db.Annotation.Add(annotation);
+         db.SaveChanges();
+         return GetAnnotation(annotation.UserId, annotation.QuestionId);
+      }
+
+      public bool DeleteAnnotation(int userId, int questionId)
+      {
+        using var db = new SOContext();
+        var annotation = GetAnnotation(userId, questionId);
+        try
+          {
+              db.Annotation.Remove(annotation);
+              db.SaveChanges();
+          } catch (System.Exception e)
+            {
+                return false; 
+            }
+            return db.SaveChanges() > 0;
+      }
+
+      public bool UpdateAnnotation(int userId, int questionId, string body)
+      {
+        try {
+           using var db = new SOContext();
+           var annotation = GetAnnotation(userId, questionId);
+           annotation.Body = body;
+           db.Update(annotation);
+           db.SaveChanges();
+
+         } catch (System.Exception e)
+            {
+                return false;
+            }
+         return true;
+      }
+
+
 
         /*
         public Annotation CreateAnnotation(string name, string body)

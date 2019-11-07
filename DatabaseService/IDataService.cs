@@ -15,12 +15,14 @@ namespace DatabaseService
 
     List<Post> GetPosts();
     Post GetPost(int id);
-       
+      
+    List<Annotation> GetAnnotations(int userId);
+    Annotation GetAnnotation(int userId, int questionId);
+    Annotation CreateAnnotation(int userId, int questionId, string body);
+    bool DeleteAnnotation(int userId, int questionId);
+    bool UpdateAnnotation(int userId, int questionId, string body);
 
-        /*
-    List<Annotation> GetAnnotations();
-    Annotation GetAnnotation(int id);
-    */
+
         // Category CreateCategory(string name, string description);
         // // Category CreateCategory(Category category);
         // bool DeleteCategory(int id);

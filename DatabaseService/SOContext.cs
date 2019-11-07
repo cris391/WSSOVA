@@ -38,18 +38,12 @@ namespace DatabaseService
       modelBuilder.Entity<Post>().Property(m => m.Score).HasColumnName("score");
       modelBuilder.Entity<Post>().Property(m => m.Body).HasColumnName("body");
 
-     
-
-
-
-      /*
-      modelBuilder.Entity<Annotation>().ToTable("annotation");
-      modelBuilder.Entity<Annotation>().Property("userId");
-      modelBuilder.Entity<Annotation>().Property("questionid");
-      modelBuilder.Entity<Annotation>().Property("body");
-      */
-
-
+  
+      modelBuilder.Entity<Annotation>().ToTable("annotations");
+      modelBuilder.Entity<Annotation>().Property(m => m.UserId).HasColumnName("userid");
+      modelBuilder.Entity<Annotation>().Property(m => m.QuestionId).HasColumnName("questionid");
+      modelBuilder.Entity<Annotation>().Property(m => m.Body).HasColumnName("body");
+    
     }
   }
 }
