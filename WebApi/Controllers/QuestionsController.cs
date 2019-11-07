@@ -24,47 +24,60 @@ namespace WebApi.Controllers
         return _dataService.GetQuestions();
       }
 
+    /*
       [HttpGet("{questionId}")]
       public ActionResult<Question> GetQuestion(int questionId)
       {
+     
         var question = _dataService.GetQuestion(questionId);
-
         if (question == null) return NotFound();
 
         return Ok(question);
-      }
+       }
+     */
 
-    //   [HttpPost]
-    //   public ActionResult CreateCategory([FromBody] Category category)
-    //   {
-    //     var cat = _dataService.CreateCategory(category.Name, category.Description);
 
-    //     return Created("post", cat);
-    //   }
+        [HttpGet("{questionId}")]
+        public ActionResult<Question> GetFullQuestion(int questionId)
+        {
+            var question = _dataService.GetFullQuestion(questionId);
 
-    //   [HttpPut("{categoryId}")]
-    //   public ActionResult PutCategory([FromBody] Category category, int categoryId)
-    //   {
-    //     var cat = _dataService.PutCategory(categoryId, category.Name, category.Description);
-    //     if (cat == false)
-    //     {
-    //       return NotFound();
-    //     }
+            if (question == null) return NotFound();
 
-    //     return Ok(cat);
-    //   }
+            return Ok(question);
+        }
 
-    //   [HttpDelete("{categoryId}")]
-    //   public ActionResult<Category> DeleteCategory(int categoryId)
-    //   {
-    //     // var category = _dataService.DeleteCategory(categoryId);
+        //   [HttpPost]
+        //   public ActionResult CreateCategory([FromBody] Category category)
+        //   {
+        //     var cat = _dataService.CreateCategory(category.Name, category.Description);
 
-    //     if (_dataService.DeleteCategory(categoryId) == false)
-    //     {
-    //       return NotFound();
-    //     }
+        //     return Created("post", cat);
+        //   }
 
-    //     return Ok();
-    //   }
-  }
+        //   [HttpPut("{categoryId}")]
+        //   public ActionResult PutCategory([FromBody] Category category, int categoryId)
+        //   {
+        //     var cat = _dataService.PutCategory(categoryId, category.Name, category.Description);
+        //     if (cat == false)
+        //     {
+        //       return NotFound();
+        //     }
+
+        //     return Ok(cat);
+        //   }
+
+        //   [HttpDelete("{categoryId}")]
+        //   public ActionResult<Category> DeleteCategory(int categoryId)
+        //   {
+        //     // var category = _dataService.DeleteCategory(categoryId);
+
+        //     if (_dataService.DeleteCategory(categoryId) == false)
+        //     {
+        //       return NotFound();
+        //     }
+
+        //     return Ok();
+        //   }
+    }
 }
