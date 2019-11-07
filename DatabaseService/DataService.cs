@@ -18,7 +18,7 @@ namespace DatabaseService
                 .Take(pagingAttributes.PageSize)
                 .ToList();
     }
-    public void GetQuestionWithAnswers(int questionId)
+    public object GetQuestionWithAnswers(int questionId)
     {
       using var db = new SOContext();
       var question = db.Questions.Find(questionId);
@@ -27,6 +27,7 @@ namespace DatabaseService
         .ToList();
       Console.WriteLine("@@@@@@@@@@@@");
       Console.WriteLine(answers.Count);
+      return new { Question = question, Answers = answers };
     }
 
     public int NumberOfQuestions()

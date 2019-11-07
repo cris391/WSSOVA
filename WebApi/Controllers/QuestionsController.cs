@@ -31,12 +31,12 @@ namespace WebApi.Controllers
       return Ok(result);
     }
     [HttpGet("answers")]
-    public void GetQuestionsWithAnswer()
+    public ActionResult GetQuestionWithAnswers()
     {
-      // var questions = _dataService.GetQuestionWithAnswers(10662902);
-      _dataService.GetQuestionWithAnswers(10662902);
+      var result = _dataService.GetQuestionWithAnswers(10662902);
+      Console.WriteLine(result);
 
-      // return Ok(questions);
+      return Ok(result);
     }
 
     [HttpGet("{questionId}", Name = nameof(GetQuestion))]
