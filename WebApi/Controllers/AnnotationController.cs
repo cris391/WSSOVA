@@ -32,15 +32,15 @@ namespace WebApi.Controllers
         }
 
 
-        //[HttpPost]
-        //[Route("api/annotation/{userId}/{questionId}")]
-        //public ActionResult CreateAnnotation([FromBody] int userId, int questionId, string body, Annotation annotation)
-        //{
-        //   var anno = _dataService.CreateAnnotation(userId, questionId, "ssd");
+        [HttpPost]
+        [Route("api/annotation/{userId}/{questionId}")]
+        public ActionResult CreateAnnotation([FromBody] Annotation annotation)
+        {
+            _dataService.CreateAnnotation(annotation);
 
-        //   return Created("post", anno);
-        //   //return Created("annotation", anno);
-        //}
+            return Ok(annotation);
+            //return Created("annotation", anno);
+        }
 
 
         [HttpDelete("delete/{userId}/{questionId}")]

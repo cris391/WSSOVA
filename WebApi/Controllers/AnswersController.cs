@@ -20,9 +20,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IList<Answer> GetAnswers()
+        public IList<Answer> GetAnswers([FromQuery]PagingAttributes pagingAttributes)
         {
-           return _dataService.GetAnswers();
+           return _dataService.GetAnswers(pagingAttributes);
         }
 
         [HttpGet("{answerId}")]

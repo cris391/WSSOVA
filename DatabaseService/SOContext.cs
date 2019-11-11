@@ -50,6 +50,7 @@ namespace DatabaseService
       modelBuilder.Entity<User>().Property(m => m.Username).HasColumnName("username");
       modelBuilder.Entity<User>().Property(m => m.Password).HasColumnName("password");
       modelBuilder.Entity<User>().Property(m => m.Salt).HasColumnName("salt");
+      modelBuilder.Entity<User>().Property(m => m.Name).HasColumnName("name");
  
     }
   }

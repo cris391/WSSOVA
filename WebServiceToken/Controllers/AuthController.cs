@@ -49,7 +49,7 @@ namespace WebApi.WebServiceToken.Controllers
 
             var pwd = PasswordService.HashPassword(dto.Password, salt, size);
 
-            _dataService.CreateUser(dto.Name, pwd, salt);
+            _dataService.CreateUser(dto.Name, dto.UserName, pwd, salt);
 
             return CreatedAtRoute(null, dto.Name);
         }

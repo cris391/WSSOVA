@@ -18,5 +18,6 @@
   <ItemGroup>
     <Compile Remove="MOdels\PostDto.cs" />
     <Compile Remove="MOdels\PostDto.cs" />
+    <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 </Project>

@@ -9,15 +9,16 @@ namespace DatabaseService
 
   public class DataService: IDataService
   {
-
     readonly List<User> _users = new List<User>();
-        // auth
     readonly List<Post> _posts = new List<Post>();
 
-    public List<Question> GetQuestions()
+    public List<Question> GetQuestions(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
-      return db.Questions.ToList();
+      return db.Questions
+                .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
+                .Take(pagingAttributes.PageSize)
+                .ToList();
     }
 
     public Question GetQuestion(int id)
@@ -26,10 +27,20 @@ namespace DatabaseService
       return db.Questions.Find(id);
     }
 
-    public List<Answer> GetAnswers()
+    public int NumberOfQuestions()
+    {
+       using var db = new SOContext();
+       return db.Questions.Count();
+    }
+
+    public List<Answer> GetAnswers(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
-      return db.Answers.Include(p => p.PostId).ToList(); 
+      return db.Answers
+                .Include(p => p.PostId)
+                .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
+                .Take(pagingAttributes.PageSize)
+                .ToList(); 
     }
 
     public Answer GetAnswer(int id)
@@ -38,7 +49,13 @@ namespace DatabaseService
       return db.Answers.Find(id); 
     }
 
-    public List<Post> GetPosts()
+    public int NumberOfAnswers()
+    {
+       using var db = new SOContext();
+       return db.Answers.Count();
+    }
+
+    public List<Post> GetPosts(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
       return db.Posts.ToList(); 
@@ -48,6 +65,12 @@ namespace DatabaseService
     {
       using var db = new SOContext();
       return db.Posts.Find(id);
+    }
+
+    public int NumberOfPosts()
+    {
+      using var db = new SOContext();
+      return db.Posts.Count();
     }
 
     public QuestionDto GetFullQuestion (int questionId)
@@ -73,21 +96,20 @@ namespace DatabaseService
          return userAnnotation.First();
       }
 
-      public Annotation CreateAnnotation(int userId, int questionId, string body)
+      public void CreateAnnotation(Annotation annotation)
       {
          using var db = new SOContext();
-         var annotation = new Annotation { UserId = userId, QuestionId = questionId, Body = body };
+        // var annotation = new Annotation() { UserId = userId, QuestionId = questionId, Body = body };
          db.Annotation.Add(annotation);
          db.SaveChanges();
-         return GetAnnotation(annotation.UserId, annotation.QuestionId);
+         //return GetAnnotation(annotation.UserId, annotation.QuestionId);
       }
 
       public bool DeleteAnnotation(int userId, int questionId)
       {
         using var db = new SOContext();
         var annotation = GetAnnotation(userId, questionId);
-        try
-          {
+        try {
               db.Annotation.Remove(annotation);
               db.SaveChanges();
           } catch (System.Exception)
@@ -113,7 +135,12 @@ namespace DatabaseService
          return true;
       }
 
-    /* Instantiate 1 test user delete on reload */
+    public int NumberOfAnnotations()
+     {
+        using var db = new SOContext();
+        return db.Annotation.Count();
+     }
+
     public DataService()
     {
             _users.Add(new User()
@@ -130,19 +157,35 @@ namespace DatabaseService
      }
 
 
-     public User CreateUser(string username, string password, string salt)
+     public User CreateUser(string name, string username, string password, string salt)
      {
+            using var db = new SOContext();
             var user = new User()
             {
-                Id = _users.Max(x => x.Id) + 1,
+                Id = db.User.Max(x => x.Id) + 1,
+                Name = name,
                 Username = username,
                 Password = password,
                 Salt = salt
             };
-            _users.Add(user);
-            Console.Write("@@@@@@@@@@@@@ NEWUSER @@@@@@@@@@@@@@@@");
-            Console.WriteLine(user);
-            return user;
+            Console.WriteLine("@@@@@@@@@@@@@ NEWUSER @@@@@@@@@@@@@@@@");
+            Console.WriteLine(user.Name);
+            Console.WriteLine(user.Id);
+            Console.WriteLine(user.Username);
+            Console.WriteLine(user.Password);
+            Console.WriteLine(salt);
+
+            try {
+                 db.User.Add(user);
+                 db.SaveChanges();
+                Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
+                return user;
+
+            } catch
+            {
+                Console.WriteLine("@@@@@@@@@@@@@ failed stored in db @@@@@@@@@@@@@@@@");
+                return user;
+            }   
      }
 
     public List<Post> GetAuthPosts(int userId)
@@ -152,10 +195,10 @@ namespace DatabaseService
             return _posts;
         }
 
-
-
-
-
+        //public void CreateAnnotation(Annotation annotation)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /*
         public Annotation CreateAnnotation(string name, string body)

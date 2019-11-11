@@ -22,9 +22,9 @@ namespace WebApi.Controllers
 
         
         [HttpGet]
-        public List<Post> GetPosts()
+        public List<Post> GetPosts([FromQuery]PagingAttributes pagingAttributes)
         {
-            return _dataService.GetPosts();
+            return _dataService.GetPosts(pagingAttributes);
         }
 
      
