@@ -11,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebApi.Middleware;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens; 
 
 namespace WebApi
 {
@@ -29,6 +33,7 @@ namespace WebApi
       services.AddControllers();
 
       services.AddSingleton<IDataService, DataService>();
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +48,11 @@ namespace WebApi
 
       app.UseRouting();
 
+      app.UseMiddleware<AuthService>();
+
       app.UseAuthorization();
+
+      app.UseAuthentication();
 
       app.UseEndpoints(endpoints =>
       {

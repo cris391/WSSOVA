@@ -11,6 +11,7 @@ namespace DatabaseService
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Annotation> Annotation { get; set; }
+    public DbSet<User> User { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -43,7 +44,13 @@ namespace DatabaseService
       modelBuilder.Entity<Annotation>().Property(m => m.UserId).HasColumnName("userid");
       modelBuilder.Entity<Annotation>().Property(m => m.QuestionId).HasColumnName("questionid");
       modelBuilder.Entity<Annotation>().Property(m => m.Body).HasColumnName("body");
-    
+
+      modelBuilder.Entity<User>().ToTable("app_users");
+      modelBuilder.Entity<User>().Property(m => m.Id).HasColumnName("userid");
+      modelBuilder.Entity<User>().Property(m => m.Username).HasColumnName("username");
+      modelBuilder.Entity<User>().Property(m => m.Password).HasColumnName("password");
+      modelBuilder.Entity<User>().Property(m => m.Salt).HasColumnName("salt");
+ 
     }
   }
 }

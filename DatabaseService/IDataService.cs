@@ -15,7 +15,10 @@ namespace DatabaseService
 
     List<Post> GetPosts();
     Post GetPost(int id);
-      
+        // Auth
+    List<Post> GetAuthPosts(int userId);
+
+
     List<Annotation> GetAnnotations(int userId);
     Annotation GetAnnotation(int userId, int questionId);
     Annotation CreateAnnotation(int userId, int questionId, string body);
@@ -23,18 +26,9 @@ namespace DatabaseService
     bool UpdateAnnotation(int userId, int questionId, string body);
 
 
-        // Category CreateCategory(string name, string description);
-        // // Category CreateCategory(Category category);
-        // bool DeleteCategory(int id);
-        // List<Category> GetCategories();
-        // Order GetOrder(int id);
-        // List<OrderDetails> GetOrderDetailsByOrderId(int id);
-        // List<OrderDetails> GetOrderDetailsByProductId(int id);
-        // List<Order> GetOrders();
-        // Product GetProduct(int id);
-        // List<Product> GetProductByCategory(int id);
-        // List<Product> GetProductByName(string name);
-        // bool UpdateCategory(int id, string name, string description);
-        // bool PutCategory(int id, string name, string description);
+    User GetUser(string username);
+    User CreateUser(string username, string password, string salt);
+
+
     }
 }

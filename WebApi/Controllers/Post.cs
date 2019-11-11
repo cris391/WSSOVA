@@ -20,13 +20,14 @@ namespace WebApi.Controllers
             _dataService = dataService;
         }
 
+        
         [HttpGet]
         public List<Post> GetPosts()
         {
             return _dataService.GetPosts();
         }
 
-
+     
         [HttpGet]
         [Route("{postId}")]
         public ActionResult<Post> GetPost(int postId)

@@ -9,6 +9,11 @@ namespace DatabaseService
 
   public class DataService: IDataService
   {
+
+    readonly List<User> _users = new List<User>();
+        // auth
+    readonly List<Post> _posts = new List<Post>();
+
     public List<Question> GetQuestions()
     {
       using var db = new SOContext();
@@ -49,10 +54,6 @@ namespace DatabaseService
     {
       using var db = new SOContext();
       var question = db.Questions.Where(x => x.QuestionId == questionId).Include(x => x.Post).FirstOrDefault();
-      /*
-            .Where(q => q.QuestionId == questionId)
-            .FirstOrDefault();
-       */
       var questionDto = Helpers.CreateQuestionDtos(question);
       return questionDto;
     }
@@ -89,7 +90,7 @@ namespace DatabaseService
           {
               db.Annotation.Remove(annotation);
               db.SaveChanges();
-          } catch (System.Exception e)
+          } catch (System.Exception)
             {
                 return false; 
             }
@@ -105,12 +106,54 @@ namespace DatabaseService
            db.Update(annotation);
            db.SaveChanges();
 
-         } catch (System.Exception e)
+         } catch (System.Exception)
             {
                 return false;
             }
          return true;
       }
+
+    /* Instantiate 1 test user delete on reload */
+    public DataService()
+    {
+            _users.Add(new User()
+            {
+                Id = 999999,
+                Username = "klomanden"
+            });
+    }
+
+
+     public User GetUser(string username)
+     {
+        return _users.FirstOrDefault(x => x.Username == username);
+     }
+
+
+     public User CreateUser(string username, string password, string salt)
+     {
+            var user = new User()
+            {
+                Id = _users.Max(x => x.Id) + 1,
+                Username = username,
+                Password = password,
+                Salt = salt
+            };
+            _users.Add(user);
+            Console.Write("@@@@@@@@@@@@@ NEWUSER @@@@@@@@@@@@@@@@");
+            Console.WriteLine(user);
+            return user;
+     }
+
+    public List<Post> GetAuthPosts(int userId)
+        {
+            if (_users.FirstOrDefault(x => x.Id == userId) == null)
+                throw new ArgumentException("user not found");
+            return _posts;
+        }
+
+
+
 
 
 
