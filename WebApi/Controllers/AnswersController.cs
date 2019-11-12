@@ -1,15 +1,13 @@
-using System;
 using System.Collections.Generic;
 using AutoMapper;
 using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
   [ApiController]
-  [Route("api/answers")]
+  [Route("api/[controller]")]
   public class AnswersController : ControllerBase
   {
     IDataService _dataService;
@@ -25,7 +23,6 @@ namespace WebApi.Controllers
     {
       var result = _dataService.GetAnswer(answerId);
 
-      // return Ok(result);
       return Ok(CreateAnswerDto(result));
     }
 

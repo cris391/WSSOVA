@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DatabaseService;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace DatabaseService
 {
@@ -98,8 +99,8 @@ namespace DatabaseService
                        Score = p.Score,
                        Body = p.Body
                      }).FirstOrDefault();
-                     Console.WriteLine("@@@@@@@@@@@@@@@@");
-                     Console.WriteLine(answers);
+      Console.WriteLine("@@@@@@@@@@@@@@@@");
+      Console.WriteLine(answers);
       return answers;
     }
 
@@ -123,6 +124,53 @@ namespace DatabaseService
       return answers;
     }
 
+    public int AddAnnotation(Annotation annotation)
+    {
+      using var db = new SOContext();
+
+      // you can add parameters to the query, as shown here, by list them after the 
+      // statement, and reference them with {0} {1} ... {n}, where 0 is the first argument,
+      // 1 is the second etc.
+      try
+      {
+        return db.AnnotationFunction
+          .FromSqlRaw("select addAnnotation({0}, {1}, {2}) as Id", annotation.UserId, annotation.QuestionId, annotation.Body)
+          .FirstOrDefault()
+          .Id;
+      }
+      catch (System.Exception e)
+      {
+
+        return 0;
+      }
+    }
+
+    public Annotation GetAnnotation(int annotationId)
+    {
+      using var db = new SOContext();
+
+      var annotation = db.Annotations.Find(annotationId);
+      return annotation;
+    }
+
+    public bool UpdateAnnotation(Annotation annotation)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        var oldAnnotation = db.Annotations.Find(annotation.AnnotationId);
+        oldAnnotation.Body = annotation.Body;
+        db.Annotations.Update(oldAnnotation);
+        db.SaveChanges();
+
+        return true;
+      }
+      catch (System.Exception)
+      {
+        return false;
+      }
+    }
 
     // public Category CreateCategory(string name, string description)
     // {

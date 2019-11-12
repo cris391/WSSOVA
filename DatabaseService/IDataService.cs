@@ -12,6 +12,9 @@ namespace DatabaseService
     object GetQuestionWithAnswers(int questionId);
     AnswerDbDto GetAnswer(int answerId);
     List<AnswerDbDto> GetAnswersForQuestion(int questionId);
+    int AddAnnotation(Annotation annotation);
+    Annotation GetAnnotation(int annotationId);
+    bool UpdateAnnotation(Annotation annotation);
     // List<Answer> GetAnswersForQuestion(int questionId);
     // List<AnswerDto> GetAnswersForQuestion(int questionId);
 

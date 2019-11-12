@@ -14,6 +14,8 @@ namespace DatabaseService
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Annotation> Annotations { get; set; }
+    public DbSet<AnnotationFunction> AnnotationFunction { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -24,7 +26,10 @@ namespace DatabaseService
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.CreateMap("Id");
+      modelBuilder.CreateMap("Id, Name");
+      modelBuilder.Entity<AnnotationFunction>().HasNoKey();
+      // modelBuilder.Entity<Annotation>().hasF
+
       // modelBuilder.Entity<Question>().HasOne(pt => pt.Answer)
       //       .WithOne(p => p.Question)
       //       .HasForeignKey<Answer>(pt => pt.QuestionForeignKey);
@@ -35,7 +40,6 @@ namespace DatabaseService
 
       // modelBuilder.Entity<OrderDetails>().ToTable("orderdetails");
       // modelBuilder.Entity<OrderDetails>().Property(m => m.OrderId).HasColumnName("orderid");
-      // modelBuilder.Entity<OrderDetails>().HasKey(m => new { m.OrderId, m.ProductId });
     }
   }
 
@@ -52,15 +56,14 @@ namespace DatabaseService
         foreach (var property in entityType.GetProperties())
         {
           var propertyName = property.Name.ToLower();
-          var entityName = "";
+          // var entityName = "";
 
-          if (dict.Contains(property.Name))
-          {
-            entityName = entityType.ClrType.Name.ToLower();
-          }
+          // if (dict.Contains(property.Name))
+          // {
+          //   entityName = entityType.ClrType.Name.ToLower();
+          // }
 
-
-          property.SetColumnName(entityName + propertyName);
+          property.SetColumnName(propertyName);
         }
 
       }
