@@ -17,6 +17,12 @@ namespace DatabaseService
     Post GetPost(int id);
     List<Post> GetAuthPosts(int userId);
 
+    Tag CreateTag(Tag tag);
+    List<Tag> GetTags();
+
+    List<Comment> GetComments(PagingAttributes pagingAttributes);
+    Comment CreateComment(int postId, int userId, Comment comment);
+
 
     List<Annotation> GetAnnotations(int userId);
     Annotation GetAnnotation(int userId, int questionId);
@@ -27,7 +33,5 @@ namespace DatabaseService
 
     User GetUser(string username);
     User CreateUser(string username, string password, string salt);
-
-
     }
 }

@@ -8,25 +8,15 @@ using System.Threading.Tasks;
 
 namespace DatabaseService
 {
-    //public class SaveUser
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //    public string Username { get; set; }
-    //    public string Password { get; set; }
-    //    public string Salt { get; set; }
-    //}
-
-
     public class SOContext : DbContext
   {
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
+    public DbSet<Tag> Tags { get; set; }
+    public DbSet<Comment> Comments { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Annotation> Annotation { get; set; }
     public DbSet<User> User { get; set; }
-
-    //public DbQuery<User> Create_User { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -66,14 +56,18 @@ namespace DatabaseService
       modelBuilder.Entity<User>().Property(m => m.Username).HasColumnName("username");
       modelBuilder.Entity<User>().Property(m => m.Password).HasColumnName("password");
       modelBuilder.Entity<User>().Property(m => m.Salt).HasColumnName("salt");
-     // modelBuilder.Entity<User>().Property(m => m.Name).HasColumnName("name");
 
-     //modelBuilder.Query<SaveUser>().Property(x => x.Id).HasColumnName("userid");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Username).HasColumnName("username");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Password).HasColumnName("password");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Salt).HasColumnName("salt");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Name).HasColumnName("name");
+      modelBuilder.Entity<Comment>().ToTable("comments");
+      modelBuilder.Entity<Comment>().Property(m => m.Id).HasColumnName("commentid");
+      modelBuilder.Entity<Comment>().Property(m => m.UserId).HasColumnName("userid");
+      modelBuilder.Entity<Comment>().Property(m => m.PostId).HasColumnName("postid");
+      modelBuilder.Entity<Comment>().Property(m => m.CommentScore).HasColumnName("commentscore");
+      modelBuilder.Entity<Comment>().Property(m => m.CommentText).HasColumnName("commenttext");
+      modelBuilder.Entity<Comment>().Property(m => m.Timestamp).HasColumnName("commentcreatedate");
 
-        }
+      modelBuilder.Entity<Tag>().ToTable("tags");
+      modelBuilder.Entity<Tag>().Property(m => m.TagId).HasColumnName("tagid");
+      modelBuilder.Entity<Tag>().Property(m => m.Value).HasColumnName("value");
+    }
   }
 }

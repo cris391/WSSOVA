@@ -76,6 +76,50 @@ namespace DatabaseService
       return db.Posts.Count();
     }
 
+    public Tag CreateTag(Tag tag)
+    {
+      using var db = new SOContext();
+      var new_tag = new Tag()
+      {
+        Value = tag.Value,
+        TagId = tag.TagId
+      };
+        db.Tags.Add(new_tag);
+        db.SaveChanges();
+        return new_tag;
+    }
+
+     public List <Tag> GetTags()
+     {
+       using var db = new SOContext();
+       return db.Tags.ToList();
+     }
+
+    public List <Comment> GetComments(PagingAttributes pagingAttributes)
+    {
+      using var db = new SOContext();
+      return db.Comments
+                .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
+                .Take(pagingAttributes.PageSize)
+                .ToList();
+    }
+
+    public Comment CreateComment(int postId, int userId, Comment comment) 
+    {
+      using var db = new SOContext();
+      var new_comment = new Comment()
+        {
+           Id = db.Comments.Max(m => m.Id) + 1,
+           CommentText = comment.CommentText,
+           UserId = userId,
+           Timestamp = DateTime.Today,
+           PostId = postId
+         };
+           db.Comments.Add(new_comment);
+           db.SaveChanges();
+           return new_comment;
+    }
+
     public QuestionDto GetFullQuestion (int questionId)
     {
       using var db = new SOContext();
@@ -179,7 +223,6 @@ namespace DatabaseService
             using var db = new SOContext();
             var user = new User()
             {
-               
                 Username = username,
                 Password = password,
                 Salt = salt      
@@ -201,8 +244,6 @@ namespace DatabaseService
        public List<Post> GetAuthPosts(int userId)
         {
             var db = new SOContext();
-            Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
-            Console.WriteLine(@"User id = {0} ", userId);
             if (db.User.FirstOrDefault(x => x.Id == userId) == null)
                 throw new ArgumentException("user not found");
             return _posts;
