@@ -34,7 +34,22 @@ namespace WebApi
 
       services.AddSingleton<IDataService, DataService>();
 
-    }
+            var key = Encoding.UTF8.GetBytes(Configuration.GetSection("Auth:Key").Value);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateLifetime = true,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+        }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,9 +65,10 @@ namespace WebApi
 
       app.UseMiddleware<AuthService>();
 
+      app.UseAuthentication();
+
       app.UseAuthorization();
 
-      app.UseAuthentication();
 
       app.UseEndpoints(endpoints =>
       {

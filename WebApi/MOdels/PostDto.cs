@@ -1,6 +1,7 @@
-﻿namespace WebApi.Controllers
+﻿using System;
+namespace WebApi.Models
 {
-    internal class PostDto
+    public class PostDto
     {
         public string Title { get; set; }
     }

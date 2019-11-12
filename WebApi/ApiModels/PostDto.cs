@@ -3,8 +3,6 @@ namespace WebApi.ApiModels
 {
     public class PostDto
     {
-        public PostDto()
-        {
-        }
+        public string Title { get; set; }
     }
 }

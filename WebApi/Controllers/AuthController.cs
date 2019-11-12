@@ -9,10 +9,11 @@ using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.WebServiceToken.Models;
+using WebApi.ApiModels;
+
 using WebApi.WebServiceToken.Services;
 
-namespace WebApi.WebServiceToken.Controllers
+namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/auth")]
@@ -57,6 +58,7 @@ namespace WebApi.WebServiceToken.Controllers
         [HttpPost("tokens")]
         public ActionResult Login([FromBody] UserForLoginDto dto)
         {
+  
             var user = _dataService.GetUser(dto.UserName);
 
             if (user == null)
@@ -91,7 +93,7 @@ namespace WebApi.WebServiceToken.Controllers
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                 }),
 
-                Expires = DateTime.Now.AddSeconds(20),
+                Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature)

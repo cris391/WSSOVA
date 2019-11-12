@@ -58,7 +58,10 @@ namespace DatabaseService
     public List<Post> GetPosts(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
-      return db.Posts.ToList(); 
+      return db.Posts
+                .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
+                .Take(pagingAttributes.PageSize)
+                .ToList(); 
     }
 
     public Post GetPost(int id)
@@ -76,7 +79,10 @@ namespace DatabaseService
     public QuestionDto GetFullQuestion (int questionId)
     {
       using var db = new SOContext();
-      var question = db.Questions.Where(x => x.QuestionId == questionId).Include(x => x.Post).FirstOrDefault();
+      var question = db.Questions
+                .Where(x => x.QuestionId == questionId)
+                .Include(x => x.Post)
+                .FirstOrDefault();
       var questionDto = Helpers.CreateQuestionDtos(question);
       return questionDto;
     }
@@ -153,7 +159,8 @@ namespace DatabaseService
 
      public User GetUser(string username)
      {
-        return _users.FirstOrDefault(x => x.Username == username);
+        using var db = new SOContext();
+        return db.User.FirstOrDefault(x => x.Username == username);
      }
 
 
@@ -162,35 +169,33 @@ namespace DatabaseService
             using var db = new SOContext();
             var user = new User()
             {
-                Id = db.User.Max(x => x.Id) + 1,
-                Name = name,
+                Id = 1,
                 Username = username,
                 Password = password,
-                Salt = salt
+                Salt = salt,
+                Name = name
+              
             };
-            Console.WriteLine("@@@@@@@@@@@@@ NEWUSER @@@@@@@@@@@@@@@@");
-            Console.WriteLine(user.Name);
-            Console.WriteLine(user.Id);
-            Console.WriteLine(user.Username);
-            Console.WriteLine(user.Password);
-            Console.WriteLine(salt);
-
             try {
-                 db.User.Add(user);
-                 db.SaveChanges();
+                db.User.Add(user);
+                db.SaveChanges();
                 Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
                 return user;
 
-            } catch
+            } catch( Exception e)
             {
                 Console.WriteLine("@@@@@@@@@@@@@ failed stored in db @@@@@@@@@@@@@@@@");
+                Console.Write(e);
                 return user;
             }   
      }
 
-    public List<Post> GetAuthPosts(int userId)
+       public List<Post> GetAuthPosts(int userId)
         {
-            if (_users.FirstOrDefault(x => x.Id == userId) == null)
+            var db = new SOContext();
+            Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
+            Console.WriteLine(@"User id = {0} ", userId);
+            if (db.User.FirstOrDefault(x => x.Id == userId) == null)
                 throw new ArgumentException("user not found");
             return _posts;
         }

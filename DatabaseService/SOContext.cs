@@ -1,17 +1,32 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using DatabaseService;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DatabaseService
 {
-  public class SOContext : DbContext
+    public class SaveUser
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Salt { get; set; }
+    }
+
+
+    public class SOContext : DbContext
   {
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Annotation> Annotation { get; set; }
     public DbSet<User> User { get; set; }
+
+    public DbQuery<User> Create_User { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -51,7 +66,13 @@ namespace DatabaseService
       modelBuilder.Entity<User>().Property(m => m.Password).HasColumnName("password");
       modelBuilder.Entity<User>().Property(m => m.Salt).HasColumnName("salt");
       modelBuilder.Entity<User>().Property(m => m.Name).HasColumnName("name");
- 
-    }
+
+     modelBuilder.Query<SaveUser>().Property(x => x.Id).HasColumnName("userid");
+     modelBuilder.Query<SaveUser>().Property(m => m.Username).HasColumnName("username");
+     modelBuilder.Query<SaveUser>().Property(m => m.Password).HasColumnName("password");
+     modelBuilder.Query<SaveUser>().Property(m => m.Salt).HasColumnName("salt");
+     modelBuilder.Query<SaveUser>().Property(m => m.Name).HasColumnName("name");
+
+        }
   }
 }

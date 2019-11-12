@@ -4,20 +4,29 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DatabaseService\DatabaseService.csproj" />
-  </ItemGroup>
-
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom' ">
+    <StartAction>Project</StartAction>
+    <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Middleware\" />
+    <Folder Include="Services\" />
+    <Folder Include="ApiModels\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JWT" Version="5.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="MOdels\PostDto.cs" />
-    <Compile Remove="MOdels\PostDto.cs" />
-    <Compile Remove="WeatherForecast.cs" />
+   <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+ </ItemGroup>
+
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseService\DatabaseService.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
+
 </Project>
