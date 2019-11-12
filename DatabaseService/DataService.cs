@@ -176,7 +176,7 @@ namespace DatabaseService
     {
       using var db = new SOContext();
       var result = new List<Annotation>();
-      
+
       if (questionId == 0)
       {
         return db.Annotations.Where(a => a.UserId == userId).ToList();
@@ -184,6 +184,47 @@ namespace DatabaseService
       return db.Annotations.Where(a => a.UserId == userId && a.QuestionId == questionId).ToList();
     }
 
+    public bool CreateMarking(Marking marking)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        db.Markings.Add(marking);
+        var hei = db.SaveChanges();
+
+        return true;
+      }
+      catch (System.Exception e)
+      {
+        return false;
+      }
+    }
+    public List<Marking> GetMarkings(int userid)
+    {
+      using var db = new SOContext();
+
+      var markings = db.Markings
+        .Where(m => m.UserId == userid)
+        .ToList();
+
+      return markings;
+    }
+
+    public bool DeleteMarkings(Marking marking)
+    {
+      using var db = new SOContext();
+      try
+      {
+        db.Markings.Remove(marking);
+        db.SaveChanges();
+        return true;
+      }
+      catch (System.Exception)
+      {
+        return false;
+      }
+    }
     // public Category CreateCategory(string name, string description)
     // {
     //   using var db = new NorthwindContext();

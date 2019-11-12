@@ -15,6 +15,7 @@ namespace DatabaseService
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Annotation> Annotations { get; set; }
+    public DbSet<Marking> Markings { get; set; }
     public DbSet<AnnotationFunction> AnnotationFunction { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
