@@ -39,5 +39,13 @@ namespace WebApi.Controllers
 
       return Ok(result);
     }
+
+    [HttpGet]
+    public ActionResult GetAnnotations([FromBody] Annotation annotation)
+    {
+      var result = _dataService.GetAnnotations(annotation.UserId, annotation.QuestionId);
+
+      return Ok(result);
+    }
   }
 }

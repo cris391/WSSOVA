@@ -172,6 +172,18 @@ namespace DatabaseService
       }
     }
 
+    public List<Annotation> GetAnnotations(int userId, int? questionId)
+    {
+      using var db = new SOContext();
+      var result = new List<Annotation>();
+      
+      if (questionId == 0)
+      {
+        return db.Annotations.Where(a => a.UserId == userId).ToList();
+      }
+      return db.Annotations.Where(a => a.UserId == userId && a.QuestionId == questionId).ToList();
+    }
+
     // public Category CreateCategory(string name, string description)
     // {
     //   using var db = new NorthwindContext();
