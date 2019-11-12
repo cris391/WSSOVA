@@ -22,9 +22,9 @@ namespace WebApi.Controllers
 
         [Route("create")]
         [HttpPost]
-        public User CreateUser([FromBody]string name, string username, string password, string salt)
+        public User CreateUser([FromBody] string username, string password, string salt)
         {
-            var newUser = _dataService.CreateUser(name, username, password, salt);
+            var newUser = _dataService.CreateUser(username, password, salt);
             return newUser;
         }
 

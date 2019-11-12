@@ -102,14 +102,24 @@ namespace DatabaseService
          return userAnnotation.First();
       }
 
+
+
       public void CreateAnnotation(Annotation annotation)
       {
          using var db = new SOContext();
-        // var annotation = new Annotation() { UserId = userId, QuestionId = questionId, Body = body };
+         var new_annotation = new Annotation()
+         {
+             Id = db.Annotation.Max(x => x.Id) + 1,
+             UserId = annotation.UserId,
+             QuestionId = annotation.QuestionId,
+             Body = annotation.Body
+         };
          db.Annotation.Add(annotation);
          db.SaveChanges();
-         //return GetAnnotation(annotation.UserId, annotation.QuestionId);
+        // return GetAnnotation(annotation.UserId, annotation.QuestionId);
       }
+
+
 
       public bool DeleteAnnotation(int userId, int questionId)
       {
@@ -164,17 +174,15 @@ namespace DatabaseService
      }
 
 
-     public User CreateUser(string name, string username, string password, string salt)
+     public User CreateUser(string username, string password, string salt)
      {
             using var db = new SOContext();
             var user = new User()
             {
-                Id = 1,
+               
                 Username = username,
                 Password = password,
-                Salt = salt,
-                Name = name
-              
+                Salt = salt      
             };
             try {
                 db.User.Add(user);

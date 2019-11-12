@@ -8,6 +8,7 @@ namespace DatabaseService
       
         public int UserId { get; set; }
         [Key]
+        public int Id { get; set; }
         public int QuestionId { get; set; }
         public string? Body { get; set; }
     }

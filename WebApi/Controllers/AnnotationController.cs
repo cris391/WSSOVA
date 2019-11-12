@@ -33,7 +33,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
-        [Route("api/annotation/{userId}/{questionId}")]
+        [Route("api/annotation/create/{userId}/{questionId}")]
         public ActionResult CreateAnnotation([FromBody] Annotation annotation)
         {
             _dataService.CreateAnnotation(annotation);

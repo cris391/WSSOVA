@@ -26,7 +26,7 @@ namespace DatabaseService
 
 
     User GetUser(string username);
-    User CreateUser(string name, string username, string password, string salt);
+    User CreateUser(string username, string password, string salt);
 
 
     }

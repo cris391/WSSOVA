@@ -50,9 +50,9 @@ namespace WebApi.Controllers
 
             var pwd = PasswordService.HashPassword(dto.Password, salt, size);
 
-            _dataService.CreateUser(dto.Name, dto.UserName, pwd, salt);
+            _dataService.CreateUser(dto.UserName, pwd, salt);
 
-            return CreatedAtRoute(null, dto.Name);
+            return CreatedAtRoute(null, dto.UserName);
         }
 
         [HttpPost("tokens")]

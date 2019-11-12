@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DatabaseService
 {
-    public class SaveUser
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; }
-    }
+    //public class SaveUser
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //    public string Username { get; set; }
+    //    public string Password { get; set; }
+    //    public string Salt { get; set; }
+    //}
 
 
     public class SOContext : DbContext
@@ -26,7 +26,7 @@ namespace DatabaseService
     public DbSet<Annotation> Annotation { get; set; }
     public DbSet<User> User { get; set; }
 
-    public DbQuery<User> Create_User { get; set; }
+    //public DbQuery<User> Create_User { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -56,6 +56,7 @@ namespace DatabaseService
 
   
       modelBuilder.Entity<Annotation>().ToTable("annotations");
+      modelBuilder.Entity<Annotation>().Property(m => m.Id).HasColumnName("id");
       modelBuilder.Entity<Annotation>().Property(m => m.UserId).HasColumnName("userid");
       modelBuilder.Entity<Annotation>().Property(m => m.QuestionId).HasColumnName("questionid");
       modelBuilder.Entity<Annotation>().Property(m => m.Body).HasColumnName("body");
@@ -65,13 +66,13 @@ namespace DatabaseService
       modelBuilder.Entity<User>().Property(m => m.Username).HasColumnName("username");
       modelBuilder.Entity<User>().Property(m => m.Password).HasColumnName("password");
       modelBuilder.Entity<User>().Property(m => m.Salt).HasColumnName("salt");
-      modelBuilder.Entity<User>().Property(m => m.Name).HasColumnName("name");
+     // modelBuilder.Entity<User>().Property(m => m.Name).HasColumnName("name");
 
-     modelBuilder.Query<SaveUser>().Property(x => x.Id).HasColumnName("userid");
-     modelBuilder.Query<SaveUser>().Property(m => m.Username).HasColumnName("username");
-     modelBuilder.Query<SaveUser>().Property(m => m.Password).HasColumnName("password");
-     modelBuilder.Query<SaveUser>().Property(m => m.Salt).HasColumnName("salt");
-     modelBuilder.Query<SaveUser>().Property(m => m.Name).HasColumnName("name");
+     //modelBuilder.Query<SaveUser>().Property(x => x.Id).HasColumnName("userid");
+     //modelBuilder.Query<SaveUser>().Property(m => m.Username).HasColumnName("username");
+     //modelBuilder.Query<SaveUser>().Property(m => m.Password).HasColumnName("password");
+     //modelBuilder.Query<SaveUser>().Property(m => m.Salt).HasColumnName("salt");
+     //modelBuilder.Query<SaveUser>().Property(m => m.Name).HasColumnName("name");
 
         }
   }
