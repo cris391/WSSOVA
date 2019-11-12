@@ -1,6 +1,5 @@
 ﻿using System;
-
-namespace WebApi.WebServiceToken.Models
+namespace WebApi.Models
 {
     public class UserForCreationDto
     {
@@ -9,3 +8,4 @@ namespace WebApi.WebServiceToken.Models
         public string Password { get; set; }
     }
 }
+

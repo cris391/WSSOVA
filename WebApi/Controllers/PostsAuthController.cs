@@ -2,9 +2,10 @@
 using DatabaseService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebServiceToken.Models;
+using WebApi.Models;
 
-namespace WebServiceToken.Controllers
+
+namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/auth/posts")]

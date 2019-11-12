@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace WebApi.WebServiceToken.Models
+namespace WebApi.Models
 {
     public class UserForLoginDto
     {
