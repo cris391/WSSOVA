@@ -9,8 +9,9 @@ namespace DatabaseService
     Question GetQuestion(int id);
     int NumberOfQuestions();
     List<Post> GetPosts();
-    List<AnswerDto> GetAnswers();
     object GetQuestionWithAnswers(int questionId);
+    AnswerDbDto GetAnswer(int answerId);
+    List<AnswerDbDto> GetAnswersForQuestion(int questionId);
     // List<Answer> GetAnswersForQuestion(int questionId);
     // List<AnswerDto> GetAnswersForQuestion(int questionId);
 

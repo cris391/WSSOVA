@@ -42,16 +42,16 @@ namespace DatabaseService
       // }
 
       var answers = (from a in db.Answers
-                    join p in db.Posts
-                    on a.AnswerId equals p.PostId
-                    where a.PostId == questionId
-                    select new
-                    {
-                      Id = p.PostId,
-                      p.CreationDate,
-                      p.Score,
-                      p.Body
-                    }).ToList();
+                     join p in db.Posts
+                     on a.AnswerId equals p.PostId
+                     where a.PostId == questionId
+                     select new
+                     {
+                       Id = p.PostId,
+                       p.CreationDate,
+                       p.Score,
+                       p.Body
+                     }).ToList();
 
       // var answerDtos = Helpers.CreateAnswerDtos(answers);
       return new { Question = question, Answers = answers };
@@ -80,17 +80,47 @@ namespace DatabaseService
         // .Include(p => p.Question)
         .Take(10).ToList();
     }
-    public List<AnswerDto> GetAnswers()
+
+    public AnswerDbDto GetAnswer(int answerId)
     {
       using var db = new SOContext();
-      var answers = db.Answers.Where(a => a.PostId == 104068)
-        .Include(a => a.Post)
-        .Take(10).ToList();
 
-      var answerDtos = Helpers.CreateAnswerDtos(answers);
+      var answers = (from a in db.Answers
+                     join p in db.Posts
+                     on a.AnswerId equals p.PostId
+                     where a.AnswerId == answerId
+                     select new
+                     AnswerDbDto
+                     {
+                       AnswerId = p.PostId,
+                       ParentId = a.PostId,
+                       CreationDate = p.CreationDate,
+                       Score = p.Score,
+                       Body = p.Body
+                     }).FirstOrDefault();
+                     Console.WriteLine("@@@@@@@@@@@@@@@@");
+                     Console.WriteLine(answers);
+      return answers;
+    }
 
+    public List<AnswerDbDto> GetAnswersForQuestion(int questionId)
+    {
+      using var db = new SOContext();
+      var answers = (from a in db.Answers
+                     join p in db.Posts
+                     on a.AnswerId equals p.PostId
+                     where a.PostId == questionId
+                     select new
+                     AnswerDbDto
+                     {
+                       AnswerId = p.PostId,
+                       ParentId = a.PostId,
+                       CreationDate = p.CreationDate,
+                       Score = p.Score,
+                       Body = p.Body
+                     }).ToList();
 
-      return answerDtos;
+      return answers;
     }
 
 

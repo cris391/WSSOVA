@@ -4,6 +4,7 @@ using AutoMapper;
 using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
@@ -19,22 +20,58 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
-    [HttpGet]
-    public ActionResult GetAnswers()
+    [HttpGet("{answerId}", Name = nameof(GetAnswer))]
+    public ActionResult GetAnswer(int answerId)
     {
-      var result = _dataService.GetAnswers();
+      var result = _dataService.GetAnswer(answerId);
 
-      return Ok(result);
+      // return Ok(result);
+      return Ok(CreateAnswerDto(result));
     }
 
-    // [HttpGet("{questionId}")]
-    // public ActionResult GetAnswersForQuestion(int questionId)
-    // {
-    //   var result = _dataService.GetAnswersForQuestion(questionId);
+    [HttpGet("question/{questionId}")]
+    public ActionResult GetAnswersForQuestion(int questionId)
+    {
+      var result = _dataService.GetAnswersForQuestion(questionId);
 
-    //   return Ok(result);
-    // }
+      return Ok(CreateAnswerDtos(result));
+      // return Ok(result);
+    }
+
+    ///////////////////
+    //
+    // Helpers
+    //
+    //////////////////////
+
+    private AnswerDto CreateAnswerDto(AnswerDbDto answer)
+    {
+      var dto = _mapper.Map<AnswerDto>(answer);
+      dto.Link = Url.Link(
+              nameof(GetAnswer),
+              new { answerId = answer.AnswerId });
+      dto.LinkParent = Url.Link(
+              nameof(GetAnswer),
+              new { answerId = answer.ParentId });
+      return dto;
+    }
+
+    private List<AnswerDto> CreateAnswerDtos(List<AnswerDbDto> answers)
+    {
+      List<AnswerDto> answerDtos = new List<AnswerDto>();
+      foreach (var answer in answers)
+      {
+        // AnswerDto answerDto = new AnswerDto();
+        var answerDto = _mapper.Map<AnswerDto>(answer);
+        answerDto.Link = Url.Link(
+              nameof(GetAnswer),
+              new { answerId = answer.AnswerId });
+        answerDto.LinkParent = Url.Link(
+                nameof(GetAnswer),
+                new { answerId = answer.ParentId });
+        answerDtos.Add(answerDto);
+      }
+      return answerDtos;
+    }
   }
-
-  
 }

@@ -47,14 +47,14 @@ namespace WebApi.Controllers
       return Ok(CreateQuestionDto(question));
     }
 
-    [HttpGet("answers/{questionId}")]
-    public ActionResult GetQuestionWithAnswers(int questionId)
-    {
-      var result = _dataService.GetQuestionWithAnswers(questionId);
-      Console.WriteLine(result);
+    // [HttpGet("answers/{questionId}")]
+    // public ActionResult GetQuestionWithAnswers(int questionId)
+    // {
+    //   var result = _dataService.GetQuestionWithAnswers(questionId);
+    //   Console.WriteLine(result);
 
-      return Ok(result);
-    }
+    //   return Ok(result);
+    // }
     //   [HttpPost]
     //   public ActionResult CreateCategory([FromBody] Category category)
     //   {
