@@ -134,7 +134,7 @@ namespace DatabaseService
       try
       {
         return db.AnnotationFunction
-          .FromSqlRaw("select addAnnotation({0}, {1}, {2}) as Id", annotation.UserId, annotation.QuestionId, annotation.Body)
+          .FromSqlRaw("select addAnnotation({0}, {1}) as Id", annotation.MarkingId, annotation.Body)
           .FirstOrDefault()
           .Id;
       }
@@ -172,16 +172,12 @@ namespace DatabaseService
       }
     }
 
-    public List<Annotation> GetAnnotations(int userId, int? questionId)
+    public List<Annotation> GetAnnotations(int markingId)
     {
       using var db = new SOContext();
       var result = new List<Annotation>();
 
-      if (questionId == 0)
-      {
-        return db.Annotations.Where(a => a.UserId == userId).ToList();
-      }
-      return db.Annotations.Where(a => a.UserId == userId && a.QuestionId == questionId).ToList();
+      return db.Annotations.Where(a => a.MarkingId == markingId).ToList();
     }
 
     public bool CreateMarking(Marking marking)
@@ -211,7 +207,7 @@ namespace DatabaseService
       return markings;
     }
 
-    public bool DeleteMarkings(Marking marking)
+    public bool DeleteMarking(Marking marking)
     {
       using var db = new SOContext();
       try
@@ -220,7 +216,21 @@ namespace DatabaseService
         db.SaveChanges();
         return true;
       }
-      catch (System.Exception)
+      catch (System.Exception e)
+      {
+        return false;
+      }
+    }
+    public bool DeleteAnnotation(Annotation annotation)
+    {
+      using var db = new SOContext();
+      try
+      {
+        db.Annotations.Remove(annotation);
+        db.SaveChanges();
+        return true;
+      }
+      catch (System.Exception e)
       {
         return false;
       }

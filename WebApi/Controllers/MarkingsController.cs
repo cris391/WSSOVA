@@ -35,9 +35,9 @@ namespace WebApi.Controllers
     }
 
     [HttpDelete]
-    public ActionResult DeleteMarkings(Marking marking)
+    public ActionResult DeleteMarking(Marking marking)
     {
-      var result = _dataService.DeleteMarkings(marking);
+      var result = _dataService.DeleteMarking(marking);
 
       return Ok(result);
     }

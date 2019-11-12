@@ -25,13 +25,13 @@ namespace WebApi.Controllers
       return Ok(result);
     }
     
-    [HttpGet("{annotationId}")]
-    public ActionResult GetAnnotation(int annotationId)
-    {
-      var result = _dataService.GetAnnotation(annotationId);
+    // [HttpGet("{annotationId}")]
+    // public ActionResult GetAnnotation(int annotationId)
+    // {
+    //   var result = _dataService.GetAnnotation(annotationId);
 
-      return Ok(result);
-    }
+    //   return Ok(result);
+    // }
     [HttpPut]
     public ActionResult UpdateAnnotation([FromBody] Annotation annotation)
     {
@@ -40,12 +40,32 @@ namespace WebApi.Controllers
       return Ok(result);
     }
 
-    [HttpGet]
-    public ActionResult GetAnnotations([FromBody] Annotation annotation)
+    [HttpGet("marking/{markingId}")]
+    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
+    public ActionResult GetAnnotations(int markingId)
     {
-      var result = _dataService.GetAnnotations(annotation.UserId, annotation.QuestionId);
+      var result = _dataService.GetAnnotations(markingId);
 
       return Ok(result);
     }
+
+    [HttpDelete]
+    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
+    public ActionResult DeleteAnnotation(Annotation annotation)
+    {
+      var result = _dataService.DeleteAnnotation(annotation);
+
+      return Ok(result);
+    }
+
+  // TODO fetch annotations by markingid and postid
+    // [HttpGet("marking/post")]
+    // // public ActionResult GetAnnotations([FromBody] Annotation annotation)
+    // public ActionResult GetAnnotationsByMarkingAndPost()
+    // {
+    //   var result = _dataService.GetAnnotations(markingId);
+
+    //   return Ok(result);
+    // }
   }
 }

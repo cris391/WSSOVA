@@ -10,10 +10,16 @@ GET /api/questions/{questionId}
 GET /api/answers/{answerId}
 GET /api/answers/question/{answerId}
 
+> Markings endpoints
+
+GET /api/markings/{userId}
+POST /api/markings BODY {"userid": 1,"postid": 16637748}
+Delete /api/markings BODY {"markingid": 1}
+
 > Annotations endpoints
 
-GET /api/annotations/{annotationId}
-GET /api/annotations BODY {"userid": 1,"questionid?": 16637748}
-POST /api/annotations BODY {"userid": 1,"questionid": 16637748,"body": "api"}
-PUT /api/annotations BODY {"userid": 1,"questionid": 16637748,"body": "api2"}
+GET /api/annotations/{markingid}
+GET /api/annotations BODY {"markingid": 1}
+POST /api/annotations BODY {"markingid": 1,"body": "api"}
+PUT /api/annotations BODY {"markingid": 1,"body": "api2"}
 

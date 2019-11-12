@@ -15,10 +15,11 @@ namespace DatabaseService
     int AddAnnotation(Annotation annotation);
     Annotation GetAnnotation(int annotationId);
     bool UpdateAnnotation(Annotation annotation);
-    List<Annotation> GetAnnotations(int userId, int? questionid);
+    List<Annotation> GetAnnotations(int markingId);
     bool CreateMarking(Marking marking);
     List<Marking> GetMarkings(int userid);
-    bool DeleteMarkings(Marking marking);
+    bool DeleteMarking(Marking marking);
+    bool DeleteAnnotation(Annotation annotation);
     // List<Answer> GetAnswersForQuestion(int questionId);
     // List<AnswerDto> GetAnswersForQuestion(int questionId);
 
