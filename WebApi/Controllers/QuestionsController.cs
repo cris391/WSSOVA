@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using WebApi.Models;
+using WebApi.MOdels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
@@ -35,14 +36,15 @@ namespace WebApi.Controllers
     public ActionResult<Question> GetQuestion(int questionId)
     {
       var question = _dataService.GetQuestion(questionId);
-
+     
       if (question == null) return NotFound();
 
       Console.WriteLine("@@@@");
-      // Console.WriteLine(question.Post.Body);
       Console.WriteLine(question.ClosedDate);
 
-      return Ok(CreateQuestionDto(question));
+         
+       return Ok(question);
+       //return Ok(CreateQuestionDto(question));
     }
 
     ///////////////////

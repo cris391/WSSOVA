@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DatabaseService;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace DatabaseService
 {
-
-  public class DataService : IDataService
+    
+    public class DataService : IDataService
   {
     public List<Question> GetQuestions(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
       var questions = db.Questions
                 .Include(q => q.Post)
+                
                 .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
                 .Take(pagingAttributes.PageSize)
                 .ToList();
@@ -68,6 +67,74 @@ namespace DatabaseService
         .Take(10).ToList();
     }
 
+    public FullPost GetFullPost(int questionId)
+    {
+      using var db = new SOContext();
+
+      var question = GetQuestion(questionId);
+
+      var answers = GetAnswersForQuestion(questionId);
+           
+         var comment = new Comment();
+         var commentList = new List <Comment>();
+
+         List<Comment> instance = new List<Comment>();
+
+      
+        foreach (var answ in answers)
+        {
+                answ.Comments = new List<Comment>();
+                var answerID = answ.AnswerId;
+                comment = ( from c in db.Comments
+                            join a in db.Answers
+                            on c.PostId equals a.AnswerId
+                            where a.AnswerId == answerID
+                            select new Comment
+                            {
+                                UserId = c.UserId,
+                                PostId = c.PostId,
+                                //Timestamp = c.Timestamp,
+                                CommentId = c.CommentId,
+                                CommentScore = c.CommentScore,
+                                CommentText = c.CommentText
+                            }).FirstOrDefault();
+
+                if(comment != null)
+                {
+                    
+                    answ.Comments.Add(comment);
+                } 
+            }
+
+            var fullPost = new FullPost()
+            {
+                Question = question,
+                Answers = answers,
+            };
+            Console.WriteLine(fullPost);
+
+       return fullPost;
+    }
+
+    public Comment GetComments(int postId)
+    {
+       using var db = new SOContext();
+
+            var comments = (from a in db.Comments
+                            join p in db.Posts
+                            on a.PostId equals p.PostId
+                            where a.PostId == postId
+                            select new Comment
+                            {
+                             CommentText = a.CommentText,
+                             CommentScore = a.CommentScore,
+                             UserId = a.UserId,
+                             PostId = a.PostId
+                            }).FirstOrDefault();
+
+            return comments;
+    }
+
     public AnswerDbDto GetAnswer(int answerId)
     {
       using var db = new SOContext();
@@ -90,9 +157,11 @@ namespace DatabaseService
       return answers;
     }
 
+
     public List<AnswerDbDto> GetAnswersForQuestion(int questionId)
     {
       using var db = new SOContext();
+
       var answers = (from a in db.Answers
                      join p in db.Posts
                      on a.AnswerId equals p.PostId
@@ -107,8 +176,32 @@ namespace DatabaseService
                        Body = p.Body
                      }).ToList();
 
+      //var comments = (from a in db.Comments
+      //                   join p in db.Answers
+      //                   on a.PostId equals p.PostId
+      //                   where a.PostId == questionId 
+      //                   select new Comment
+      //                   {
+      //                       CommentText = a.CommentText,
+      //                       CommentScore = a.CommentScore,
+      //                       UserId = a.UserId,
+      //                       PostId = a.PostId
+      //                   }).FirstOrDefault();
+
+      //var finalResult = new FinalQuestionAnswerCommentDto()
+      //      {
+      //          AnswerDb = answers,
+      //          Comments = comments
+      //      };
+
+      //Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@ FInal result @@@@@@@@");
+      //      Console.Write(answers);
+      //      Console.Write(comments);
+      //Console.WriteLine(finalResult);
       return answers;
     }
+
+   
 
     public int AddAnnotation(Annotation annotation)
     {
@@ -124,7 +217,7 @@ namespace DatabaseService
           .FirstOrDefault()
           .Id;
       }
-      catch (System.Exception e)
+      catch (System.Exception)
       {
 
         return 0;
@@ -177,7 +270,7 @@ namespace DatabaseService
 
         return true;
       }
-      catch (System.Exception e)
+      catch (System.Exception )
       {
         return false;
       }
@@ -202,7 +295,7 @@ namespace DatabaseService
         db.SaveChanges();
         return true;
       }
-      catch (System.Exception e)
+      catch (System.Exception)
       {
         return false;
       }
@@ -216,7 +309,7 @@ namespace DatabaseService
         db.SaveChanges();
         return true;
       }
-      catch (System.Exception e)
+      catch (System.Exception)
       {
         return false;
       }
@@ -249,14 +342,6 @@ namespace DatabaseService
                 return user;
             }   
      }
-    //  public List<Post> GetAuthPosts(int userId)
-    //     {
-    //         var db = new SOContext();
-    //         Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
-    //         Console.WriteLine(@"User id = {0} ", userId);
-    //         if (db.Users.FirstOrDefault(x => x.Id == userId) == null)
-    //             throw new ArgumentException("user not found");
-    //         return _posts;
-    //     }
+   
   }
 }
