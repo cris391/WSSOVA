@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using DatabaseService;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace DatabaseService
 {
@@ -20,60 +18,54 @@ namespace DatabaseService
 
     public class SOContext : DbContext
   {
+    public static readonly ILoggerFactory MyLoggerFactory
+            = LoggerFactory.Create(builder => { builder.AddConsole(); });
+
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Post> Posts { get; set; }
-    public DbSet<Annotation> Annotation { get; set; }
-    public DbSet<User> User { get; set; }
-
-    //public DbQuery<User> Create_User { get; set; }
+    public DbSet<Annotation> Annotations { get; set; }
+    public DbSet<Marking> Markings { get; set; }
+    public DbSet<AnnotationFunction> AnnotationFunction { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseNpgsql(connectionString: "host=localhost;db=stack_overflow;uid=postgres;pwd=");
+      
+      optionsBuilder
+      .UseLoggerFactory(MyLoggerFactory)
+      .UseNpgsql(connectionString: "host=localhost;db=stackoverflow;uid=postgres;pwd=root");
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Question>().ToTable("questions");
-      modelBuilder.Entity<Question>().Property(m => m.QuestionId).HasColumnName("questionid");
-      modelBuilder.Entity<Question>().Property(m => m.ClosedDate).HasColumnName("closeddate");
-      modelBuilder.Entity<Question>().Property(m => m.Title).HasColumnName("title");
-      modelBuilder.Entity<Question>().Property(m => m.AcceptedAnswerId).HasColumnName("acceptedanswerid");
-      modelBuilder.Entity<Question>().Property(m => m.Postid).HasColumnName("postid"); 
+      modelBuilder.CreateMap("Id, Name");
+      modelBuilder.Entity<AnnotationFunction>().HasNoKey();
+    }
+  }
 
+  static class ModelBuilderExtensions
+  {
+    public static void CreateMap(
+        this ModelBuilder modelBuilder,
+        params string[] names)
+    {
+      foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+      {
+        var dict = new List<string>(names);
+        entityType.SetTableName(entityType.GetTableName().ToLower());
+        foreach (var property in entityType.GetProperties())
+        {
+          var propertyName = property.Name.ToLower();
+          // var entityName = "";
 
-      modelBuilder.Entity<Answer>().ToTable("answers");
-      modelBuilder.Entity<Answer>().Property(m => m.Id).HasColumnName("answerid");
-      modelBuilder.Entity<Answer>().Property(m => m.parentId).HasColumnName("parentid");
-      modelBuilder.Entity<Answer>().Property(m => m.PostId).HasColumnName("postid");
+          // if (dict.Contains(property.Name))
+          // {
+          //   entityName = entityType.ClrType.Name.ToLower();
+          // }
 
-
-      modelBuilder.Entity<Post>().ToTable("posts");
-      modelBuilder.Entity<Post>().Property(m => m.Id).HasColumnName("postid");
-      modelBuilder.Entity<Post>().Property(m => m.CreationDate).HasColumnName("creationdate");
-      modelBuilder.Entity<Post>().Property(m => m.Score).HasColumnName("score");
-      modelBuilder.Entity<Post>().Property(m => m.Body).HasColumnName("body");
-
-  
-      modelBuilder.Entity<Annotation>().ToTable("annotations");
-      modelBuilder.Entity<Annotation>().Property(m => m.Id).HasColumnName("id");
-      modelBuilder.Entity<Annotation>().Property(m => m.UserId).HasColumnName("userid");
-      modelBuilder.Entity<Annotation>().Property(m => m.QuestionId).HasColumnName("questionid");
-      modelBuilder.Entity<Annotation>().Property(m => m.Body).HasColumnName("body");
-
-      modelBuilder.Entity<User>().ToTable("app_users");
-      modelBuilder.Entity<User>().Property(m => m.Id).HasColumnName("userid");
-      modelBuilder.Entity<User>().Property(m => m.Username).HasColumnName("username");
-      modelBuilder.Entity<User>().Property(m => m.Password).HasColumnName("password");
-      modelBuilder.Entity<User>().Property(m => m.Salt).HasColumnName("salt");
-     // modelBuilder.Entity<User>().Property(m => m.Name).HasColumnName("name");
-
-     //modelBuilder.Query<SaveUser>().Property(x => x.Id).HasColumnName("userid");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Username).HasColumnName("username");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Password).HasColumnName("password");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Salt).HasColumnName("salt");
-     //modelBuilder.Query<SaveUser>().Property(m => m.Name).HasColumnName("name");
-
+          property.SetColumnName(propertyName);
         }
+
+      }
+    }
   }
 }

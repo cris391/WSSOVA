@@ -1,15 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace DatabaseService
 {
     public class Annotation
     {
-      
-        public int UserId { get; set; }
-        [Key]
-        public int Id { get; set; }
-        public int QuestionId { get; set; }
-        public string? Body { get; set; }
+        public int AnnotationId { get; set; }
+        public int MarkingId { get; set; }
+        public string Body { get; set; }
     }
 }

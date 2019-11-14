@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
+
 namespace DatabaseService
 {
-    public class PagingAttributes
+  public class PagingAttributes
+  {
+    public const int MaxPageSize = 20;
+    private int _pageSize = MaxPageSize;
+    public int Page { get; set; } = 0;
+    public int PageSize
     {
-        public const int MaxPageSize = 10; 
-        private int _pageSize = MaxPageSize;
-        public int Page { get; set; } = 0;
-        public int PageSize
-        {
-            get => _pageSize;
-            set => _pageSize = Math.Min(value, MaxPageSize);
-        }
+      get => _pageSize;
+      set => _pageSize = Math.Min(value, MaxPageSize);
     }
+  }
 }

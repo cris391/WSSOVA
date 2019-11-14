@@ -3,178 +3,230 @@ using System.Collections.Generic;
 using System.Linq;
 using DatabaseService;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace DatabaseService
 {
 
-  public class DataService: IDataService
+  public class DataService : IDataService
   {
-    readonly List<User> _users = new List<User>();
-    readonly List<Post> _posts = new List<Post>();
-
     public List<Question> GetQuestions(PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
-      return db.Questions
+      var questions = db.Questions
+                .Include(q => q.Post)
                 .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
                 .Take(pagingAttributes.PageSize)
                 .ToList();
+
+
+      return questions;
+    }
+    public object GetQuestionWithAnswers(int questionId)
+    {
+      using var db = new SOContext();
+      var question = db.Questions
+        .Where(q => q.QuestionId == questionId)
+        .Include(q => q.Post).FirstOrDefault();
+
+      var answers = (from a in db.Answers
+                     join p in db.Posts
+                     on a.AnswerId equals p.PostId
+                     where a.PostId == questionId
+                     select new
+                     {
+                       Id = p.PostId,
+                       p.CreationDate,
+                       p.Score,
+                       p.Body
+                     }).ToList();
+
+      return new { Question = question, Answers = answers };
+    }
+
+    public int NumberOfQuestions()
+    {
+      using var db = new SOContext();
+      return db.Questions.Count();
     }
 
     public Question GetQuestion(int id)
     {
       using var db = new SOContext();
-      return db.Questions.Find(id);
-    }
-
-    public int NumberOfQuestions()
-    {
-       using var db = new SOContext();
-       return db.Questions.Count();
-    }
-
-    public List<Answer> GetAnswers(PagingAttributes pagingAttributes)
-    {
-      using var db = new SOContext();
-      return db.Answers
-                .Include(p => p.PostId)
-                .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
-                .Take(pagingAttributes.PageSize)
-                .ToList(); 
-    }
-
-    public Answer GetAnswer(int id)
-    {
-      using var db = new SOContext();
-      return db.Answers.Find(id); 
-    }
-
-    public int NumberOfAnswers()
-    {
-       using var db = new SOContext();
-       return db.Answers.Count();
-    }
-
-    public List<Post> GetPosts(PagingAttributes pagingAttributes)
-    {
-      using var db = new SOContext();
-      return db.Posts
-                .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
-                .Take(pagingAttributes.PageSize)
-                .ToList(); 
-    }
-
-    public Post GetPost(int id)
-    {
-      using var db = new SOContext();
-      return db.Posts.Find(id);
-    }
-
-    public int NumberOfPosts()
-    {
-      using var db = new SOContext();
-      return db.Posts.Count();
-    }
-
-    public QuestionDto GetFullQuestion (int questionId)
-    {
-      using var db = new SOContext();
-      var question = db.Questions
-                .Where(x => x.QuestionId == questionId)
-                .Include(x => x.Post)
+      return db.Questions
+                .Where(q => q.QuestionId == id)
+                .Include(q => q.Post)
                 .FirstOrDefault();
-      var questionDto = Helpers.CreateQuestionDtos(question);
-      return questionDto;
     }
 
-     public List<Annotation> GetAnnotations(int userId)
-     {
-        using var db = new SOContext();
-        var userAnnotations = db.Annotation.Where(x => x.UserId == userId); 
-        return userAnnotations.ToList();
-     }
-
-     public Annotation GetAnnotation(int userId, int questionId)
-      {
-         using var db = new SOContext();
-         var userAnnotation = db.Annotation.Where(x => x.UserId == userId && x.QuestionId == questionId);
-
-         return userAnnotation.First();
-      }
-
-
-
-      public void CreateAnnotation(Annotation annotation)
-      {
-         using var db = new SOContext();
-         var new_annotation = new Annotation()
-         {
-             Id = db.Annotation.Max(x => x.Id) + 1,
-             UserId = annotation.UserId,
-             QuestionId = annotation.QuestionId,
-             Body = annotation.Body
-         };
-         db.Annotation.Add(annotation);
-         db.SaveChanges();
-        // return GetAnnotation(annotation.UserId, annotation.QuestionId);
-      }
-
-
-
-      public bool DeleteAnnotation(int userId, int questionId)
-      {
-        using var db = new SOContext();
-        var annotation = GetAnnotation(userId, questionId);
-        try {
-              db.Annotation.Remove(annotation);
-              db.SaveChanges();
-          } catch (System.Exception)
-            {
-                return false; 
-            }
-            return db.SaveChanges() > 0;
-      }
-
-      public bool UpdateAnnotation(int userId, int questionId, string body)
-      {
-        try {
-           using var db = new SOContext();
-           var annotation = GetAnnotation(userId, questionId);
-           annotation.Body = body;
-           db.Update(annotation);
-           db.SaveChanges();
-
-         } catch (System.Exception)
-            {
-                return false;
-            }
-         return true;
-      }
-
-    public int NumberOfAnnotations()
-     {
-        using var db = new SOContext();
-        return db.Annotation.Count();
-     }
-
-    public DataService()
+    public List<Post> GetPosts()
     {
-            _users.Add(new User()
-            {
-                Id = 999999,
-                Username = "klomanden"
-            });
+      using var db = new SOContext();
+
+      return db.Posts
+        // .Include(p => p.Question)
+        .Take(10).ToList();
     }
 
+    public AnswerDbDto GetAnswer(int answerId)
+    {
+      using var db = new SOContext();
 
-     public User GetUser(string username)
+      var answers = (from a in db.Answers
+                     join p in db.Posts
+                     on a.AnswerId equals p.PostId
+                     where a.AnswerId == answerId
+                     select new
+                     AnswerDbDto
+                     {
+                       AnswerId = p.PostId,
+                       ParentId = a.PostId,
+                       CreationDate = p.CreationDate,
+                       Score = p.Score,
+                       Body = p.Body
+                     }).FirstOrDefault();
+      Console.WriteLine("@@@@@@@@@@@@@@@@");
+      Console.WriteLine(answers);
+      return answers;
+    }
+
+    public List<AnswerDbDto> GetAnswersForQuestion(int questionId)
+    {
+      using var db = new SOContext();
+      var answers = (from a in db.Answers
+                     join p in db.Posts
+                     on a.AnswerId equals p.PostId
+                     where a.PostId == questionId
+                     select new
+                     AnswerDbDto
+                     {
+                       AnswerId = p.PostId,
+                       ParentId = a.PostId,
+                       CreationDate = p.CreationDate,
+                       Score = p.Score,
+                       Body = p.Body
+                     }).ToList();
+
+      return answers;
+    }
+
+    public int AddAnnotation(Annotation annotation)
+    {
+      using var db = new SOContext();
+
+      // you can add parameters to the query, as shown here, by list them after the 
+      // statement, and reference them with {0} {1} ... {n}, where 0 is the first argument,
+      // 1 is the second etc.
+      try
+      {
+        return db.AnnotationFunction
+          .FromSqlRaw("select addAnnotation({0}, {1}) as Id", annotation.MarkingId, annotation.Body)
+          .FirstOrDefault()
+          .Id;
+      }
+      catch (System.Exception e)
+      {
+
+        return 0;
+      }
+    }
+
+    public Annotation GetAnnotation(int annotationId)
+    {
+      using var db = new SOContext();
+
+      var annotation = db.Annotations.Find(annotationId);
+      return annotation;
+    }
+
+    public bool UpdateAnnotation(Annotation annotation)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        var oldAnnotation = db.Annotations.Find(annotation.AnnotationId);
+        oldAnnotation.Body = annotation.Body;
+        db.Annotations.Update(oldAnnotation);
+        db.SaveChanges();
+
+        return true;
+      }
+      catch (System.Exception)
+      {
+        return false;
+      }
+    }
+
+    public List<Annotation> GetAnnotations(int markingId)
+    {
+      using var db = new SOContext();
+      var result = new List<Annotation>();
+
+      return db.Annotations.Where(a => a.MarkingId == markingId).ToList();
+    }
+
+    public bool CreateMarking(Marking marking)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        db.Markings.Add(marking);
+        var hei = db.SaveChanges();
+
+        return true;
+      }
+      catch (System.Exception e)
+      {
+        return false;
+      }
+    }
+    public List<Marking> GetMarkings(int userid)
+    {
+      using var db = new SOContext();
+
+      var markings = db.Markings
+        .Where(m => m.UserId == userid)
+        .ToList();
+
+      return markings;
+    }
+
+    public bool DeleteMarking(Marking marking)
+    {
+      using var db = new SOContext();
+      try
+      {
+        db.Markings.Remove(marking);
+        db.SaveChanges();
+        return true;
+      }
+      catch (System.Exception e)
+      {
+        return false;
+      }
+    }
+    public bool DeleteAnnotation(Annotation annotation)
+    {
+      using var db = new SOContext();
+      try
+      {
+        db.Annotations.Remove(annotation);
+        db.SaveChanges();
+        return true;
+      }
+      catch (System.Exception e)
+      {
+        return false;
+      }
+    }
+    public User GetUser(string username)
      {
         using var db = new SOContext();
         return db.User.FirstOrDefault(x => x.Username == username);
      }
-
-
-     public User CreateUser(string username, string password, string salt)
+          public User CreateUser(string username, string password, string salt)
      {
             using var db = new SOContext();
             var user = new User()
@@ -197,8 +249,7 @@ namespace DatabaseService
                 return user;
             }   
      }
-
-       public List<Post> GetAuthPosts(int userId)
+     public List<Post> GetAuthPosts(int userId)
         {
             var db = new SOContext();
             Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
@@ -207,135 +258,5 @@ namespace DatabaseService
                 throw new ArgumentException("user not found");
             return _posts;
         }
-
-        //public void CreateAnnotation(Annotation annotation)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        /*
-        public Annotation CreateAnnotation(string name, string body)
-        {
-          using var db = new SOContext();
-          var nextId = db.Annotation.Max(x => x.Id) + 1;
-          var annotation = new Annotation { Id = nextId, Body = body };
-          db.Annotation.Add(annotation);
-          db.SaveChanges();
-
-          return GetAnnotation(annotation.Id);
-         }
-         */
-
-        // public bool DeleteCategory(int id)
-        // {
-        //   using var db = new NorthwindContext();
-        //   var category = GetCategory(id);
-        //   try
-        //   {
-        //     db.Categories.Remove(category);
-        //     db.SaveChanges();
-        //   }
-        //   catch (System.Exception e)
-        //   {
-        //     return false;
-        //   }
-        //   return true;
-        // }
-
-        // public bool UpdateCategory(int id, string name, string description)
-        // {
-        //   try
-        //   {
-        //     using var db = new NorthwindContext();
-        //     var category = GetCategory(id);
-        //     category.Name = name;
-        //     category.Description = description;
-        //     db.Update(category);
-        //     db.SaveChanges();
-        //   }
-        //   catch (System.Exception e)
-        //   {
-        //     return false;
-        //   }
-        //   return true;
-        // }
-        // public bool PutCategory(int id, string name, string description)
-        // {
-        //   try
-        //   {
-        //     using var db = new NorthwindContext();
-        //     var category = GetCategory(id);
-        //     category.Name = name;
-        //     category.Description = description;
-        //     db.Update(category); 
-        //     db.SaveChanges();
-        //   }
-        //   catch (System.Exception e)
-        //   {
-        //     return false;
-        //   }
-        //   return true;
-        // }
-
-        // public Product GetProduct(int id)
-        // {
-        //   using var db = new NorthwindContext();
-        //   return db.Products
-        //     .Where(p => p.Id == id)
-        //     .Include(p => p.Category)
-        //     .FirstOrDefault();
-        // }
-
-        // public List<Product> GetProductByCategory(int id)
-        // {
-        //   using var db = new NorthwindContext();
-        //   return db.Products
-        //     .Where(p => p.CategoryId == id)
-        //     .Include(p => p.Category)
-        //     .ToList();
-        // }
-
-        // public List<Product> GetProductByName(string name)
-        // {
-        //   using var db = new NorthwindContext();
-        //   return db.Products
-        //     .Where(p => p.Name.Contains(name))
-        //     .ToList();
-        // }
-
-        // public Order GetOrder(int id)
-        // {
-        //   using var db = new NorthwindContext();
-        //   return db.Orders
-        //     .Where(p => p.Id == id)
-        //     .Include(p => p.OrderDetails)
-        //     .ThenInclude(p => p.Product)
-        //     .ThenInclude(p => p.Category)
-        //     .FirstOrDefault();
-        // }
-
-        // public List<Order> GetOrders()
-        // {
-        //   using var db = new NorthwindContext();
-        //   return db.Orders.ToList();
-        // }
-
-        // public List<OrderDetails> GetOrderDetailsByOrderId(int id)
-        // {
-        //   using var db = new NorthwindContext();
-        //   return db.OrderDetails
-        //   .Where(m => m.OrderId == id)
-        //   .Include(m => m.Product)
-        //   .ToList();
-        // }
-
-        // public List<OrderDetails> GetOrderDetailsByProductId(int id)
-        // {
-        //   using var db = new NorthwindContext();
-        //   return db.OrderDetails
-        //   .Where(m => m.ProductId == id)
-        //   .Include(m => m.Order)
-        //   .ToList();
-        // }
-    }
+  }
 }

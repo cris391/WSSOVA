@@ -7,27 +7,21 @@ namespace DatabaseService
   {
     List<Question> GetQuestions(PagingAttributes pagingAttributes);
     Question GetQuestion(int id);
-
-    QuestionDto GetFullQuestion(int id);
-
-    List<Answer> GetAnswers(PagingAttributes pagingAttributes);
-    Answer GetAnswer(int id);
-
-    List<Post> GetPosts(PagingAttributes pagingAttributes);
-    Post GetPost(int id);
+    int NumberOfQuestions();
+    List<Post> GetPosts();
+    object GetQuestionWithAnswers(int questionId);
+    AnswerDbDto GetAnswer(int answerId);
+    List<AnswerDbDto> GetAnswersForQuestion(int questionId);
+    int AddAnnotation(Annotation annotation);
+    Annotation GetAnnotation(int annotationId);
+    bool UpdateAnnotation(Annotation annotation);
+    List<Annotation> GetAnnotations(int markingId);
+    bool CreateMarking(Marking marking);
+    List<Marking> GetMarkings(int userid);
+    bool DeleteMarking(Marking marking);
+    bool DeleteAnnotation(Annotation annotation);
     List<Post> GetAuthPosts(int userId);
-
-
-    List<Annotation> GetAnnotations(int userId);
-    Annotation GetAnnotation(int userId, int questionId);
-    void CreateAnnotation(Annotation annotation);
-    bool DeleteAnnotation(int userId, int questionId);
-    bool UpdateAnnotation(int userId, int questionId, string body);
-
-
     User GetUser(string username);
     User CreateUser(string username, string password, string salt);
-
-
-    }
+  }
 }

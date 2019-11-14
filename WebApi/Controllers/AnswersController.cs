@@ -1,38 +1,74 @@
-﻿using DatabaseService;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using DatabaseService;
+using Microsoft.AspNetCore.Mvc;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [ApiController]
-    [Route("api/answers")]
-    public class AnswersController: ControllerBase
+  [ApiController]
+  [Route("api/[controller]")]
+  public class AnswersController : ControllerBase
+  {
+    IDataService _dataService;
+    private IMapper _mapper;
+    public AnswersController(IDataService dataService, IMapper mapper)
     {
-        IDataService _dataService;
-
-        public AnswersController(IDataService dataService)
-        {
-            _dataService = dataService;
-        }
-
-        [HttpGet]
-        public IList<Answer> GetAnswers([FromQuery]PagingAttributes pagingAttributes)
-        {
-           return _dataService.GetAnswers(pagingAttributes);
-        }
-
-        [HttpGet("{answerId}")]
-        public ActionResult <Answer> GetAnswer(int answerId)
-        {
-            var answer = _dataService.GetAnswer(answerId);
-
-            if (answer == null) return NotFound();
-
-            return Ok(answer);
-        }
+      _dataService = dataService;
+      _mapper = mapper;
     }
+
+    [HttpGet("{answerId}", Name = nameof(GetAnswer))]
+    public ActionResult GetAnswer(int answerId)
+    {
+      var result = _dataService.GetAnswer(answerId);
+
+      return Ok(CreateAnswerDto(result));
+    }
+
+    [HttpGet("question/{questionId}")]
+    public ActionResult GetAnswersForQuestion(int questionId)
+    {
+      var result = _dataService.GetAnswersForQuestion(questionId);
+
+      return Ok(CreateAnswerDtos(result));
+      // return Ok(result);
+    }
+
+    ///////////////////
+    //
+    // Helpers
+    //
+    //////////////////////
+
+    private AnswerDto CreateAnswerDto(AnswerDbDto answer)
+    {
+      var dto = _mapper.Map<AnswerDto>(answer);
+      dto.Link = Url.Link(
+              nameof(GetAnswer),
+              new { answerId = answer.AnswerId });
+      dto.LinkParent = Url.Link(
+              nameof(GetAnswer),
+              new { answerId = answer.ParentId });
+      return dto;
+    }
+
+    private List<AnswerDto> CreateAnswerDtos(List<AnswerDbDto> answers)
+    {
+      List<AnswerDto> answerDtos = new List<AnswerDto>();
+      foreach (var answer in answers)
+      {
+        // AnswerDto answerDto = new AnswerDto();
+        var answerDto = _mapper.Map<AnswerDto>(answer);
+        answerDto.Link = Url.Link(
+              nameof(GetAnswer),
+              new { answerId = answer.AnswerId });
+        answerDto.LinkParent = Url.Link(
+                nameof(GetAnswer),
+                new { answerId = answer.ParentId });
+        answerDtos.Add(answerDto);
+      }
+      return answerDtos;
+    }
+  }
 }
