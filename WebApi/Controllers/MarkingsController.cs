@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace WebApi.Controllers
     public ActionResult GetMarkings(int userId)
     {
       var result = _dataService.GetMarkings(userId);
-
+      if (result.Count == 0) return NoContent();
       return Ok(result);
     }
 
@@ -29,7 +30,9 @@ namespace WebApi.Controllers
     public ActionResult AddMarking([FromBody] MarkingForCreation markingDto)
     {
       var marking = _mapper.Map<Marking>(markingDto);
-      var result = _dataService.CreateMarking(marking);
+      var result = _dataService.AddMarking(marking);
+
+      if (result == false) return BadRequest();
 
       return Ok(result);
     }
@@ -38,6 +41,11 @@ namespace WebApi.Controllers
     public ActionResult DeleteMarking(Marking marking)
     {
       var result = _dataService.DeleteMarking(marking);
+
+      if (result == false)
+      {
+        return NotFound();
+      }
 
       return Ok(result);
     }

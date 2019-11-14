@@ -8,5 +8,6 @@ public class QuestionProfile : Profile
   {
     CreateMap<Question, QuestionDto>();
     CreateMap<QuestionForCreation, Question>();
+    CreateMap<QuestionDbDto, QuestionDto>();
   }
 }

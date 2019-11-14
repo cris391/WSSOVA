@@ -32,17 +32,15 @@ namespace WebApi.Controllers
     }
 
     [HttpGet("{questionId}", Name = nameof(GetQuestion))]
-    public ActionResult<Question> GetQuestion(int questionId)
+    public ActionResult<QuestionDbDto> GetQuestion(int questionId)
     {
       var question = _dataService.GetQuestion(questionId);
 
+      var dto = _mapper.Map<QuestionDto>(question);
+
       if (question == null) return NotFound();
 
-      Console.WriteLine("@@@@");
-      // Console.WriteLine(question.Post.Body);
-      Console.WriteLine(question.ClosedDate);
-
-      return Ok(CreateQuestionDto(question));
+      return Ok(CreateQuestionDtoFromDb(dto));
     }
 
     ///////////////////
@@ -58,6 +56,16 @@ namespace WebApi.Controllers
               nameof(GetQuestion),
               new { questionId = question.QuestionId });
       dto.Body = question.Post.Body;
+      return dto;
+    }
+
+    private QuestionDto CreateQuestionDtoFromDb(QuestionDto question)
+    {
+      var dto = _mapper.Map<QuestionDto>(question);
+      dto.Link = Url.Link(
+              nameof(GetQuestion),
+              new { questionId = question.QuestionId });
+      dto.Body = question.Body;
       return dto;
     }
 
@@ -103,7 +111,6 @@ namespace WebApi.Controllers
           CreationDate = question.Post.CreationDate,
           Score = question.Post.Score,
           Body = question.Post.Body,
-          PostId = question.Post.PostId
         };
         questionDtos.Add(questionDto);
       }

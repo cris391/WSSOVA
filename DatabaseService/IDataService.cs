@@ -6,7 +6,7 @@ namespace DatabaseService
   public interface IDataService
   {
     List<Question> GetQuestions(PagingAttributes pagingAttributes);
-    Question GetQuestion(int id);
+    QuestionDbDto GetQuestion(int id);
     int NumberOfQuestions();
     List<Post> GetPosts();
     object GetQuestionWithAnswers(int questionId);
@@ -15,8 +15,9 @@ namespace DatabaseService
     int AddAnnotation(Annotation annotation);
     Annotation GetAnnotation(int annotationId);
     bool UpdateAnnotation(Annotation annotation);
-    List<Annotation> GetAnnotations(int markingId);
-    bool CreateMarking(Marking marking);
+    List<Annotation> GetAnnotationsByMarking(int markingId);
+    List<Annotation> GetAnnotationsByUser(int userId);
+    bool AddMarking(Marking marking);
     List<Marking> GetMarkings(int userid);
     bool DeleteMarking(Marking marking);
     bool DeleteAnnotation(Annotation annotation);

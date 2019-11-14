@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using DatabaseService;
 using Microsoft.EntityFrameworkCore;
@@ -49,13 +50,24 @@ namespace DatabaseService
       return db.Questions.Count();
     }
 
-    public Question GetQuestion(int id)
+    public QuestionDbDto GetQuestion(int id)
     {
       using var db = new SOContext();
-      return db.Questions
-                .Where(q => q.QuestionId == id)
-                .Include(q => q.Post)
-                .FirstOrDefault();
+
+      var questionDto = (from q in db.Questions
+                         join p in db.Posts
+                         on q.QuestionId equals p.PostId
+                         where q.QuestionId == id
+                         select new QuestionDbDto
+                         {
+                           Title = q.Title,
+                           QuestionId = p.PostId,
+                           CreationDate = p.CreationDate,
+                           ClosedDate = q.ClosedDate,
+                           Score = p.Score,
+                           Body = p.Body
+                         }).FirstOrDefault();
+      return questionDto;
     }
 
     public List<Post> GetPosts()
@@ -75,8 +87,7 @@ namespace DatabaseService
                      join p in db.Posts
                      on a.AnswerId equals p.PostId
                      where a.AnswerId == answerId
-                     select new
-                     AnswerDbDto
+                     select new AnswerDbDto
                      {
                        AnswerId = p.PostId,
                        ParentId = a.PostId,
@@ -96,8 +107,7 @@ namespace DatabaseService
                      join p in db.Posts
                      on a.AnswerId equals p.PostId
                      where a.PostId == questionId
-                     select new
-                     AnswerDbDto
+                     select new AnswerDbDto
                      {
                        AnswerId = p.PostId,
                        ParentId = a.PostId,
@@ -123,10 +133,10 @@ namespace DatabaseService
           .FirstOrDefault()
           .Id;
       }
-      catch (System.Exception e)
+      catch (Exception e)
       {
-        Console.WriteLine(e);
         return 0;
+        throw e;
       }
     }
 
@@ -151,35 +161,52 @@ namespace DatabaseService
 
         return true;
       }
-      catch (System.Exception)
+      catch (Exception e)
       {
         return false;
+        throw e;
       }
     }
 
-    public List<Annotation> GetAnnotations(int markingId)
+    public List<Annotation> GetAnnotationsByMarking(int markingId)
     {
       using var db = new SOContext();
-      var result = new List<Annotation>();
+      var annotations = db.Annotations.Where(a => a.MarkingId == markingId).ToList();
 
-      return db.Annotations.Where(a => a.MarkingId == markingId).ToList();
+      return annotations;
     }
 
-    public bool CreateMarking(Marking marking)
+    public List<Annotation> GetAnnotationsByUser(int userId)
+    {
+      using var db = new SOContext();
+      var annotations = (from a in db.Annotations
+                         join m in db.Markings on a.MarkingId equals m.MarkingId
+                         where m.UserId == userId
+                         select new Annotation
+                         {
+                           AnnotationId = a.AnnotationId,
+                           MarkingId = a.MarkingId,
+                           Body = a.Body
+                         }).ToList();
+
+      return annotations;
+    }
+
+    public bool AddMarking(Marking marking)
     {
       using var db = new SOContext();
 
       try
       {
         db.Markings.Add(marking);
-        var hei = db.SaveChanges();
+        db.SaveChanges();
 
         return true;
       }
-      catch (System.Exception e)
+      catch (Exception e)
       {
-        Console.WriteLine(e);
         return false;
+        throw e;
       }
     }
     public List<Marking> GetMarkings(int userid)
@@ -202,10 +229,10 @@ namespace DatabaseService
         db.SaveChanges();
         return true;
       }
-      catch (System.Exception e)
+      catch (Exception e)
       {
-        Console.WriteLine(e);
         return false;
+        throw e;
       }
     }
     public bool DeleteAnnotation(Annotation annotation)
@@ -224,33 +251,35 @@ namespace DatabaseService
       }
     }
     public User GetUser(string username)
-     {
-        using var db = new SOContext();
-        return db.Users.FirstOrDefault(x => x.Username == username);
-     }
-          public User CreateUser(string username, string password, string salt)
-     {
-            using var db = new SOContext();
-            var user = new User()
-            {
-               
-                Username = username,
-                Password = password,
-                Salt = salt      
-            };
-            try {
-                db.Users.Add(user);
-                db.SaveChanges();
-                Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
-                return user;
+    {
+      using var db = new SOContext();
+      return db.Users.FirstOrDefault(x => x.Username == username);
+    }
+    public User CreateUser(string username, string password, string salt)
+    {
+      using var db = new SOContext();
+      var user = new User()
+      {
 
-            } catch( Exception e)
-            {
-                Console.WriteLine("@@@@@@@@@@@@@ failed stored in db @@@@@@@@@@@@@@@@");
-                Console.Write(e);
-                return user;
-            }   
-     }
+        Username = username,
+        Password = password,
+        Salt = salt
+      };
+      try
+      {
+        db.Users.Add(user);
+        db.SaveChanges();
+        Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
+        return user;
+
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine("@@@@@@@@@@@@@ failed stored in db @@@@@@@@@@@@@@@@");
+        Console.Write(e);
+        return user;
+      }
+    }
     //  public List<Post> GetAuthPosts(int userId)
     //     {
     //         var db = new SOContext();

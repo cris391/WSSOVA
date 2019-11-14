@@ -22,6 +22,8 @@ namespace WebApi.Controllers
     {
       var result = _dataService.AddAnnotation(annotation);
 
+      if (result == 0) return BadRequest();
+
       return Ok(result);
     }
     
@@ -37,6 +39,8 @@ namespace WebApi.Controllers
     {
       var result = _dataService.UpdateAnnotation(annotation);
 
+      if (result == false) return NotFound();
+
       return Ok(result);
     }
 
@@ -44,7 +48,20 @@ namespace WebApi.Controllers
     // public ActionResult GetAnnotations([FromBody] Annotation annotation)
     public ActionResult GetAnnotations(int markingId)
     {
-      var result = _dataService.GetAnnotations(markingId);
+      var result = _dataService.GetAnnotationsByMarking(markingId);
+
+      if(result.Count == 0) return NoContent();
+
+      return Ok(result);
+    }
+
+    [HttpGet("user/{userId}")]
+    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
+    public ActionResult GetAnnotationsByUser(int userId)
+    {
+      var result = _dataService.GetAnnotationsByUser(userId);
+
+      if(result.Count == 0) return NoContent();
 
       return Ok(result);
     }
