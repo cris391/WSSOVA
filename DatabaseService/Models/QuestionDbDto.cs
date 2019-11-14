@@ -1,7 +1,7 @@
 ﻿using System;
 namespace DatabaseService
 {
-    public class QuestionDto
+    public class QuestionDbDto
     {
         public int QuestionId { get; set; }
         public DateTime? CreationDate { get; set; }

@@ -3,9 +3,6 @@ using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -47,45 +44,6 @@ namespace WebApi.Controllers
 
       return Ok(CreateQuestionDto(question));
     }
-
-    // [HttpGet("answers/{questionId}")]
-    // public ActionResult GetQuestionWithAnswers(int questionId)
-    // {
-    //   var result = _dataService.GetQuestionWithAnswers(questionId);
-    //   Console.WriteLine(result);
-
-    //   return Ok(result);
-    // }
-    //   [HttpPost]
-    //   public ActionResult CreateCategory([FromBody] Category category)
-    //   {
-    //     var cat = _dataService.CreateCategory(category.Name, category.Description);
-
-            return Ok(question);
-        }
-
-        //   [HttpPost]
-        //   public ActionResult CreateCategory([FromBody] Category category)
-        //   {
-        //     var cat = _dataService.CreateCategory(category.Name, category.Description);
-
-        //     return Created("post", cat);
-        //   }
-
-        //   [HttpPut("{categoryId}")]
-        //   public ActionResult PutCategory([FromBody] Category category, int categoryId)
-        //   {
-        //     var cat = _dataService.PutCategory(categoryId, category.Name, category.Description);
-        //     if (cat == false)
-        //     {
-        //       return NotFound();
-        //     }
-
-        //     return Ok(cat);
-        //   }
-
-    //     return Ok();
-    //   }
 
     ///////////////////
     //

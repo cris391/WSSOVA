@@ -224,7 +224,7 @@ namespace DatabaseService
     public User GetUser(string username)
      {
         using var db = new SOContext();
-        return db.User.FirstOrDefault(x => x.Username == username);
+        return db.Users.FirstOrDefault(x => x.Username == username);
      }
           public User CreateUser(string username, string password, string salt)
      {
@@ -237,7 +237,7 @@ namespace DatabaseService
                 Salt = salt      
             };
             try {
-                db.User.Add(user);
+                db.Users.Add(user);
                 db.SaveChanges();
                 Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
                 return user;
@@ -249,14 +249,14 @@ namespace DatabaseService
                 return user;
             }   
      }
-     public List<Post> GetAuthPosts(int userId)
-        {
-            var db = new SOContext();
-            Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
-            Console.WriteLine(@"User id = {0} ", userId);
-            if (db.User.FirstOrDefault(x => x.Id == userId) == null)
-                throw new ArgumentException("user not found");
-            return _posts;
-        }
+    //  public List<Post> GetAuthPosts(int userId)
+    //     {
+    //         var db = new SOContext();
+    //         Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
+    //         Console.WriteLine(@"User id = {0} ", userId);
+    //         if (db.Users.FirstOrDefault(x => x.Id == userId) == null)
+    //             throw new ArgumentException("user not found");
+    //         return _posts;
+    //     }
   }
 }

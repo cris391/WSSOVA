@@ -20,7 +20,7 @@ namespace DatabaseService
     List<Marking> GetMarkings(int userid);
     bool DeleteMarking(Marking marking);
     bool DeleteAnnotation(Annotation annotation);
-    List<Post> GetAuthPosts(int userId);
+    // List<Post> GetAuthPosts(int userId);
     User GetUser(string username);
     User CreateUser(string username, string password, string salt);
   }

@@ -6,17 +6,17 @@ using Microsoft.Extensions.Logging;
 
 namespace DatabaseService
 {
-    //public class SaveUser
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //    public string Username { get; set; }
-    //    public string Password { get; set; }
-    //    public string Salt { get; set; }
-    //}
+  //public class SaveUser
+  //{
+  //    public int Id { get; set; }
+  //    public string Name { get; set; }
+  //    public string Username { get; set; }
+  //    public string Password { get; set; }
+  //    public string Salt { get; set; }
+  //}
 
 
-    public class SOContext : DbContext
+  public class SOContext : DbContext
   {
     public static readonly ILoggerFactory MyLoggerFactory
             = LoggerFactory.Create(builder => { builder.AddConsole(); });
@@ -27,10 +27,11 @@ namespace DatabaseService
     public DbSet<Annotation> Annotations { get; set; }
     public DbSet<Marking> Markings { get; set; }
     public DbSet<AnnotationFunction> AnnotationFunction { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      
+
       optionsBuilder
       .UseLoggerFactory(MyLoggerFactory)
       .UseNpgsql(connectionString: "host=localhost;db=stackoverflow;uid=postgres;pwd=root");
@@ -39,6 +40,7 @@ namespace DatabaseService
     {
       modelBuilder.CreateMap("Id, Name");
       modelBuilder.Entity<AnnotationFunction>().HasNoKey();
+      modelBuilder.Entity<User>().ToTable("app_users");;
     }
   }
 
