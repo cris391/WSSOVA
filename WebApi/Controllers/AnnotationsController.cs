@@ -72,6 +72,8 @@ namespace WebApi.Controllers
     {
       var result = _dataService.DeleteAnnotation(annotation);
 
+      if(result == false) return BadRequest();
+
       return Ok(result);
     }
 

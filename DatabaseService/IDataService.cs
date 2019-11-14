@@ -24,5 +24,6 @@ namespace DatabaseService
     // List<Post> GetAuthPosts(int userId);
     User GetUser(string username);
     User CreateUser(string username, string password, string salt);
+    List<SearchResult> Search(string[] words);
   }
 }

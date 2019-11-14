@@ -244,7 +244,7 @@ namespace DatabaseService
         db.SaveChanges();
         return true;
       }
-      catch (System.Exception e)
+      catch (Exception e)
       {
         Console.WriteLine(e);
         return false;
@@ -289,5 +289,24 @@ namespace DatabaseService
     //             throw new ArgumentException("user not found");
     //         return _posts;
     //     }
+
+    public List<SearchResult> Search(string[] words)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        var result = db.SearchResults
+          .FromSqlRaw("select * from best_match_with_weight({0})", words)
+          .ToList();
+
+        return result;
+      }
+      catch (Exception e)
+      {
+        return null;
+        throw e;
+      }
+    }
   }
 }

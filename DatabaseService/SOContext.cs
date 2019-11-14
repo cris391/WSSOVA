@@ -28,6 +28,7 @@ namespace DatabaseService
     public DbSet<Marking> Markings { get; set; }
     public DbSet<AnnotationFunction> AnnotationFunction { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<SearchResult> SearchResults { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -40,6 +41,7 @@ namespace DatabaseService
     {
       modelBuilder.CreateMap("Id, Name");
       modelBuilder.Entity<AnnotationFunction>().HasNoKey();
+      modelBuilder.Entity<SearchResult>().HasNoKey();
       modelBuilder.Entity<User>().ToTable("app_users");;
     }
   }

@@ -39,7 +39,7 @@ namespace WebApi.Controllers
     //
     // Helpers
     //
-    //////////////////////
+    ///////////////////
 
     private AnswerDto CreateAnswerDto(AnswerDbDto answer)
     {
