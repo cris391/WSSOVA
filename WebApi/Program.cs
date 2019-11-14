@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using DatabaseService;
 
 namespace WebApi
 {
   public class Program
   {
+    public static User CurrentUser = null;
     public static void Main(string[] args)
     {
       CreateHostBuilder(args).Build().Run();

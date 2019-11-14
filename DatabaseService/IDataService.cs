@@ -20,23 +20,8 @@ namespace DatabaseService
     List<Marking> GetMarkings(int userid);
     bool DeleteMarking(Marking marking);
     bool DeleteAnnotation(Annotation annotation);
-    // List<Answer> GetAnswersForQuestion(int questionId);
-    // List<AnswerDto> GetAnswersForQuestion(int questionId);
-
-
-
-    // Category CreateCategory(string name, string description);
-    // // Category CreateCategory(Category category);
-    // bool DeleteCategory(int id);
-    // List<Category> GetCategories();
-    // Order GetOrder(int id);
-    // List<OrderDetails> GetOrderDetailsByOrderId(int id);
-    // List<OrderDetails> GetOrderDetailsByProductId(int id);
-    // List<Order> GetOrders();
-    // Product GetProduct(int id);
-    // List<Product> GetProductByCategory(int id);
-    // List<Product> GetProductByName(string name);
-    // bool UpdateCategory(int id, string name, string description);
-    // bool PutCategory(int id, string name, string description);
+    // List<Post> GetAuthPosts(int userId);
+    User GetUser(string username);
+    User CreateUser(string username, string password, string salt);
   }
 }

@@ -6,6 +6,16 @@ using Microsoft.Extensions.Logging;
 
 namespace DatabaseService
 {
+  //public class SaveUser
+  //{
+  //    public int Id { get; set; }
+  //    public string Name { get; set; }
+  //    public string Username { get; set; }
+  //    public string Password { get; set; }
+  //    public string Salt { get; set; }
+  //}
+
+
   public class SOContext : DbContext
   {
     public static readonly ILoggerFactory MyLoggerFactory
@@ -17,10 +27,11 @@ namespace DatabaseService
     public DbSet<Annotation> Annotations { get; set; }
     public DbSet<Marking> Markings { get; set; }
     public DbSet<AnnotationFunction> AnnotationFunction { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      
+
       optionsBuilder
       .UseLoggerFactory(MyLoggerFactory)
       .UseNpgsql(connectionString: "host=localhost;db=stackoverflow;uid=postgres;pwd=root");
@@ -29,18 +40,7 @@ namespace DatabaseService
     {
       modelBuilder.CreateMap("Id, Name");
       modelBuilder.Entity<AnnotationFunction>().HasNoKey();
-      // modelBuilder.Entity<Annotation>().hasF
-
-      // modelBuilder.Entity<Question>().HasOne(pt => pt.Answer)
-      //       .WithOne(p => p.Question)
-      //       .HasForeignKey<Answer>(pt => pt.QuestionForeignKey);
-      // modelBuilder.Entity<Question>().ToTable("questions");
-      // modelBuilder.Entity<Question>().Property(m => m.Id).HasColumnName("questionid");
-      // modelBuilder.Entity<Question>().Property(m => m.ClosedDate).HasColumnName("closeddate");
-
-
-      // modelBuilder.Entity<OrderDetails>().ToTable("orderdetails");
-      // modelBuilder.Entity<OrderDetails>().Property(m => m.OrderId).HasColumnName("orderid");
+      modelBuilder.Entity<User>().ToTable("app_users");;
     }
   }
 

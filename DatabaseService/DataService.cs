@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DatabaseService;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace DatabaseService
 {
@@ -29,19 +28,6 @@ namespace DatabaseService
         .Where(q => q.QuestionId == questionId)
         .Include(q => q.Post).FirstOrDefault();
 
-      // var answers = db.Answers
-      //   .Where(a => a.PostId == questionId)
-      //   .Include(a => a.Post) // this gets body of post of type question(and not of type answer)
-      //   .ToList();
-
-      // var fullAnswers = new List<object>();
-      // foreach (var answer in answers)
-      // {
-      //   Console.WriteLine(answer.AnswerId);
-      //   var post = db.Posts.Find(answer.AnswerId);
-      //   fullAnswers.Add(post);
-      // }
-
       var answers = (from a in db.Answers
                      join p in db.Posts
                      on a.AnswerId equals p.PostId
@@ -54,7 +40,6 @@ namespace DatabaseService
                        p.Body
                      }).ToList();
 
-      // var answerDtos = Helpers.CreateAnswerDtos(answers);
       return new { Question = question, Answers = answers };
     }
 
@@ -238,5 +223,42 @@ namespace DatabaseService
         return false;
       }
     }
+    public User GetUser(string username)
+     {
+        using var db = new SOContext();
+        return db.Users.FirstOrDefault(x => x.Username == username);
+     }
+          public User CreateUser(string username, string password, string salt)
+     {
+            using var db = new SOContext();
+            var user = new User()
+            {
+               
+                Username = username,
+                Password = password,
+                Salt = salt      
+            };
+            try {
+                db.Users.Add(user);
+                db.SaveChanges();
+                Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
+                return user;
+
+            } catch( Exception e)
+            {
+                Console.WriteLine("@@@@@@@@@@@@@ failed stored in db @@@@@@@@@@@@@@@@");
+                Console.Write(e);
+                return user;
+            }   
+     }
+    //  public List<Post> GetAuthPosts(int userId)
+    //     {
+    //         var db = new SOContext();
+    //         Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
+    //         Console.WriteLine(@"User id = {0} ", userId);
+    //         if (db.Users.FirstOrDefault(x => x.Id == userId) == null)
+    //             throw new ArgumentException("user not found");
+    //         return _posts;
+    //     }
   }
 }

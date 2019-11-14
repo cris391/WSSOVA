@@ -1,4 +1,6 @@
 ﻿using System;
+using Npgsql;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseService
 {
@@ -6,7 +8,7 @@ namespace DatabaseService
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }
