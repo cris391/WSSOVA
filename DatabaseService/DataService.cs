@@ -29,19 +29,6 @@ namespace DatabaseService
         .Where(q => q.QuestionId == questionId)
         .Include(q => q.Post).FirstOrDefault();
 
-      // var answers = db.Answers
-      //   .Where(a => a.PostId == questionId)
-      //   .Include(a => a.Post) // this gets body of post of type question(and not of type answer)
-      //   .ToList();
-
-      // var fullAnswers = new List<object>();
-      // foreach (var answer in answers)
-      // {
-      //   Console.WriteLine(answer.AnswerId);
-      //   var post = db.Posts.Find(answer.AnswerId);
-      //   fullAnswers.Add(post);
-      // }
-
       var answers = (from a in db.Answers
                      join p in db.Posts
                      on a.AnswerId equals p.PostId
@@ -54,7 +41,6 @@ namespace DatabaseService
                        p.Body
                      }).ToList();
 
-      // var answerDtos = Helpers.CreateAnswerDtos(answers);
       return new { Question = question, Answers = answers };
     }
 
@@ -235,128 +221,42 @@ namespace DatabaseService
         return false;
       }
     }
-    // public Category CreateCategory(string name, string description)
-    // {
-    //   using var db = new NorthwindContext();
-    //   var nextId = db.Categories.Max(x => x.Id) + 1;
-    //   var category = new Category { Id = nextId, Name = name, Description = description };
-    //   db.Categories.Add(category);
-    //   db.SaveChanges();
+    public User GetUser(string username)
+     {
+        using var db = new SOContext();
+        return db.User.FirstOrDefault(x => x.Username == username);
+     }
+          public User CreateUser(string username, string password, string salt)
+     {
+            using var db = new SOContext();
+            var user = new User()
+            {
+               
+                Username = username,
+                Password = password,
+                Salt = salt      
+            };
+            try {
+                db.User.Add(user);
+                db.SaveChanges();
+                Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
+                return user;
 
-    //   return GetCategory(category.Id);
-    // }
-
-
-    // public bool DeleteCategory(int id)
-    // {
-    //   using var db = new NorthwindContext();
-    //   var category = GetCategory(id);
-    //   try
-    //   {
-    //     db.Categories.Remove(category);
-    //     db.SaveChanges();
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return false;
-    //   }
-    //   return true;
-    // }
-
-    // public bool UpdateCategory(int id, string name, string description)
-    // {
-    //   try
-    //   {
-    //     using var db = new NorthwindContext();
-    //     var category = GetCategory(id);
-    //     category.Name = name;
-    //     category.Description = description;
-    //     db.Update(category);
-    //     db.SaveChanges();
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return false;
-    //   }
-    //   return true;
-    // }
-    // public bool PutCategory(int id, string name, string description)
-    // {
-    //   try
-    //   {
-    //     using var db = new NorthwindContext();
-    //     var category = GetCategory(id);
-    //     category.Name = name;
-    //     category.Description = description;
-    //     db.Update(category); 
-    //     db.SaveChanges();
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return false;
-    //   }
-    //   return true;
-    // }
-
-    // public Product GetProduct(int id)
-    // {
-    //   using var db = new NorthwindContext();
-    //   return db.Products
-    //     .Where(p => p.Id == id)
-    //     .Include(p => p.Category)
-    //     .FirstOrDefault();
-    // }
-
-    // public List<Product> GetProductByCategory(int id)
-    // {
-    //   using var db = new NorthwindContext();
-    //   return db.Products
-    //     .Where(p => p.CategoryId == id)
-    //     .Include(p => p.Category)
-    //     .ToList();
-    // }
-
-    // public List<Product> GetProductByName(string name)
-    // {
-    //   using var db = new NorthwindContext();
-    //   return db.Products
-    //     .Where(p => p.Name.Contains(name))
-    //     .ToList();
-    // }
-
-    // public Order GetOrder(int id)
-    // {
-    //   using var db = new NorthwindContext();
-    //   return db.Orders
-    //     .Where(p => p.Id == id)
-    //     .Include(p => p.OrderDetails)
-    //     .ThenInclude(p => p.Product)
-    //     .ThenInclude(p => p.Category)
-    //     .FirstOrDefault();
-    // }
-
-    // public List<Order> GetOrders()
-    // {
-    //   using var db = new NorthwindContext();
-    //   return db.Orders.ToList();
-    // }
-
-    // public List<OrderDetails> GetOrderDetailsByOrderId(int id)
-    // {
-    //   using var db = new NorthwindContext();
-    //   return db.OrderDetails
-    //   .Where(m => m.OrderId == id)
-    //   .Include(m => m.Product)
-    //   .ToList();
-    // }
-
-    // public List<OrderDetails> GetOrderDetailsByProductId(int id)
-    // {
-    //   using var db = new NorthwindContext();
-    //   return db.OrderDetails
-    //   .Where(m => m.ProductId == id)
-    //   .Include(m => m.Order)
-    //   .ToList();
-    // }
+            } catch( Exception e)
+            {
+                Console.WriteLine("@@@@@@@@@@@@@ failed stored in db @@@@@@@@@@@@@@@@");
+                Console.Write(e);
+                return user;
+            }   
+     }
+     public List<Post> GetAuthPosts(int userId)
+        {
+            var db = new SOContext();
+            Console.WriteLine("@@@@@@@@@@@@@ USER ID @@@@@@@@@@@@@@@@");
+            Console.WriteLine(@"User id = {0} ", userId);
+            if (db.User.FirstOrDefault(x => x.Id == userId) == null)
+                throw new ArgumentException("user not found");
+            return _posts;
+        }
   }
 }

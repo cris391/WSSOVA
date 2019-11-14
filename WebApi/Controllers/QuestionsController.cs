@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -60,30 +61,28 @@ namespace WebApi.Controllers
     //   {
     //     var cat = _dataService.CreateCategory(category.Name, category.Description);
 
-    //     return Created("post", cat);
-    //   }
+            return Ok(question);
+        }
 
-    //   [HttpPut("{categoryId}")]
-    //   public ActionResult PutCategory([FromBody] Category category, int categoryId)
-    //   {
-    //     var cat = _dataService.PutCategory(categoryId, category.Name, category.Description);
-    //     if (cat == false)
-    //     {
-    //       return NotFound();
-    //     }
+        //   [HttpPost]
+        //   public ActionResult CreateCategory([FromBody] Category category)
+        //   {
+        //     var cat = _dataService.CreateCategory(category.Name, category.Description);
 
-    //     return Ok(cat);
-    //   }
+        //     return Created("post", cat);
+        //   }
 
-    //   [HttpDelete("{categoryId}")]
-    //   public ActionResult<Category> DeleteCategory(int categoryId)
-    //   {
-    //     // var category = _dataService.DeleteCategory(categoryId);
+        //   [HttpPut("{categoryId}")]
+        //   public ActionResult PutCategory([FromBody] Category category, int categoryId)
+        //   {
+        //     var cat = _dataService.PutCategory(categoryId, category.Name, category.Description);
+        //     if (cat == false)
+        //     {
+        //       return NotFound();
+        //     }
 
-    //     if (_dataService.DeleteCategory(categoryId) == false)
-    //     {
-    //       return NotFound();
-    //     }
+        //     return Ok(cat);
+        //   }
 
     //     return Ok();
     //   }
