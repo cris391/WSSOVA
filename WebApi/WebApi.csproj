@@ -6,7 +6,7 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom' ">
     <StartAction>Project</StartAction>
-    <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
+    <ApplicationURL>http://localhost:5001</ApplicationURL>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Middleware\" />
@@ -34,4 +34,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\UserController.cs" />
+  </ItemGroup>
 </Project>

@@ -6,15 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace DatabaseService
 {
-  //public class SaveUser
-  //{
-  //    public int Id { get; set; }
-  //    public string Name { get; set; }
-  //    public string Username { get; set; }
-  //    public string Password { get; set; }
-  //    public string Salt { get; set; }
-  //}
-
 
   public class SOContext : DbContext
   {
@@ -24,6 +15,7 @@ namespace DatabaseService
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Comment> Comments { get; set; }
     public DbSet<Annotation> Annotations { get; set; }
     public DbSet<Marking> Markings { get; set; }
     public DbSet<AnnotationFunction> AnnotationFunction { get; set; }

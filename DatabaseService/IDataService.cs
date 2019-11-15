@@ -12,6 +12,8 @@ namespace DatabaseService
     object GetQuestionWithAnswers(int questionId);
     AnswerDbDto GetAnswer(int answerId);
     List<AnswerDbDto> GetAnswersForQuestion(int questionId);
+    FullPost GetFullPost(int questionId);
+    Comment GetComments(int postId);
     int AddAnnotation(Annotation annotation);
     Annotation GetAnnotation(int annotationId);
     bool UpdateAnnotation(Annotation annotation);
@@ -21,7 +23,6 @@ namespace DatabaseService
     List<Marking> GetMarkings(int userid);
     bool DeleteMarking(Marking marking);
     bool DeleteAnnotation(Annotation annotation);
-    // List<Post> GetAuthPosts(int userId);
     User GetUser(string username);
     User CreateUser(string username, string password, string salt);
     List<SearchResult> Search(string[] words);

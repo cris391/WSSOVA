@@ -13,5 +13,7 @@
 
  <ItemGroup>
    <Compile Remove="QuestionDto.cs" />
+   <Compile Remove="Models\CommentDto.cs" />
+   <Compile Remove="Models\FinalQuestionAnswerCommentDto.cs" />
  </ItemGroup>
 </Project>
