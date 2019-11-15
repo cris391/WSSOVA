@@ -5,7 +5,7 @@ namespace DatabaseService
 {
     public class FullPost
     {
-        public Question Question { get; set; }
+        public QuestionDbDto Question { get; set; }
         public List<AnswerDbDto> Answers { get; set; }      
     }
 }
