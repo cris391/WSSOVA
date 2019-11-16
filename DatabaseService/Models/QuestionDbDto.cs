@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace DatabaseService
 {
     public class QuestionDbDto
@@ -9,5 +11,7 @@ namespace DatabaseService
         public DateTime? ClosedDate { get; set; }
         public int Score { get; set; }
         public string Body { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }
