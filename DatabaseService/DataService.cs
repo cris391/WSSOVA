@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DatabaseService
 {
@@ -79,53 +80,70 @@ namespace DatabaseService
         .Take(10).ToList();
     }
 
+    // due to efcore 3.0 still not supporting multiple dataset return we will query the db multiple times for due to efcore's simplicity
     public FullPost GetFullPost(int questionId)
     {
-      using var db = new SOContext();
-
-      var question = GetQuestion(questionId);
-
-      var answers = GetAnswersForQuestion(questionId);
-
-      var comment = new Comment();
-      var commentList = new List<Comment>();
-
-      List<Comment> instance = new List<Comment>();
-
-
-      foreach (var answ in answers)
+      try
       {
-        answ.Comments = new List<Comment>();
-        var answerID = answ.AnswerId;
-        comment = (from c in db.Comments
-                   join a in db.Answers
-                   on c.PostId equals a.AnswerId
-                   where a.AnswerId == answerID
-                   select new Comment
-                   {
-                     UserId = c.UserId,
-                     PostId = c.PostId,
-                     //Timestamp = c.Timestamp,
-                     CommentId = c.CommentId,
-                     CommentScore = c.CommentScore,
-                     CommentText = c.CommentText
-                   }).FirstOrDefault();
 
-        if (comment != null)
+        using var db = new SOContext();
+        var questionDbDto = (from q in db.Questions
+                             join p in db.Posts
+                             on q.QuestionId equals p.PostId
+                             where q.QuestionId == questionId
+                             select new QuestionDbDto
+                             {
+                               QuestionId = q.QuestionId,
+                               Title = q.Title,
+                               CreationDate = p.CreationDate,
+                               ClosedDate = q.ClosedDate,
+                               Score = p.Score,
+                               Body = p.Body
+                             }).FirstOrDefault();
+        var questionDbDtoComments = db.Comments
+                                      .Where(c => c.PostId == questionId)
+                                      .ToList();
+
+        // assign comments to question
+        questionDbDto.Comments = questionDbDtoComments;
+
+        var answerDbDtos = (from a in db.Answers
+                            join p in db.Posts
+                            on a.AnswerId equals p.PostId
+                            where a.PostId == questionId
+                            select new AnswerDbDto
+                            {
+                              AnswerId = a.AnswerId,
+                              CreationDate = p.CreationDate,
+                              Score = p.Score,
+                              Body = p.Body
+                            }).ToList();
+
+        var answerIds = new List<int>();
+        foreach (var item in answerDbDtos)
         {
-
-          answ.Comments.Add(comment);
+          answerIds.Add(item.AnswerId);
         }
+        var answerDbDtoComments = db.Comments
+                                    .Where(c => answerIds.Contains(c.PostId))
+                                    .ToList();
+        foreach (var answer in answerDbDtos)
+        {
+          answer.Comments = answerDbDtoComments.Where(c => c.PostId == answer.AnswerId).ToList();
+        }
+
+        // map questions and answers + comments to post
+        FullPost post = new FullPost();
+        post.Question = questionDbDto;
+        post.Answers = answerDbDtos;
+
+        return post;
       }
-
-      var fullPost = new FullPost()
+      catch (Exception e)
       {
-        Question = question,
-        Answers = answers,
-      };
-      Console.WriteLine(fullPost);
-
-      return fullPost;
+        return null;
+        throw e;
+      }
     }
 
     public Comment GetComments(int postId)
@@ -347,9 +365,10 @@ namespace DatabaseService
     public User GetUser(string username)
     {
       using var db = new SOContext();
-      return db.Users.FirstOrDefault(x => x.Username == username);
+      var user = db.Users.FirstOrDefault(x => x.Username == username);
+      return user;
     }
-    
+
     public User CreateUser(string username, string password, string salt)
     {
       using var db = new SOContext();
@@ -364,15 +383,13 @@ namespace DatabaseService
       {
         db.Users.Add(user);
         db.SaveChanges();
-        Console.WriteLine("@@@@@@@@@@@@@ stored in db @@@@@@@@@@@@@@@@");
         return user;
 
       }
       catch (Exception e)
       {
-        Console.WriteLine("@@@@@@@@@@@@@ failed stored in db @@@@@@@@@@@@@@@@");
-        Console.Write(e);
         return user;
+        throw e;
       }
     }
 
@@ -402,6 +419,23 @@ namespace DatabaseService
       {
         return null;
         throw e;
+      }
+    }
+
+    public Tag GetQuestionTags(int questionId)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        var tags = db.Tags
+                      .Where(t => t.QuestionId == questionId)
+                      .FirstOrDefault();
+        return tags;
+      }
+      catch (Exception)
+      {
+        return null;
       }
     }
   }

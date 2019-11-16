@@ -1,3 +1,8 @@
+### Setup the Data service
+
+1. Scaffold schema from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/stackoverflow-normalized-schema.sql).
+2. Scaffold functions, indexes, etc from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/annotation-and-bestmatch.sql).
+
 ### API USAGE
 
 > Questions endpoints

@@ -26,5 +26,6 @@ namespace DatabaseService
     User GetUser(string username);
     User CreateUser(string username, string password, string salt);
     List<SearchResult> Search(string[] words);
+    Tag GetQuestionTags(int questionId);
   }
 }
