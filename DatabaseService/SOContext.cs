@@ -35,6 +35,7 @@ namespace DatabaseService
       modelBuilder.CreateMap("Id, Name");
       modelBuilder.Entity<AnnotationFunction>().HasNoKey();
       modelBuilder.Entity<SearchResult>().HasNoKey();
+      modelBuilder.Entity<Tag>().HasNoKey();
       modelBuilder.Entity<User>().ToTable("app_users");;
     }
   }
