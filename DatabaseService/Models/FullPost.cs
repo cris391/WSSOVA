@@ -7,5 +7,6 @@ namespace DatabaseService
     {
         public QuestionDbDto Question { get; set; }
         public List<AnswerDbDto> Answers { get; set; }      
+        public Tag Tags { get; set; }
     }
 }

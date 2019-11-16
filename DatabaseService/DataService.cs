@@ -132,10 +132,13 @@ namespace DatabaseService
           answer.Comments = answerDbDtoComments.Where(c => c.PostId == answer.AnswerId).ToList();
         }
 
+        var tags = GetQuestionTags(questionId);
+
         // map questions and answers + comments to post
         FullPost post = new FullPost();
         post.Question = questionDbDto;
         post.Answers = answerDbDtos;
+        post.Tags = tags;
 
         return post;
       }
