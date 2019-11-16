@@ -1,3 +1,4 @@
+[I'm an inline-style link](https://www.google.com)
 ### API USAGE
 
 > Questions endpoints
