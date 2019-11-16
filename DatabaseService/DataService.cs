@@ -421,5 +421,64 @@ namespace DatabaseService
         throw e;
       }
     }
+    public List<Tag> GetTags()
+    {
+      using var db = new SOContext();
+      try
+      {
+        var tags = db.Tags.ToList();
+        return tags;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
+    public Tag AddTag(Tag tag)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        db.Tags.Add(tag);
+        db.SaveChanges();
+        return tag;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
+
+    public Tag RemoveTag(Tag tag)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        db.Tags.Remove(tag);
+        db.SaveChanges();
+        return tag;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
+    public List<Tag> GetQuestionTags(int questionId)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        var tags = db.Tags.Where;
+        db.SaveChanges();
+        return tag;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
   }
 }
