@@ -7,6 +7,6 @@ namespace WebApi.Models
     public string Title { get; set; }
     public string LinkPost { get; set; }
 
-    public AnnotationDto? AnnotationDto { get; set; }
+    public AnnotationDto AnnotationDto { get; set; }
   }
 }

@@ -9,7 +9,7 @@ namespace DatabaseService
     public int UserId { get; set; }
     public DateTime UserCreationDate { get; set; }
     public string UserDisplayName { get; set; }
-    public string? UserLocation { get; set; }
-    public int? UserAge { get; set; }
+    public string UserLocation { get; set; }
+    public int UserAge { get; set; }
   }
 }

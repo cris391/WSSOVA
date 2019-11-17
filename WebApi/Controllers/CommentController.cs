@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Models;
 
 namespace WebApi.Controllers
 {
