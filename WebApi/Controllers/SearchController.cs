@@ -39,8 +39,6 @@ namespace WebApi.Controllers
     [HttpGet("history")]
     public ActionResult GetSearchHistory()
     {
-      Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
-      Console.WriteLine();
       var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
 
       var result = _dataService.GetSearchHistory(userId);
@@ -48,7 +46,6 @@ namespace WebApi.Controllers
       if (result.Count == 0) return NoContent();
 
       return Ok(result);
-      // return Ok(null);
     }
 
     ///////////////////
