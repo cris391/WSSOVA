@@ -12,7 +12,7 @@ namespace WebApi.Models
     public int QuestionId { get; set; }
     public DateTime CreationDate { get; set; }
     public DateTime ClosedDate { get; set; }
-    // public int AcceptedAnswerId { get; set; }
+
     public int Score { get; set; }
     public string Body { get; set; }
   }

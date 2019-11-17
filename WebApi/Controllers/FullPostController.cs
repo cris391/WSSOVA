@@ -26,7 +26,7 @@ namespace WebApi.Controllers
     {
       var result = _dataService.GetFullPost(questionId);
 
-      if (result == null) return NotFound();
+      if (result == null) return NoContent();
 
       return Ok(result);
     }

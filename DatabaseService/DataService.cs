@@ -71,25 +71,18 @@ namespace DatabaseService
       return questionDto;
     }
 
-    public List<Post> GetPosts()
-    {
-      using var db = new SOContext();
-
-      return db.Posts
-        // .Include(p => p.Question)
-        .Take(10).ToList();
-    }
-
     // due to efcore 3.0 still not supporting multiple dataset return we will query the db multiple times for due to efcore's simplicity
     public FullPost GetFullPost(int questionId)
     {
       try
       {
-
         using var db = new SOContext();
+
         var questionDbDto = (from q in db.Questions
                              join p in db.Posts
                              on q.QuestionId equals p.PostId
+                             join o in db.Owners
+                             on p.OwnerId equals o.UserId
                              where q.QuestionId == questionId
                              select new QuestionDbDto
                              {
@@ -98,8 +91,10 @@ namespace DatabaseService
                                CreationDate = p.CreationDate,
                                ClosedDate = q.ClosedDate,
                                Score = p.Score,
-                               Body = p.Body
+                               Body = p.Body,
+                               Owner = o
                              }).FirstOrDefault();
+        Console.WriteLine(JsonConvert.SerializeObject(questionDbDto));
         var questionDbDtoComments = db.Comments
                                       .Where(c => c.PostId == questionId)
                                       .ToList();
@@ -110,13 +105,16 @@ namespace DatabaseService
         var answerDbDtos = (from a in db.Answers
                             join p in db.Posts
                             on a.AnswerId equals p.PostId
+                            join o in db.Owners
+                            on p.OwnerId equals o.UserId
                             where a.PostId == questionId
                             select new AnswerDbDto
                             {
                               AnswerId = a.AnswerId,
                               CreationDate = p.CreationDate,
                               Score = p.Score,
-                              Body = p.Body
+                              Body = p.Body,
+                              Owner = o
                             }).ToList();
 
         var answerIds = new List<int>();
@@ -132,16 +130,19 @@ namespace DatabaseService
           answer.Comments = answerDbDtoComments.Where(c => c.PostId == answer.AnswerId).ToList();
         }
 
+        var tags = GetQuestionTags(questionId);
+
         // map questions and answers + comments to post
         FullPost post = new FullPost();
         post.Question = questionDbDto;
         post.Answers = answerDbDtos;
+        post.Tags = tags;
 
         return post;
       }
       catch (Exception e)
       {
-        return null;
+        // return null;
         throw e;
       }
     }

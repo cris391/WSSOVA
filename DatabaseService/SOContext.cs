@@ -22,6 +22,7 @@ namespace DatabaseService
     public DbSet<User> Users { get; set; }
     public DbSet<SearchResult> SearchResults { get; set; }
     public DbSet<Tag> Tags { get; set; }
+    public DbSet<Owner> Owners { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -37,6 +38,9 @@ namespace DatabaseService
       modelBuilder.Entity<SearchResult>().HasNoKey();
       modelBuilder.Entity<Tag>().HasNoKey();
       modelBuilder.Entity<User>().ToTable("app_users");;
+      modelBuilder.Entity<Owner>().ToTable("stack_users");;
+      // modelBuilder.Entity<Owner>().HasKey("userid");
+      // modelBuilder.Entity<Owner>().Property(o => o.UserId).HasColumnName("description");
     }
   }
 

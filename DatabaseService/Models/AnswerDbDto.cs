@@ -11,6 +11,7 @@ namespace DatabaseService
     public int Score { get; set; }
     public string Body { get; set; }
 
+    public Owner Owner { get; set; }
     public List <Comment> Comments { get; set; }
     }
 }

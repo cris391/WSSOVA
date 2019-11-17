@@ -9,8 +9,7 @@ namespace DatabaseService
     public int Score { get; set; }
     public string Body { get; set; }
 
-    // public int PostId { get; set; }
-    // public Question Question { get; set; }
-    // public Answer Answer { get; set; }
+    public int OwnerId { get; set; }
+    public Owner Owner { get; set; }
   }
 }
