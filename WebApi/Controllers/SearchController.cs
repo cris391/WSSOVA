@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using AutoMapper;
 using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -20,16 +20,35 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
+    [Authorize]
     [HttpGet]
     public ActionResult Search([FromQuery] SearchQuery searchQuery)
     {
       var words = GetWords(searchQuery.Q);
 
-      var result = _dataService.Search(words);
+      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
 
-      if(result.Count == 0) return NoContent();
-      
+      var result = _dataService.Search(words, userId);
+
+      if (result.Count == 0) return NoContent();
+
       return Ok(result);
+    }
+
+    [Authorize]
+    [HttpGet("history")]
+    public ActionResult GetSearchHistory()
+    {
+      Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
+      Console.WriteLine();
+      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
+
+      var result = _dataService.GetSearchHistory(userId);
+
+      if (result.Count == 0) return NoContent();
+
+      return Ok(result);
+      // return Ok(null);
     }
 
     ///////////////////

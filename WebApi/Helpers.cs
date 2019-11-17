@@ -1,30 +1,22 @@
-using System.Collections.Generic;
-using WebApi.Models;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace DatabaseService
 {
   class Helpers
   {
-    // public static List<QuestionDto> CreateQuestionDtos(List<Question> questions)
-    // {
-    //   List<QuestionDto> questionDtos = new List<QuestionDto>();
-    //   foreach (var question in questions)
-    //   {
-    //     QuestionDto questionDto = new QuestionDto()
-    //     {
-    //       Link = Url.Link(
-    //           nameof("GetQuestions"),
-    //           new { questionId = question.QuestionId }),
-    //       Title = question.Title,
-    //       QuestionId = question.QuestionId,
-    //       CreationDate = question.Post.CreationDate,
-    //       Score = question.Post.Score,
-    //       Body = question.Post.Body,
-    //       PostId = question.Post.PostId
-    //     };
-    //     questionDtos.Add(questionDto);
-    //   }
-    //   return questionDtos;
-    // }
+    public static int GetUserIdFromJWTToken(string accessToken)
+    {
+      accessToken = accessToken.ToString().Replace("Bearer ", "");
+      var handler = new JwtSecurityTokenHandler();
+      var tokenS = handler.ReadToken(accessToken) as JwtSecurityToken;
+      var userIdStr = tokenS.Claims.First(claim => claim.Type == "unique_name").Value;
+      if (int.TryParse(userIdStr, out int userId))
+      {
+        return userId;
+      }
+      return 0;
+    }
   }
 }

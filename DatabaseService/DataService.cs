@@ -404,21 +404,27 @@ namespace DatabaseService
     //         return _posts;
     //     }
 
-    public List<SearchResult> Search(string[] words)
+    public List<SearchResult> Search(string[] words, int userId)
     {
       using var db = new SOContext();
 
+      // small hack due to FromSqlRaw parser issue
+      string str = "";
+      foreach (var item in words)
+      {
+        str += $",'{item}'";
+      }
       try
       {
         var result = db.SearchResults
-          .FromSqlRaw("select * from best_match_with_weight({0})", words)
+          .FromSqlRaw($"select * from best_match_with_weight({userId} {str})")
           .ToList();
 
         return result;
       }
       catch (Exception e)
       {
-        return null;
+        // return null;
         throw e;
       }
     }
@@ -439,5 +445,24 @@ namespace DatabaseService
         return null;
       }
     }
+
+    public List<SearchHistory> GetSearchHistory(int userId)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        var result = db.SearchHistories
+                        .Where(h => h.UserId == userId)
+                        .ToList();
+        return result;
+      }
+      catch (Exception e)
+      {
+        // return null;
+        throw e;
+      }
+    }
+
   }
 }

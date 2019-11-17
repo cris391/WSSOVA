@@ -24,7 +24,8 @@ namespace DatabaseService
     bool DeleteAnnotation(Annotation annotation);
     User GetUser(string username);
     User CreateUser(string username, string password, string salt);
-    List<SearchResult> Search(string[] words);
+    List<SearchResult> Search(string[] words, int userId);
     Tag GetQuestionTags(int questionId);
+    List<SearchHistory> GetSearchHistory(int userId);
   }
 }
