@@ -307,6 +307,8 @@ namespace DatabaseService
                            MarkingId = a.MarkingId,
                            Body = a.Body
                          }).ToList();
+                         Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
+                         Console.WriteLine(annotations.Count);
 
       return annotations;
     }
@@ -468,7 +470,7 @@ namespace DatabaseService
       }
       catch (Exception e)
       {
-        // return null;
+        return null;
         throw e;
       }
     }
