@@ -1,5 +1,3 @@
-using System;
-
 namespace DatabaseService
 {
     public class Annotation

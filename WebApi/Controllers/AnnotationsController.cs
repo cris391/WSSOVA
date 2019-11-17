@@ -30,9 +30,10 @@ namespace WebApi.Controllers
     }
 
     [Authorize]
-    [HttpPut]
-    public ActionResult UpdateAnnotation([FromBody] Annotation annotation)
+    [HttpPut("{annotationId}", Name = nameof(UpdateAnnotation))]
+    public ActionResult UpdateAnnotation([FromBody] Annotation annotation, int annotationId)
     {
+      annotation.AnnotationId = annotationId;
       var result = _dataService.UpdateAnnotation(annotation);
 
       if (result == false) return NotFound();
