@@ -5,6 +5,7 @@ using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace WebApi.Controllers
 {
@@ -32,23 +33,20 @@ namespace WebApi.Controllers
 
       if (result.Count == 0) return NoContent();
 
-      return Ok(result);
+      return Ok(CreateSearchResultDtos(result));
     }
 
     [Authorize]
     [HttpGet("history")]
     public ActionResult GetSearchHistory()
     {
-      Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
-      Console.WriteLine();
       var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
 
       var result = _dataService.GetSearchHistory(userId);
 
       if (result.Count == 0) return NoContent();
 
-      return Ok(result);
-      // return Ok(null);
+      return Ok(CreateSearchHistoryDtos(result));
     }
 
     ///////////////////
@@ -67,6 +65,42 @@ namespace WebApi.Controllers
       var words = fixedInput.Split(' ');
 
       return words;
+    }
+
+    ///////////////////
+    //
+    // Helpers
+    //
+    //////////////////////
+
+    private List<SearchResultDto> CreateSearchResultDtos(List<SearchResult> searchResults)
+    {
+      List<SearchResultDto> searchResultDtos = new List<SearchResultDto>();
+      foreach (var searchResult in searchResults)
+      {
+        searchResultDtos.Add(new SearchResultDto
+        {
+          LinkPost = Url.Link(
+              nameof(QuestionsController.GetQuestion),
+              new { questionId = searchResult.QuestionId }),
+          Title = searchResult.Title
+        });
+      };
+      return searchResultDtos;
+    }
+
+    private List<SearchHistoryDto> CreateSearchHistoryDtos(List<SearchHistory> searchHistories)
+    {
+      List<SearchHistoryDto> searchHistoryDtos = new List<SearchHistoryDto>();
+      foreach (var searchHistory in searchHistories)
+      {
+        searchHistoryDtos.Add(new SearchHistoryDto
+        {
+          SearchDate = searchHistory.SearchDate,
+          QueryText = searchHistory.QueryText
+        });
+      };
+      return searchHistoryDtos;
     }
   }
 }

@@ -1,5 +1,10 @@
 # StackOverflow Service
 
+### Setup the Data service
+
+1. Scaffold schema from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/stackoverflow-normalized-schema.sql).
+2. Scaffold functions, indexes, etc from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/add-tfidf-weights.sql).
+
 ### API USAGE
 
 > Questions endpoints
@@ -24,4 +29,3 @@ GET /api/annotations/{markingid}
 GET /api/annotations BODY {"markingid": 1}
 POST /api/annotations BODY {"markingid": 1,"body": "api"}
 PUT /api/annotations BODY {"markingid": 1,"body": "api2"}
-

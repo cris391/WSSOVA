@@ -1,7 +1,7 @@
 ### Setup the Data service
 
 1. Scaffold schema from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/stackoverflow-normalized-schema.sql).
-2. Scaffold functions, indexes, etc from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/functionality-indexing.sql).
+2. Scaffold functions, indexes, etc from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/add-tfidf-weights.sql).
 
 ### API USAGE
 

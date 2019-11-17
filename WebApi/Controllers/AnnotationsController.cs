@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using AutoMapper;
 using DatabaseService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -17,31 +19,28 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult AddAnnotation([FromBody] Annotation annotation)
     {
       var result = _dataService.AddAnnotation(annotation);
 
       if (result == 0) return BadRequest();
+      annotation.AnnotationId = result;
 
-      return Ok(result);
+      return Ok(CreateAnnotationDto(annotation));
     }
-    
-    // [HttpGet("{annotationId}")]
-    // public ActionResult GetAnnotation(int annotationId)
-    // {
-    //   var result = _dataService.GetAnnotation(annotationId);
 
-    //   return Ok(result);
-    // }
-    [HttpPut]
-    public ActionResult UpdateAnnotation([FromBody] Annotation annotation)
+    [Authorize]
+    [HttpPut("{annotationId}", Name = nameof(UpdateAnnotation))]
+    public ActionResult UpdateAnnotation([FromBody] Annotation annotation, int annotationId)
     {
+      annotation.AnnotationId = annotationId;
       var result = _dataService.UpdateAnnotation(annotation);
 
       if (result == false) return NotFound();
 
-      return Ok(result);
+      return Ok(CreateAnnotationDto(annotation));
     }
 
     [HttpGet("marking/{markingId}")]
@@ -50,41 +49,67 @@ namespace WebApi.Controllers
     {
       var result = _dataService.GetAnnotationsByMarking(markingId);
 
-      if(result.Count == 0) return NoContent();
+      if (result.Count == 0) return NoContent();
 
       return Ok(result);
     }
 
-    [HttpGet("user/{userId}")]
-    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
-    public ActionResult GetAnnotationsByUser(int userId)
+    [Authorize]
+    [HttpGet]
+    public ActionResult<AnnotationDto> GetAnnotationsByUser()
     {
+      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
       var result = _dataService.GetAnnotationsByUser(userId);
 
-      if(result.Count == 0) return NoContent();
+      if (result.Count == 0) return NoContent();
 
-      return Ok(result);
+      return Ok(CreateAnnotationDtos(result));
     }
 
+    [Authorize]
     [HttpDelete]
-    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
     public ActionResult DeleteAnnotation(Annotation annotation)
     {
       var result = _dataService.DeleteAnnotation(annotation);
 
-      if(result == false) return BadRequest();
+      if (result == false) return BadRequest();
 
       return Ok(result);
     }
 
-  // TODO fetch annotations by markingid and postid
-    // [HttpGet("marking/post")]
-    // // public ActionResult GetAnnotations([FromBody] Annotation annotation)
-    // public ActionResult GetAnnotationsByMarkingAndPost()
-    // {
-    //   var result = _dataService.GetAnnotations(markingId);
 
-    //   return Ok(result);
-    // }
+    ///////////////////
+    //
+    // Helpers
+    //
+    //////////////////////
+
+    private AnnotationDto CreateAnnotationDto(Annotation annotation)
+    {
+      var dto = _mapper.Map<AnnotationDto>(annotation);
+
+      dto.Link = Url.Link(
+            nameof(AnnotationsController.UpdateAnnotation),
+            new { annotationId = annotation.AnnotationId });
+
+      return dto;
+    }
+
+    private List<AnnotationDto> CreateAnnotationDtos(List<Annotation> annotations)
+    {
+      List<AnnotationDto> dtos = new List<AnnotationDto>();
+      foreach (var annotation in annotations)
+      {
+        dtos.Add(new AnnotationDto
+        {
+          Link = Url.Link(
+            nameof(AnnotationsController.UpdateAnnotation),
+            new { annotationId = annotation.AnnotationId }),
+          Body = annotation.Body
+        });
+      }
+
+      return dtos;
+    }
   }
 }

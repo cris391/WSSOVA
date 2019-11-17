@@ -51,6 +51,12 @@ namespace DatabaseService
       return db.Questions.Count();
     }
 
+    public int NumberOfMarkings()
+    {
+      using var db = new SOContext();
+      return db.Markings.Count();
+    }
+
     public QuestionDbDto GetQuestion(int id)
     {
       using var db = new SOContext();
@@ -301,6 +307,8 @@ namespace DatabaseService
                            MarkingId = a.MarkingId,
                            Body = a.Body
                          }).ToList();
+                         Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
+                         Console.WriteLine(annotations.Count);
 
       return annotations;
     }
@@ -322,12 +330,15 @@ namespace DatabaseService
         throw e;
       }
     }
-    public List<Marking> GetMarkings(int userid)
+    public List<Marking> GetMarkings(int userid, PagingAttributes pagingAttributes)
     {
       using var db = new SOContext();
 
       var markings = db.Markings
         .Where(m => m.UserId == userid)
+        .Include(m => m.Annotation)
+        .Skip(pagingAttributes.Page * pagingAttributes.PageSize)
+        .Take(pagingAttributes.PageSize)
         .ToList();
 
       return markings;
@@ -459,7 +470,7 @@ namespace DatabaseService
       }
       catch (Exception e)
       {
-        // return null;
+        return null;
         throw e;
       }
     }
