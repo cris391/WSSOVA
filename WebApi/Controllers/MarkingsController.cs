@@ -81,24 +81,25 @@ namespace WebApi.Controllers
 
     private List<MarkingDto> CreateMarkingDtos(List<Marking> markings)
     {
+      Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
+      Console.WriteLine(markings);
       List<MarkingDto> markingDtos = new List<MarkingDto>();
       foreach (var marking in markings)
       {
-        var annotationDto = _mapper.Map<AnnotationDto>(marking.Annotation);
-        markingDtos.Add(new MarkingDto
-        {
-          Title = _dataService.GetQuestion(marking.PostId).Title,
-          LinkPost = Url.Link(
+        var markingDto = new MarkingDto();
+        markingDto.Title = _dataService.GetQuestion(marking.PostId).Title;
+        markingDto.LinkPost = Url.Link(
                 nameof(QuestionsController.GetQuestion),
-                new { questionId = marking.PostId }),
-          AnnotationDto = new AnnotationDto
-          {
-            Link = Url.Link(
+                new { questionId = marking.PostId });
+        if (marking.Annotation != null)
+        {
+          var annotationDto = _mapper.Map<AnnotationDto>(marking.Annotation);
+          markingDto.AnnotationDto.Link = Url.Link(
                 nameof(AnnotationsController.UpdateAnnotation),
-                new { annotationId = marking.Annotation.AnnotationId }),
-            Body = annotationDto.Body
-          }
-        });
+                new { annotationId = marking.Annotation.AnnotationId });
+          markingDto.AnnotationDto.Body = annotationDto.Body;
+        }
+        markingDtos.Add(markingDto);
       }
       return markingDtos;
     }
