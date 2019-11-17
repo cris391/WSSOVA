@@ -43,7 +43,6 @@ namespace WebApi.Controllers
     }
 
     [HttpGet("marking/{markingId}")]
-    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
     public ActionResult GetAnnotations(int markingId)
     {
       var result = _dataService.GetAnnotationsByMarking(markingId);
@@ -65,6 +64,7 @@ namespace WebApi.Controllers
       return Ok(CreateAnnotationDtos(result));
     }
 
+    //todo delete annotation by specifying annotationId in the url(vs body)
     [Authorize]
     [HttpDelete]
     public ActionResult DeleteAnnotation(Annotation annotation)

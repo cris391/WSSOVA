@@ -47,6 +47,7 @@ namespace WebApi.Controllers
       return Ok(CreateMarkingDto(marking));
     }
 
+    // todo delete marking by url id and not body
     [Authorize]
     [HttpDelete]
     public ActionResult DeleteMarking(Marking marking)
@@ -81,8 +82,6 @@ namespace WebApi.Controllers
 
     private List<MarkingDto> CreateMarkingDtos(List<Marking> markings)
     {
-      Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
-      Console.WriteLine(markings);
       List<MarkingDto> markingDtos = new List<MarkingDto>();
       foreach (var marking in markings)
       {
