@@ -1,5 +1,4 @@
-﻿using System;
-namespace DatabaseService.Models
+﻿namespace DatabaseService.Models
 {
     public class CommentDto
     {
