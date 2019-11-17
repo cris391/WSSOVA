@@ -8,7 +8,6 @@ namespace DatabaseService
     List<Question> GetQuestions(PagingAttributes pagingAttributes);
     QuestionDbDto GetQuestion(int id);
     int NumberOfQuestions();
-    List<Post> GetPosts();
     object GetQuestionWithAnswers(int questionId);
     AnswerDbDto GetAnswer(int answerId);
     List<AnswerDbDto> GetAnswersForQuestion(int questionId);

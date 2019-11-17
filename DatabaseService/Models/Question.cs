@@ -11,9 +11,5 @@ namespace DatabaseService
     public string Title { get; set; }
     public int? AcceptedAnswerId { get; set; }
     public Post Post { get; set; }
-
-    // public int AnswerId { get; set; }
-    // public Answer Answer { get; set; }
-    // public List<Answer> Answers { get; set; }
   }
 }
