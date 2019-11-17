@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using DatabaseService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
@@ -18,25 +19,31 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
-    [HttpGet("{userId}")]
-    public ActionResult GetMarkings(int userId)
+    [Authorize]
+    [HttpGet]
+    public ActionResult GetMarkings()
     {
+      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
       var result = _dataService.GetMarkings(userId);
       if (result.Count == 0) return NoContent();
       return Ok(result);
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult AddMarking([FromBody] MarkingForCreation markingDto)
     {
+      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
+      markingDto.UserId = userId;
       var marking = _mapper.Map<Marking>(markingDto);
       var result = _dataService.AddMarking(marking);
 
-      if (result == false) return BadRequest();
+      if (result == false) return Conflict();
 
       return Ok(result);
     }
 
+    [Authorize]
     [HttpDelete]
     public ActionResult DeleteMarking(Marking marking)
     {

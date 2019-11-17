@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using DatabaseService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -17,6 +18,7 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult AddAnnotation([FromBody] Annotation annotation)
     {
@@ -26,14 +28,8 @@ namespace WebApi.Controllers
 
       return Ok(result);
     }
-    
-    // [HttpGet("{annotationId}")]
-    // public ActionResult GetAnnotation(int annotationId)
-    // {
-    //   var result = _dataService.GetAnnotation(annotationId);
 
-    //   return Ok(result);
-    // }
+    [Authorize]
     [HttpPut]
     public ActionResult UpdateAnnotation([FromBody] Annotation annotation)
     {
@@ -50,41 +46,32 @@ namespace WebApi.Controllers
     {
       var result = _dataService.GetAnnotationsByMarking(markingId);
 
-      if(result.Count == 0) return NoContent();
+      if (result.Count == 0) return NoContent();
 
       return Ok(result);
     }
 
-    [HttpGet("user/{userId}")]
-    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
-    public ActionResult GetAnnotationsByUser(int userId)
+    [Authorize]
+    [HttpGet]
+    public ActionResult GetAnnotationsByUser()
     {
+      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
       var result = _dataService.GetAnnotationsByUser(userId);
 
-      if(result.Count == 0) return NoContent();
+      if (result.Count == 0) return NoContent();
 
       return Ok(result);
     }
 
+    [Authorize]
     [HttpDelete]
-    // public ActionResult GetAnnotations([FromBody] Annotation annotation)
     public ActionResult DeleteAnnotation(Annotation annotation)
     {
       var result = _dataService.DeleteAnnotation(annotation);
 
-      if(result == false) return BadRequest();
+      if (result == false) return BadRequest();
 
       return Ok(result);
     }
-
-  // TODO fetch annotations by markingid and postid
-    // [HttpGet("marking/post")]
-    // // public ActionResult GetAnnotations([FromBody] Annotation annotation)
-    // public ActionResult GetAnnotationsByMarkingAndPost()
-    // {
-    //   var result = _dataService.GetAnnotations(markingId);
-
-    //   return Ok(result);
-    // }
   }
 }
