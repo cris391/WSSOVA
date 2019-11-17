@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AutoMapper;
 using DatabaseService;
 using Microsoft.AspNetCore.Authorization;
@@ -25,8 +26,9 @@ namespace WebApi.Controllers
       var result = _dataService.AddAnnotation(annotation);
 
       if (result == 0) return BadRequest();
+      annotation.AnnotationId = result;
 
-      return Ok(result);
+      return Ok(CreateAnnotationDto(annotation));
     }
 
     [Authorize]
@@ -38,7 +40,7 @@ namespace WebApi.Controllers
 
       if (result == false) return NotFound();
 
-      return Ok(result);
+      return Ok(CreateAnnotationDto(annotation));
     }
 
     [HttpGet("marking/{markingId}")]
@@ -54,14 +56,14 @@ namespace WebApi.Controllers
 
     [Authorize]
     [HttpGet]
-    public ActionResult GetAnnotationsByUser()
+    public ActionResult<AnnotationDto> GetAnnotationsByUser()
     {
       var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
       var result = _dataService.GetAnnotationsByUser(userId);
 
       if (result.Count == 0) return NoContent();
 
-      return Ok(result);
+      return Ok(CreateAnnotationDtos(result));
     }
 
     [Authorize]
@@ -73,6 +75,41 @@ namespace WebApi.Controllers
       if (result == false) return BadRequest();
 
       return Ok(result);
+    }
+
+
+    ///////////////////
+    //
+    // Helpers
+    //
+    //////////////////////
+
+    private AnnotationDto CreateAnnotationDto(Annotation annotation)
+    {
+      var dto = _mapper.Map<AnnotationDto>(annotation);
+
+      dto.Link = Url.Link(
+            nameof(AnnotationsController.UpdateAnnotation),
+            new { annotationId = annotation.AnnotationId });
+
+      return dto;
+    }
+
+    private List<AnnotationDto> CreateAnnotationDtos(List<Annotation> annotations)
+    {
+      List<AnnotationDto> dtos = new List<AnnotationDto>();
+      foreach (var annotation in annotations)
+      {
+        dtos.Add(new AnnotationDto
+        {
+          Link = Url.Link(
+            nameof(AnnotationsController.UpdateAnnotation),
+            new { annotationId = annotation.AnnotationId }),
+          Body = annotation.Body
+        });
+      }
+
+      return dtos;
     }
   }
 }
