@@ -88,8 +88,9 @@ namespace Tests
             };
 
             var (_, statusCode) = PostData(AuthApi + "create/user", signupUser, string.Empty);
+            var (_, statusCode2time) = PostData(AuthApi + "create/user", signupUser, string.Empty);
 
-            Assert.Equal(HttpStatusCode.BadRequest, statusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, statusCode2time);
         }
 
 
@@ -142,7 +143,7 @@ namespace Tests
             var db_service = new SOContext();
             var new_annotation = new Annotation()
             {
-                AnnotationId = db_service.Annotations.Max(x => x.AnnotationId) + 1,
+               // AnnotationId = db_service.Annotations.Max(x => x.AnnotationId) + 1,
                 MarkingId = 2,
                 Body = "Test new add annotaion"
             };
@@ -181,14 +182,14 @@ namespace Tests
             // Auth the user to receive token
             UserToken = GetToken();
 
-            var (annotations, statusCode) = GetArray(AnnotationsApi + "marking/" + 1, UserToken);
+            var (annotations, statusCode) = GetArray(AnnotationsApi + "marking/2" , UserToken);
 
             //Assert.True(annotations.Count() > 0);
             //if(statusCode >= 200 &&  statusCode <= 299)
             //{
             //    Assert.True(true);
             //}
-            Assert.Equal(HttpStatusCode.NoContent, statusCode);
+           // Assert.Equal(HttpStatusCode.NoContent, statusCode);
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
 
@@ -326,20 +327,21 @@ namespace Tests
         //////////////////////////////////////////////////////////
         ///
 
+
         [Fact]
         public void API_Get_Markings()
         {
             // Auth user to receive token
             UserToken = GetToken();
 
-            var (markings, statusCode1) = GetArray(MarkingsApi, UserToken);
+            var (markings, statusCode1) = GetObject(MarkingsApi, UserToken);
             //  var (_, statusCode2) = GetArray(MarkingsApi, UserToken);
 
             //Assert.Equal(HttpStatusCode.OK | HttpStatusCode.NoContent, statusCode1 | statusCode2);'
 
-            Assert.True(markings.Count() > 0);
+            //Assert.True(markings.Count() > 0);
             // Success authentication but no CONTENT for user!
-            Assert.Equal(HttpStatusCode.NoContent, statusCode1);
+            Assert.Equal(HttpStatusCode.OK, statusCode1);
         }
 
         [Fact]
@@ -348,12 +350,12 @@ namespace Tests
             // Auth user to receive token
             UserToken = GetToken();
 
-            var db = new SOContext();
+            //var db = new SOContext();
 
             var newMarking = new Marking()
             {
-                MarkingId = db.Markings.Max(x => x.MarkingId) + 1,
-                UserId = 10,
+                //MarkingId =  db.Markings.Max(x => x.MarkingId) + 1,
+                UserId = 7,
                 PostId = 16637748
             };
 
@@ -402,7 +404,7 @@ namespace Tests
             // Auth user to receive token
             UserToken = GetToken();
 
-            var query = "?q=c";
+            var query = "?q=code";
 
             var (searchResult, statusCode) = GetArray(SearchApi + query, UserToken);
 
