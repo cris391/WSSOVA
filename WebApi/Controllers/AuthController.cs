@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using DatabaseService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.ApiModels;
+using WebApi.Models;
 
 using WebApi.WebServiceToken.Services;
 
@@ -29,7 +26,7 @@ namespace WebApi.Controllers
     }
 
 
-    [HttpPost("users")]
+    [HttpPost("create/user")]
     public ActionResult CreateUser([FromBody] UserForCreationDto dto)
     {
       if (_dataService.GetUser(dto.UserName) != null)
@@ -55,7 +52,7 @@ namespace WebApi.Controllers
       return CreatedAtRoute(null, dto.UserName);
     }
 
-    [HttpPost("tokens")]
+    [HttpPost("token")]
     public ActionResult Login([FromBody] UserForLoginDto dto)
     {
       var user = _dataService.GetUser(dto.UserName);
