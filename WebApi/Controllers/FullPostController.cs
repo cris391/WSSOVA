@@ -18,6 +18,7 @@ namespace WebApi.Controllers
     }
 
 
+    // add self descriptive uris foe every property
     [HttpGet("{questionId}")]
     public ActionResult GetFullPost(int questionId)
     {

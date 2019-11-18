@@ -13,7 +13,9 @@ namespace DatabaseService
     public string Body { get; set; }
 
     public Owner Owner { get; set; }
-
-    public List<Comment> Comments { get; set; }
+    #nullable enable
+    public Marking? Marking { get; set; }
+    #nullable enable
+    public List<Comment>? Comments { get; set; }
   }
 }

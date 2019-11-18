@@ -17,10 +17,6 @@ GET /api/questions/{questionId}
 GET /api/answers/{answerId}
 GET /api/answers/question/{answerId}
 
-> Posts endpoints
-
-GET /api/posts/{questionId}
-
 > Markings endpoints
 
 GET /api/markings/{userId}
@@ -44,9 +40,13 @@ GET /api/comments/{postId}
 
 GET /api/tags/{questionId}
 
+> Posts endpoints
+
+GET /api/posts/{questionId}
+
 > Search endpoints
 
-GET /api/search?q=terms
+GET /api/search?q=term+term
 GET /api/search/history _HEADERS_ userId
 
 > Auth endpoints

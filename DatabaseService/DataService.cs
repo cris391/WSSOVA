@@ -82,7 +82,6 @@ namespace DatabaseService
       try
       {
         using var db = new SOContext();
-
         var questionDbDto = (from q in db.Questions
                              join p in db.Posts
                              on q.QuestionId equals p.PostId
@@ -99,7 +98,7 @@ namespace DatabaseService
                                Body = p.Body,
                                Owner = o
                              }).FirstOrDefault();
-        Console.WriteLine(JsonConvert.SerializeObject(questionDbDto));
+        // Console.WriteLine(JsonConvert.SerializeObject(questionDbDto));
         var questionDbDtoComments = db.Comments
                                       .Where(c => c.PostId == questionId)
                                       .ToList();
@@ -135,11 +134,18 @@ namespace DatabaseService
           answer.Comments = answerDbDtoComments.Where(c => c.PostId == answer.AnswerId).ToList();
         }
 
+        var marking = db.Markings
+            .Where(m => m.PostId == questionId)
+            .FirstOrDefault();
+        Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
+        Console.WriteLine(marking);
+
         var tags = GetQuestionTags(questionId);
 
         // map questions and answers + comments to post
         FullPost post = new FullPost();
         post.Question = questionDbDto;
+        post.Question.Marking = marking;
         post.Answers = answerDbDtos;
         post.Tags = tags;
 
@@ -187,8 +193,6 @@ namespace DatabaseService
                        Score = p.Score,
                        Body = p.Body
                      }).FirstOrDefault();
-      Console.WriteLine("@@@@@@@@@@@@@@@@");
-      Console.WriteLine(answers);
       return answers;
     }
 
@@ -306,8 +310,8 @@ namespace DatabaseService
                            MarkingId = a.MarkingId,
                            Body = a.Body
                          }).ToList();
-                         Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
-                         Console.WriteLine(annotations.Count);
+      Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@");
+      Console.WriteLine(annotations.Count);
 
       return annotations;
     }
@@ -470,6 +474,22 @@ namespace DatabaseService
       catch (Exception e)
       {
         return null;
+        throw e;
+      }
+    }
+    public Owner GetOwner(int ownerId)
+    {
+      using var db = new SOContext();
+
+      try
+      {
+        var result = db.Owners.Find(ownerId);
+
+        return result;
+      }
+      catch (Exception e)
+      {
+        // return null;
         throw e;
       }
     }

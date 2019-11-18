@@ -27,5 +27,6 @@ namespace DatabaseService
     List<SearchResult> Search(string[] words, int userId);
     Tag GetQuestionTags(int questionId);
     List<SearchHistory> GetSearchHistory(int userId);
+    Owner GetOwner(int ownerId);
   }
 }
