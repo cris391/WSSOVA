@@ -6,6 +6,7 @@ namespace DatabaseService
     public int PostId { get; set; }
 
     public int MarkingId { get; set; }
-    public Annotation Annotation { get; set; }
+    #nullable enable
+    public Annotation? Annotation { get; set; }
   }
 }
