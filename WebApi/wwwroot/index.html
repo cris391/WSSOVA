@@ -8,57 +8,8 @@
     <title>Index</title>
   </head>
   <body>
-    Hello
-    <div>
-      <button type="button" class="btn btn-primary">Click</button>
-    </div>
     <script>
-      console.log('sizeOfLongest', sizeOfLongest(['car', 'elephant', 'wagon']));
-      console.log('getLongest', getLongest(['car', 'elephant', 'wagon']));
-      console.log('max', max(4, 2));
-      console.log('max2', max2(3, 4, 292929, 5, 4));
-      console.log('getDay', getDay());
-
-      let boys = ['Peter', 'lars', 'Ole'];
-      let girls = ['Janne', 'hanne', 'Sanne'];
-      let all = [...boys, ...girls];
-      console.log(all);
-      let hyphenSeparatedStr = all.join('-');
-      console.log(hyphenSeparatedStr);
-      all = [...all, 'Lone', 'Gitte'];
-      console.log(all);
-      all = ['Hans', 'Kurt', ...all];
-      console.log(all);
-      all.splice(0, 1);
-      console.log(all);
-      all.splice(all.length - 1, 1);
-      console.log(all);
-      all.splice(all.indexOf('Ole'), 1);
-      console.log(all);
-
-      function getDay() {
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        return (day = days[new Date().getDay()]);
-      }
-      function max2(...arguments) {
-        return arguments.reduce(function(a, b) {
-          return a > b ? a : b;
-        });
-      }
-      function max(a, b) {
-        return a > b ? a : b;
-      }
-      function getLongest(words) {
-        return words.reduce(function(a, b) {
-          return a.length > b.length ? a : b;
-        });
-      }
-
-      function sizeOfLongest(words) {
-        return words.reduce(function(a, b) {
-          return a.length > b.length ? a.length : b.length;
-        });
-      }
+      
     </script>
   </body>
 </html>
