@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Index</title>
+    <title>index</title>
   </head>
   <body>
-    <script>
-      
-    </script>
+    <input data-bind="textInput: firstName" />
+    <input data-bind="textInput: lastName" />
+    <div data-bind="text: fullName"></div>
+
+    <script data-main="js/main.js" src="lib/requirejs/require.js"></script>
   </body>
 </html>
