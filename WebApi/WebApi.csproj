@@ -20,17 +20,15 @@
   <ItemGroup>
    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
  </ItemGroup>
-
-
-
   <ItemGroup>
     <ProjectReference Include="..\DatabaseService\DatabaseService.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
-
+<ItemGroup>
+    <Folder Include="wwwroot\"/>
+</ItemGroup>
 </Project>
