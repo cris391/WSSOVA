@@ -68,6 +68,7 @@ namespace WebApi
 
       app.UseAuthorization();
 
+      app.UseFileServer();
 
       app.UseEndpoints(endpoints =>
       {

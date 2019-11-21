@@ -1,64 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Index</title>
+    <title>index</title>
   </head>
   <body>
-    Hello
-    <div>
-      <button type="button" class="btn btn-primary">Click</button>
-    </div>
-    <script>
-      console.log('sizeOfLongest', sizeOfLongest(['car', 'elephant', 'wagon']));
-      console.log('getLongest', getLongest(['car', 'elephant', 'wagon']));
-      console.log('max', max(4, 2));
-      console.log('max2', max2(3, 4, 292929, 5, 4));
-      console.log('getDay', getDay());
+    <input data-bind="textInput: firstName" />
+    <input data-bind="textInput: lastName" />
+    <div data-bind="text: fullName"></div>
 
-      let boys = ['Peter', 'lars', 'Ole'];
-      let girls = ['Janne', 'hanne', 'Sanne'];
-      let all = [...boys, ...girls];
-      console.log(all);
-      let hyphenSeparatedStr = all.join('-');
-      console.log(hyphenSeparatedStr);
-      all = [...all, 'Lone', 'Gitte'];
-      console.log(all);
-      all = ['Hans', 'Kurt', ...all];
-      console.log(all);
-      all.splice(0, 1);
-      console.log(all);
-      all.splice(all.length - 1, 1);
-      console.log(all);
-      all.splice(all.indexOf('Ole'), 1);
-      console.log(all);
-
-      function getDay() {
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        return (day = days[new Date().getDay()]);
-      }
-      function max2(...arguments) {
-        return arguments.reduce(function(a, b) {
-          return a > b ? a : b;
-        });
-      }
-      function max(a, b) {
-        return a > b ? a : b;
-      }
-      function getLongest(words) {
-        return words.reduce(function(a, b) {
-          return a.length > b.length ? a : b;
-        });
-      }
-
-      function sizeOfLongest(words) {
-        return words.reduce(function(a, b) {
-          return a.length > b.length ? a.length : b.length;
-        });
-      }
-    </script>
+    <script data-main="js/main.js" src="lib/requirejs/require.js"></script>
   </body>
 </html>
