@@ -15,8 +15,8 @@
       "destination": "lib/knockout"
     },
     {
-      "library": "Require@1.1.2",
-      "destination": "lib/Require"
+      "library": "requirejs@2.3.6",
+      "destination": "lib/requirejs"
     }
   ]
 }
