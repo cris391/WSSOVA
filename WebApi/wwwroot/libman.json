@@ -7,16 +7,16 @@
       "destination": "lib/bootstrap"
     },
     {
-      "library": "requirejs@2.3.6",
-      "destination": "unpkg"
-    },
-    {
       "library": "jquery@3.4.1",
       "destination": "lib/jquery"
     },
     {
       "library": "knockout@3.5.1",
       "destination": "lib/knockout"
+    },
+    {
+      "library": "Require@1.1.2",
+      "destination": "lib/Require"
     }
   ]
 }
