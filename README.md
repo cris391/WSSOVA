@@ -1,4 +1,7 @@
 # StackOverflow Service
+### WebApi
+1. dotnet restore
+2. dotnet watch run --no-build (*development*)
 
 ### Setup the Data service
 
