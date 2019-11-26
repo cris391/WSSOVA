@@ -10,9 +10,10 @@ namespace WebApi.Controllers
   {
     private readonly IServiceProvider serviceProvider;
     private readonly IApiWarmer apiWarmer;
-    public ReadyController(IServiceProvider serviceProvider, IApiWarmer apiWarmer)
+    public ReadyController(IApiWarmer apiWarmer)
+    // public ReadyController(IServiceProvider serviceProvider, IApiWarmer apiWarmer)
     {
-      this.serviceProvider = serviceProvider;
+      // this.serviceProvider = serviceProvider;
       this.apiWarmer = apiWarmer;
     }
 
@@ -21,7 +22,7 @@ namespace WebApi.Controllers
     private string GetFullUrl(string relativeUrl) =>
            $"{Request.Scheme}://{Request.Host}{relativeUrl}";
 
-    private async Task Warmup()
+    public async Task Warmup()
     {
       using (var httpClient = new HttpClient())
       {
@@ -33,6 +34,26 @@ namespace WebApi.Controllers
       }
 
       isWarmedUp = true;
+    }
+    private async Task Warm()
+    {
+      using (var client = new HttpClient())
+      {
+        // Warm up the /values endpoint.
+        try
+        {
+          HttpResponseMessage response = await client.GetAsync("http://localhost:5001/ready");
+          response.EnsureSuccessStatusCode();
+          string responseBody = await response.Content.ReadAsStringAsync();
+
+          Console.WriteLine(responseBody);
+        }
+        catch (HttpRequestException e)
+        {
+          Console.WriteLine("\nException Caught!");
+          Console.WriteLine("Message :{0} ", e.Message); 
+        }
+      }
     }
 
 
