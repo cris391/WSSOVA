@@ -47,7 +47,6 @@ namespace WebApi
           ClockSkew = TimeSpan.Zero
         };
       });
-      services.AddSingleton<IApiWarmer, ApiWarmer>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
