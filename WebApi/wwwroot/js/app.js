@@ -1,27 +1,33 @@
-define(['knockout'], function(ko) {
-  var firstName = ko.observable('Peter');
-  var lastName = ko.observable('Smith');
+define(['knockout', 'dataService'], function(ko, ds) {
+  var posts = ko.observableArray([]);
+  var pageOfPosts = {};
 
-  var fullName = ko.computed(function() {
-    return firstName() + ' ' + lastName();
+  ds.getPostsWithJQuery('api/questions', function(data) {
+    console.log(data)
+    posts(data.items);
+    pageOfPosts = data;
+    console.log(data);
   });
 
-  var names = ko.observableArray(['Peter', 'John']);
-
-  var addName = function(data) {
-    names.push(fullName());
+  var prev = function() {
+    ds.getPostsWithJQuery(pageOfPosts.prev, function(data) {
+      posts(data.items);
+      pageOfPosts = data;
+      console.log(data);
+    });
   };
 
-  var delName = function(name) {
-    names.remove(name);
+  var next = function() {
+    ds.getPostsWithJQuery(pageOfPosts.next, function(data) {
+      posts(data.items);
+      pageOfPosts = data;
+      console.log(data);
+    });
   };
 
   return {
-    firstName,
-    lastName,
-    fullName,
-    names,
-    addName,
-    delName
+    posts,
+    prev,
+    next
   };
 });
