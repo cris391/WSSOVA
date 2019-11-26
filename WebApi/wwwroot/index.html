@@ -2,17 +2,36 @@
 <html>
   <head>
     <title>index</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <style>
+      #nextBtn {
+        right: 100px;
+        /* position: relative; */
+        float: right;
+      }
+    </style>
   </head>
   <body>
-    <h2>Stack Overflow Posts</h2>
-    <ul data-bind="foreach: posts">
-      <li>
-        <a data-bind="attr: { href: $data.link }, text: $data.title"></a>
-      </li>
-    </ul>
-    <button data-bind="click: prev">Prev</button>
-    <button data-bind="click: next">Next</button>
+    <div class="container">
+      <h2>Stack Overflow Posts</h2>
 
+      <div>
+        <div>Search: <input data-bind="textInput: search" /></div>
+        <div style="border: 2px solid red">
+          <ul data-bind="foreach: searchResult">
+            <li><span data-bind="text: name"></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <ul data-bind="foreach: posts">
+        <li>
+          <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a>
+        </li>
+      </ul>
+      <button class="btn btn-info" data-bind="click: prev">Prev</button>
+      <button class="btn btn-info" id="nextBtn" data-bind="click: next">Next</button>
+    </div>
     <script data-main="js/main.js" src="lib/requirejs/require.js"></script>
   </body>
 </html>
