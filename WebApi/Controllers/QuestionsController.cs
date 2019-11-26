@@ -118,6 +118,9 @@ namespace WebApi.Controllers
           Link = Url.Link(
               nameof(GetQuestion),
               new { questionId = question.QuestionId }),
+          LinkPost = Url.Link(
+           nameof(GetFullPost),
+           new { questionId = question.QuestionId }),
           Title = question.Title,
           QuestionId = question.QuestionId,
           CreationDate = question.Post.CreationDate,
