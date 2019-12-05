@@ -3,56 +3,20 @@
   "defaultProvider": "unpkg",
   "libraries": [
     {
-      "library": "requirejs@2.3.6",
-      "destination": "lib/requirejs/",
-      "files": [
-        "require.js"
-      ]
+      "library": "bootstrap@4.3.1",
+      "destination": "lib/bootstrap"
     },
     {
       "library": "jquery@3.4.1",
-      "destination": "lib/jquery/",
-      "files": [
-        "dist/jquery.js",
-        "dist/jquery.min.js"
-      ]
+      "destination": "lib/jquery"
     },
     {
       "library": "knockout@3.5.1",
-      "destination": "lib/knockout/",
-      "files": [
-        "build/output/knockout-latest.debug.js",
-        "build/output/knockout-latest.js"
-      ]
+      "destination": "lib/knockout"
     },
     {
-      "library": "requirejs-text@2.0.15",
-      "destination": "lib/requirejs-text/",
-      "files": [
-        "text.js"
-      ]
-    },
-    {
-      "library": "bootstrap@4.4.1",
-      "destination": "lib/bootstrap/",
-      "files": [
-        "dist/css/bootstrap.css",
-        "dist/css/bootstrap.min.css",
-        "dist/js/bootstrap.bundle.js",
-        "dist/js/bootstrap.bundle.min.js",
-        "dist/js/bootstrap.js",
-        "dist/js/bootstrap.min.js"
-      ]
-    },
-    {
-      "library": "jqcloud2@2.0.3",
-      "destination": "lib/jqcloud2/",
-      "files": [
-        "dist/jqcloud.css",
-        "dist/jqcloud.js",
-        "dist/jqcloud.min.css",
-        "dist/jqcloud.min.js"
-      ]
+      "library": "requirejs@2.3.6",
+      "destination": "lib/requirejs"
     }
   ]
 }

@@ -1,21 +1,33 @@
-﻿define(["knockout"], function (ko) {
-    var currentComponent = ko.observable("parent");
-    var currentParams = ko.observable({});
-    var changeContent = () => {
-        //if (currentComponent() === "page1") {
-        //    currentParams({ name: 'Ellen' });
-        //    currentComponent("page2");
-        //} else {
-        //    currentParams({});
-        //    currentComponent("page1");
-        //}
-    };
+define(['knockout', 'dataService'], function(ko, ds) {
+  var posts = ko.observableArray([]);
+  var pageOfPosts = {};
 
+  ds.getPostsWithJQuery('api/questions', function(data) {
+    console.log(data)
+    posts(data.items);
+    pageOfPosts = data;
+    console.log(data);
+  });
 
-    return {
-        currentComponent,
-        currentParams,
-        changeContent
+  var prev = function() {
+    ds.getPostsWithJQuery(pageOfPosts.prev, function(data) {
+      posts(data.items);
+      pageOfPosts = data;
+      console.log(data);
+    });
+  };
 
-    };
+  var next = function() {
+    ds.getPostsWithJQuery(pageOfPosts.next, function(data) {
+      posts(data.items);
+      pageOfPosts = data;
+      console.log(data);
+    });
+  };
+
+  return {
+    posts,
+    prev,
+    next
+  };
 });

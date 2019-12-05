@@ -42,16 +42,6 @@ namespace WebApi.Controllers
       return Ok(CreateQuestionDtoFromDb(dto));
     }
 
-    [HttpGet("full/{questionId}", Name = nameof(GetFullPost))]
-    public ActionResult GetFullPost(int questionId)
-    {
-      var result = _dataService.GetFullPost(questionId);
-
-      if (result == null) return NoContent();
-
-      return Ok(result);
-    }
-
     ///////////////////
     //
     // Helpers
@@ -74,9 +64,6 @@ namespace WebApi.Controllers
       dto.Link = Url.Link(
               nameof(GetQuestion),
               new { questionId = question.QuestionId });
-      dto.LinkPost = Url.Link(
-           nameof(GetFullPost),
-           new { questionId = question.QuestionId });
       dto.Body = question.Body;
       return dto;
     }
@@ -118,9 +105,6 @@ namespace WebApi.Controllers
           Link = Url.Link(
               nameof(GetQuestion),
               new { questionId = question.QuestionId }),
-          LinkPost = Url.Link(
-           nameof(GetFullPost),
-           new { questionId = question.QuestionId }),
           Title = question.Title,
           QuestionId = question.QuestionId,
           CreationDate = question.Post.CreationDate,
