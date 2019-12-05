@@ -1,0 +1,13 @@
+<div class="container">
+  <h2 class="text-center">Search for posts</h2>
+
+  <div>
+    <div>Search: <input data-bind="textInput: search" /></div>
+    <div data-bind="if: searchResult().length == 0">No content</div>
+    <ul data-bind="foreach: searchResult">
+      <li>
+        <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a>
+      </li>
+    </ul>
+  </div>
+</div>
