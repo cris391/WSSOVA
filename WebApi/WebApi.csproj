@@ -12,6 +12,9 @@
     <Folder Include="Middleware\" />
     <Folder Include="Services\" />
     <Folder Include="ApiModels\" />
+    <Folder Include="wwwroot\js\components\authcomponent\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\js\components\profilecomponent\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JWT" Version="5.3.1" />
@@ -29,6 +32,9 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 <ItemGroup>
-    <Folder Include="wwwroot\"/>
+    <Folder Include="wwwroot\" />
+</ItemGroup>
+<ItemGroup>
+  <Content Remove="wwwroot\js\components\profile\profile.js" />
 </ItemGroup>
 </Project>

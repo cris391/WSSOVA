@@ -1,12 +1,20 @@
 # StackOverflow Service
-### WebApi
-1. dotnet restore
-2. dotnet watch run --no-build (*development*)
+### Setup the client
+1. install libman
+2. go to /WebApi/wwwroot
+3. execute command ```libman restore``` (installs required dependencies)
+
 
 ### Setup the Data service
 
 1. Scaffold schema from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/stackoverflow-normalized-schema.sql).
 2. Scaffold functions, indexes, etc from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/add-tfidf-weights.sql).(this might take up to 10 minutes)
+
+
+### WebApi
+1. dotnet restore
+2. dotnet watch run --no-build (*development*)
+
 
 ### API USAGE
 

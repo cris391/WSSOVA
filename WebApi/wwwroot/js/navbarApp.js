@@ -8,6 +8,14 @@
         {
             name: "Component 2",
             component: "component2"
+        },
+        {
+            name: "Auth",
+            component: "authcomponent"
+        },
+        {
+            name: "Profile",
+            component: "profilecomponent"
         }
     ];
 

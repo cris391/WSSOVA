@@ -30,7 +30,7 @@ namespace DatabaseService
 
       optionsBuilder
       .UseLoggerFactory(MyLoggerFactory)
-      .UseNpgsql(connectionString: "host=localhost;db=stackoverflow;uid=postgres;pwd=root");
+      .UseNpgsql(connectionString: "host=localhost;db=stack_overflow;uid=postgres;pwd=");
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,7 +38,7 @@ namespace DatabaseService
       modelBuilder.Entity<AnnotationFunction>().HasNoKey();
       modelBuilder.Entity<SearchResult>().HasNoKey();
       modelBuilder.Entity<Tag>().HasNoKey();
-      modelBuilder.Entity<User>().ToTable("app_users");;
+      modelBuilder.Entity<User>().ToTable("app_users");
       modelBuilder.Entity<Owner>().ToTable("stack_users");
       modelBuilder.Entity<SearchHistory>().ToTable("search_history");
       modelBuilder.Entity<SearchHistory>().HasNoKey();
