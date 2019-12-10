@@ -4,14 +4,17 @@
   <div id="home">
     <h2 class="text-center">Stack Overflow Posts</h2>
 
-    <ul data-bind="foreach: posts">
-      <li
-        data-bind="click:
-      $parent.selectPost"
-      >
-        <span data-bind="text: title"></span>
-      </li>
-    </ul>
+    <div class="post-container">
+      <span data-bind="foreach: posts">
+        <div
+          data-bind="click:
+    $parent.selectPost"
+        >
+          <span class="center" data-bind="text: title"></span>
+        </div>
+        <hr />
+      </span>
+    </div>
     <button class="btn btn-info" data-bind="click: prev">Prev</button>
     <button class="btn btn-info" id="nextBtn" data-bind="click: next">Next</button>
   </div>

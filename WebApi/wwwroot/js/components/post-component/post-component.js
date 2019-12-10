@@ -9,7 +9,10 @@ define(['knockout', 'dataService', 'store'], function(ko, ds, store) {
           userLocation: ''
         },
         comments: []
-      }
+      },
+      answers: [
+        { score: 0, body: '', owner: { userDisplayName: '', userCreationDate: 0, userLocation: '' }, comments: '' }
+      ]
     });
     var tags = ko.observable('');
 
