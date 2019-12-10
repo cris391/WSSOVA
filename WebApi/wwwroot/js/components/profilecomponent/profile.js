@@ -29,14 +29,13 @@
                 for (var i = 0; i < jData.length; i++) {
                     $('.search-user-result').append('<tr>' +
                         '<th scope="row">' + i + '</th>' +
-                        '<td>' + jData[i].queryText + jData[i].searchDate + '</td>' +
+                        '<td><a href="' + jData[i].linkPost + '">' + jData[i].queryText + jData[i].searchDate + '</a></td>' +
                         '</tr>');
                 }
             }).fail(function (jFail) {
                 console.log(jFail);
             })
           }
-
 
       // Request User Annotation & Markings
         requestMarkingAnnotationUserData = () => {
@@ -48,7 +47,7 @@
                     xhr.setRequestHeader('Authorization', 'Bearer ' + finalToken);
                 },
             }).done(function (jData) {
-                  console.log(jData);
+                //  console.log(jData);
                 for (var i = 0; i < jData.items.length; i++) {
                     console.log(jData.items[i]);
                     $('.user-mark-annotations').append(
@@ -64,10 +63,7 @@
 
         requestMarkingAnnotationUserData();
         requestUserSearchHistory();
-
     });
-
-
 
 
     var selectPerson = function (person) {

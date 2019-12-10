@@ -7,10 +7,10 @@
     <div data-bind="if: searchResult().length == 0">No content</div>
     <ul data-bind="foreach: searchResult">
       <li>
-           <div>
 
           <button class="markPost" data-bind="attr: {id: $data.id}">  </button>
-          <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a></div>
+          <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a>
+    
       </li>
     </ul>
   </div>
