@@ -17,6 +17,12 @@
     callback(data);
   };
 
+  var getPost = async function(url, callback) {
+    var response = await fetch(url);
+    var data = await response.json();
+    callback(data);
+  };
+
   var searchPosts = async function(query, callback) {
     var response = await fetch(`api/search?q=${query}`);
     if (response.status == 204) {
@@ -35,6 +41,7 @@
     getNames,
     getWords,
     getPosts,
+    getPost,
     getPostsWithJQuery,
     searchPosts
   };

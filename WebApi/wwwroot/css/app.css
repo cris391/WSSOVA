@@ -1,15 +1,32 @@
-﻿
-
-.greenbox {
-    border: 2px solid green;
+﻿.greenbox {
+  border: 2px solid green;
 }
 
 .redbox {
-    border: 2px solid red;
+  border: 2px solid red;
 }
 
 #nextBtn {
-    right: 100px;
-    /* position: relative; */
-    float: right;
-  }
+  right: 100px;
+  /* position: relative; */
+  float: right;
+}
+
+code {
+  color: #212529;
+  background-color: rgb(224, 224, 224);
+}
+
+.user-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#post-comments {
+  font-weight: bold;
+}
+
+#post-answers {
+  font-weight: bold;
+}

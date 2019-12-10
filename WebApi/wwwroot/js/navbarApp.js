@@ -42,8 +42,6 @@
         currentComponent(menu.component);
       }
     } else {
-      console.log('@@@');
-      console.log(store.getState());
       var componentName = store.getState().selectedComponent;
       currentComponent(componentName);
     }
