@@ -5,13 +5,17 @@
 
         const userSearchEndpoint = 'http://localhost:5001/api/search/history';
         const userAnnotationEndpoint = 'http://localhost:5001/api/markings';
-        var userToken = localStorage.getItem('token');
+        var userTokenString = localStorage.getItem('token');
+        console.log(userTokenString);
         var userName = localStorage.getItem('username');
-        var finalToken = userToken.slice(1, userToken.length - 1);
+        //var userToken = JSON.parse(userTokenString);
+        var finalToken = userTokenString.slice(1, userTokenString.length - 1);
+        console.log(finalToken);
+
         $('.welcome').append(userName);
 
         // Request User Search History Data
- 
+        requestUserSearchHistory = () => {
             $.ajax({
                 url: userSearchEndpoint,
                 dataType: 'JSON',
@@ -28,18 +32,14 @@
                         '<td>' + jData[i].queryText + jData[i].searchDate + '</td>' +
                         '</tr>');
                 }
-
-                requestMarkingAnnotationUserData();
-
             }).fail(function (jFail) {
                 console.log(jFail);
             })
+          }
 
 
-        // Request User Annotation & Markings 
-        
+      // Request User Annotation & Markings
         requestMarkingAnnotationUserData = () => {
-
             $.ajax({
                 url: userAnnotationEndpoint,
                 dataType: 'JSON',
@@ -48,27 +48,27 @@
                     xhr.setRequestHeader('Authorization', 'Bearer ' + finalToken);
                 },
             }).done(function (jData) {
-
+                  console.log(jData);
                 for (var i = 0; i < jData.items.length; i++) {
                     console.log(jData.items[i]);
                     $('.user-mark-annotations').append(
                         '<tr>' +
                         '<th scope="row">' + i + '</th>' +
                         '<a href="'+ jData.items[i].linkPost + '"> <td>  ' + jData.items[i].title + '</td></a>' +
-                        '</tr>'
-                    )
+                        '</tr>');
                 }
-
             }).fail(function (jFail) {
                 console.log(jFail);
             })
         }
-       
+
+        requestMarkingAnnotationUserData();
+        requestUserSearchHistory();
 
     });
 
 
- 
+
 
     var selectPerson = function (person) {
         store.dispatch(store.actions.selectPerson(person));

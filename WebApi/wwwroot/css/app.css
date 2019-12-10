@@ -3,6 +3,25 @@
    box-sizing: border-box;
 }
 
+
+
+
+.greenbox {
+    border: 2px solid green;
+}
+
+.redbox {
+    border: 2px solid red;
+}
+
+#nextBtn {
+    right: 100px;
+    /* position: relative; */
+    float: right;
+  }
+
+
+
 /*********************/
 /* Auth Component */
 /*********************/

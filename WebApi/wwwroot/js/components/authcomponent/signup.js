@@ -6,11 +6,12 @@
 
     // Signup new user 
 
-        $('#signup').click(function () {
+        $('#signup').click(function (e) {
+         e.preventDefault();
 
         var username = $('#username').val();
         var password = $('#password').val();
-        var name = "yollo"; //$('#name').value();
+         var name = username; //$('#name').value();
 
         var dataObject = {
             username: username,
@@ -27,11 +28,6 @@
             data: JSON.stringify(dataObject)
         }).done(function (jData) {
             console.log(jData);
-            Swal.fire(
-                'Welcome',
-                'You Successfully created a User!',
-                'success'
-            )
 
         }).fail(function (jFail) {
             console.log('failed', jFail);
@@ -41,7 +37,8 @@
 
     // Authenticate user
 
-    $('#login').click(function () {
+      $('#login').click(function (e) {
+        e.preventDefault();
         var username = $('#username').val();
         var password = $('#password').val();
 
@@ -61,6 +58,7 @@
         }).done(function (jData) {
             var token = localStorage.setItem('token', JSON.stringify(jData.token));
             var username = localStorage.setItem('username', JSON.stringify(jData.username));
+            console.log(token, username);
 
         }).fail(function (jFail) {
             console.log(jFail);

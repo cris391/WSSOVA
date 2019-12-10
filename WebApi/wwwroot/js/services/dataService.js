@@ -31,6 +31,7 @@
     $.getJSON(url, callback);
   };
 
+
   return {
     getNames,
     getWords,

@@ -3,10 +3,14 @@
 
   <div>
     <div>Search: <input data-bind="textInput: search" /></div>
+
     <div data-bind="if: searchResult().length == 0">No content</div>
     <ul data-bind="foreach: searchResult">
       <li>
-        <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a>
+           <div>
+
+          <button class="markPost" data-bind="attr: {id: $data.id}">  </button>
+          <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a></div>
       </li>
     </ul>
   </div>

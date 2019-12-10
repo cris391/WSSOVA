@@ -26,9 +26,9 @@ namespace WebApi.Controllers
     {
       var words = GetWords(searchQuery.Q);
 
-      // var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
+      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
 
-      var result = _dataService.Search(words, 1);
+      var result = _dataService.Search(words, userId);
 
       if (result.Count == 0) return NoContent();
 
@@ -79,11 +79,12 @@ namespace WebApi.Controllers
       {
         searchResultDtos.Add(new SearchResultDto
         {
+          Id = searchResult.QuestionId,
           Link = Url.Link(
               nameof(QuestionsController.GetQuestion),
               new { questionId = searchResult.QuestionId }),
           LinkPost = Url.Link(
-              nameof(QuestionsController.GetFullPost),
+              nameof(QuestionsController.GetFullPost),  
               new { questionId = searchResult.QuestionId }),
           Title = searchResult.Title
         });

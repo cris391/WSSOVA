@@ -16,18 +16,18 @@
       name: 'Component 2',
       component: 'component2'
     },
- {
-            name: "Auth",
-            component: "authcomponent"
-        },
-        {
-            name: "Profile",
-            component: "profilecomponent"
-        }
+    {
+      name: "Auth",
+       component: "authcomponent"
+    },
+    {
+       name: "Profile",
+       component: "profilecomponent"
+     }
 
   ];
 
-{
+
   var currentMenu = ko.observable(menuElements[0]);
   var currentPost = ko.observable();
   var currentComponent = ko.observable(currentMenu().component);
@@ -70,4 +70,5 @@
     isSelected,
     changeComponentContent
   };
+
 });
