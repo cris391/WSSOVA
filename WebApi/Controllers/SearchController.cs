@@ -20,15 +20,15 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
-    [Authorize]
+    // [Authorize]
     [HttpGet]
     public ActionResult Search([FromQuery] SearchQuery searchQuery)
     {
       var words = GetWords(searchQuery.Q);
 
-      var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
+      // var userId = Helpers.GetUserIdFromJWTToken(Request.Headers["Authorization"]);
 
-      var result = _dataService.Search(words, userId);
+      var result = _dataService.Search(words, 1);
 
       if (result.Count == 0) return NoContent();
 
@@ -79,8 +79,11 @@ namespace WebApi.Controllers
       {
         searchResultDtos.Add(new SearchResultDto
         {
-          LinkPost = Url.Link(
+          Link = Url.Link(
               nameof(QuestionsController.GetQuestion),
+              new { questionId = searchResult.QuestionId }),
+          LinkPost = Url.Link(
+              nameof(QuestionsController.GetFullPost),
               new { questionId = searchResult.QuestionId }),
           Title = searchResult.Title
         });

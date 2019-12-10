@@ -1,18 +1,17 @@
-﻿
-require.config({
-    baseUrl: "js",
-    paths: {
-        jquery: "../lib/jquery/dist/jquery",
-        knockout: "../lib/knockout/build/output/knockout-latest.debug",
-        text: "../lib/requirejs-text/text",
-        jqcloud: "../lib/jqcloud2/dist/jqcloud",
-        dataService: "services/dataService",
-        postman: "services/postman",
-        store: "services/store"
-    },
-    shim: {
-        jqcloud: ["jquery"]
-    }
+﻿require.config({
+  baseUrl: 'js',
+  paths: {
+    jquery: '../lib/jquery/dist/jquery',
+    knockout: '../lib/knockout/build/output/knockout-latest.debug',
+    text: '../lib/requirejs-text/text',
+    jqcloud: '../lib/jqcloud2/dist/jqcloud',
+    dataService: 'services/dataService',
+    postman: 'services/postman',
+    store: 'services/store'
+  },
+  shim: {
+    jqcloud: ['jquery']
+  }
 });
 
 require(["knockout"], function (ko) {
@@ -43,12 +42,23 @@ require(["knockout"], function (ko) {
     ko.components.register('profilecomponent', {
         viewModel: { require: "components/profilecomponent/profile" },
         template: { require: "text!components/profilecomponent/profile.html" }
-    });
-   
+    });  ko.components.register('home-component', {
+  ko.components.register('home-component', {
+ 	viewModel: { require: 'components/home-component/home-component' },
+    template: { require: 'text!components/home-component/home-component.html' }
+  });
+  ko.components.register('search-component', {
+    viewModel: { require: 'components/search-component/search-component' },
+    template: { require: 'text!components/search-component/search-component.html' }
+  });
+  ko.components.register('post-component', {
+    viewModel: { require: 'components/post-component/post-component' },
+    template: { require: 'text!components/post-component/post-component.html' }
+  });
 });
 
 
-require(["knockout", "store", "navbarApp"], function (ko, store, app) {
-    store.subscribe(() => console.log(store.getState()));
-    ko.applyBindings(app);
+require(['knockout', 'store', 'navbarApp'], function(ko, store, app) {
+  store.subscribe(() => console.log(store.getState()));
+  ko.applyBindings(app);
 });
