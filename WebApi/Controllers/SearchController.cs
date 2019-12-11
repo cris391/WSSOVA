@@ -20,7 +20,7 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
-    [Authorize]
+    // [Authorize]
     [HttpGet]
     public ActionResult Search([FromQuery] SearchQuery searchQuery)
     {
@@ -79,8 +79,12 @@ namespace WebApi.Controllers
       {
         searchResultDtos.Add(new SearchResultDto
         {
-          LinkPost = Url.Link(
+          Id = searchResult.QuestionId,
+          Link = Url.Link(
               nameof(QuestionsController.GetQuestion),
+              new { questionId = searchResult.QuestionId }),
+          LinkPost = Url.Link(
+              nameof(QuestionsController.GetFullPost),  
               new { questionId = searchResult.QuestionId }),
           Title = searchResult.Title
         });

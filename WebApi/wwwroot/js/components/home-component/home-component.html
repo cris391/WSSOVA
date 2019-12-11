@@ -1,0 +1,18 @@
+<div class="container">
+  <!-- <post-component data-bind="visible: true" params="post: postObs"></post-component> -->
+
+  <div id="home">
+    <h2 class="text-center">Stack Overflow Posts</h2>
+
+    <ul data-bind="foreach: posts">
+      <li
+        data-bind="click:
+      $parent.selectPost"
+      >
+        <span data-bind="text: title"></span>
+      </li>
+    </ul>
+    <button class="btn btn-info" data-bind="click: prev">Prev</button>
+    <button class="btn btn-info" id="nextBtn" data-bind="click: next">Next</button>
+  </div>
+</div>
