@@ -4,8 +4,7 @@
 
     $(document).ready(function () {
 
-    // Signup new user 
-
+    // Signup new user
         $('#signup').click(function (e) {
          e.preventDefault();
 
@@ -28,12 +27,16 @@
             data: JSON.stringify(dataObject)
         }).done(function (jData) {
             console.log(jData);
-
+            Swal.fire(
+              'Good job!',
+              'You Successfully Created a user',
+              'success'
+            )
+            $('#signup').hide();
         }).fail(function (jFail) {
             console.log('failed', jFail);
         })
     });
-
 
     // Authenticate user
 
@@ -59,11 +62,14 @@
             var token = localStorage.setItem('token', JSON.stringify(jData.token));
             var username = localStorage.setItem('username', JSON.stringify(jData.username));
             console.log(token, username);
-
+            Swal.fire(
+              'Good job!',
+              'You Successfully logged in',
+              'success'
+            )
         }).fail(function (jFail) {
             console.log(jFail);
         })
-
     });
 
     });

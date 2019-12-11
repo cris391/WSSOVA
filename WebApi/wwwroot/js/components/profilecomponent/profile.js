@@ -3,6 +3,17 @@
 
     $(document).ready(function () {
 
+        $('#logout').click(function() {
+            console.log('logout');
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            Swal.fire(
+                'Good job!',
+                'You have now logged out',
+                'success'
+              )
+        });
+
         const userSearchEndpoint = 'http://localhost:5001/api/search/history';
         const userAnnotationEndpoint = 'http://localhost:5001/api/markings';
         var userTokenString = localStorage.getItem('token');

@@ -6,6 +6,10 @@
    box-sizing: border-box;
 }
 
+.bg-light{
+  box-shadow: 0 4px 7px 0 rgba(24,24,24,.16) !important;
+  margin-bottom: 32px !important;
+}
 
 a {
   color: #3D4F9F !important;
