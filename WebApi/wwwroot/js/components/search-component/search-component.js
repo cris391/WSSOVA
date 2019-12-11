@@ -11,11 +11,19 @@ define(['knockout', 'dataService', 'store'], function (ko, ds, store) {
       searchResult([]);
       return;
     }
-    searchPosts(sanitizedQuery);
+    if(userAuthToken !== null) {
+          searchPosts(sanitizedQuery);
+    } else {
+      Swal.fire(
+        'Please Login to Search',
+        'We help you store the search results',
+        'success'
+      )
+    }
+
   });
 
   var searchPosts = query => {
-
     ds.searchPosts(query, function(data) {
       if (data == 204) {
         searchResult([]);
@@ -29,7 +37,11 @@ define(['knockout', 'dataService', 'store'], function (ko, ds, store) {
   $(document).on('click','.markPost', function(event) {
       //let id = event.target.id;
       let id = $(this).attr('id');
-      storeMarkingUsers(id);
+      if(userAuthToken.length > 1) {
+          storeMarkingUsers(id);
+      } else{
+
+      }
   });
 
    storeMarkingUsers = (id) => {
@@ -37,15 +49,9 @@ define(['knockout', 'dataService', 'store'], function (ko, ds, store) {
        var url = "http://localhost:5001/api/markings";
        var token = localStorage.getItem('token');
 
-       console.log(selectedQuestionId);
-       console.log(token);
-       console.log(JSON.parse(token));
-
        const data = {
           postid: parseInt(id)
        };
-
-        console.log(data);
 
        $.ajax({
            url: url,
