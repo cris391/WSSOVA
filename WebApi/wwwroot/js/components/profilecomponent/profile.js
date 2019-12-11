@@ -8,7 +8,6 @@
         var userTokenString = localStorage.getItem('token');
         console.log(userTokenString);
         var userName = localStorage.getItem('username');
-        //var userToken = JSON.parse(userTokenString);
         var finalToken = userTokenString.slice(1, userTokenString.length - 1);
         console.log(finalToken);
 
@@ -25,11 +24,10 @@
                 },
             }).done(function (jData) {
                 console.log(jData);
-
                 for (var i = 0; i < jData.length; i++) {
                     $('.search-user-result').append('<tr>' +
                         '<th scope="row">' + i + '</th>' +
-                        '<td><a href="' + jData[i].linkPost + '">' + jData[i].queryText + jData[i].searchDate + '</a></td>' +
+                        '<td>' + jData[i].queryText + jData[i].searchDate + '</td>' +
                         '</tr>');
                 }
             }).fail(function (jFail) {
@@ -47,13 +45,13 @@
                     xhr.setRequestHeader('Authorization', 'Bearer ' + finalToken);
                 },
             }).done(function (jData) {
-                //  console.log(jData);
+              console.log(jData);
                 for (var i = 0; i < jData.items.length; i++) {
-                    console.log(jData.items[i]);
+                    console.log(jData.items[i].linkPost);
                     $('.user-mark-annotations').append(
                         '<tr>' +
                         '<th scope="row">' + i + '</th>' +
-                        '<a href="'+ jData.items[i].linkPost + '"> <td>  ' + jData.items[i].title + '</td></a>' +
+                        '<td><a href="'+ jData.items[i].linkPost + '">' + jData.items[i].title + '</a></td>' +
                         '</tr>');
                 }
             }).fail(function (jFail) {
