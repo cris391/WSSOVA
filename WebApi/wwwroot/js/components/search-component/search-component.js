@@ -24,35 +24,11 @@ define(['knockout', 'dataService', 'store'], function (ko, ds, store) {
       }
     });
   };
-/*
-let index = 0;
-index++;
-setTimeout(function() {
-      if(query.length >= 4 && 4 <= index){
-        console.log(userSearchEndpoint + "?q=" + query);
-          $.ajax({
-            url: userSearchEndpoint + "?q=" + query,
-            type: "POST",
-            dataType: "json",
-            processData: false,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + userAuthToken);
-            },
-          }).done(function(jData) {
-            console.log('Successfully stored  user search ', jData);
-
-          }).fail(function(jFail){
-            console.log(jFail);
-          })
-      }
-},4000)
-
-*/
-
 
 
   $(document).on('click','.markPost', function(event) {
-      let id = event.target.id;
+      //let id = event.target.id;
+      let id = $(this).attr('id');
       storeMarkingUsers(id);
   });
 
@@ -62,10 +38,14 @@ setTimeout(function() {
        var token = localStorage.getItem('token');
 
        console.log(selectedQuestionId);
+       console.log(token);
+       console.log(JSON.parse(token));
 
        const data = {
           postid: parseInt(id)
        };
+
+        console.log(data);
 
        $.ajax({
            url: url,
@@ -79,12 +59,16 @@ setTimeout(function() {
            },
        }).done(function(jData) {
           console.log(jData);
+          Swal.fire(
+            'Marked - Post',
+            '' + jData.title,
+            'success'
+          )
 
        }).fail(function(jFail){
           console.log(jFail);
        });
     };
-
 
   return function(params) {
     return {
