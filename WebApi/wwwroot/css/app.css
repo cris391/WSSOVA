@@ -1,10 +1,19 @@
+/*********************/
+/* Global */
+/*********************/
 ﻿* {
    font-size: 'Helvetica-neue';
    box-sizing: border-box;
 }
 
 
+a {
+  color: #3D4F9F !important;
+}
 
+p {
+  color: #3D4F9F !important;
+}
 
 .greenbox {
     border: 2px solid green;
@@ -15,12 +24,62 @@
 }
 
 #nextBtn {
-    right: 100px;
+  right: 100px;
     /* position: relative; */
-    float: right;
+  float: right;
   }
 
+/*********************/
+/* Search  Component */
+/*********************/
+h2.headline{
+  font-size:42px;
+  color: #3D4F9F;
+  font-weight: 200;
+  text-align: center;
+}
 
+.search-box{
+  margin: 0 auto;
+  padding: 25px;
+}
+
+input{
+  border-radius: 10px;
+}
+
+li.search-result-card{
+  -webkit-box-shadow: 2px 1px 11px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 1px 11px -5px rgba(0,0,0,0.75);
+  box-shadow: 2px 1px 11px -5px rgba(0,0,0,0.75);
+  padding: 12px;
+  margin: 15px;
+  border-radius: 13px;
+}
+
+li.search-result-card:hover {
+    opacity: 0.8;
+    zoom: 1.04;
+}
+
+ul.post-search-result {
+    list-style: none;
+}
+
+svg.mark-star {
+  width: 30px;
+  height: 30px;
+}
+
+
+markPost:hover {
+     0%  {-webkit-transform: rotate(0deg);}
+     100% {-webkit-transform: rotate(360deg);}
+}
+
+.markPost {
+    border: none;
+}
 
 /*********************/
 /* Auth Component */

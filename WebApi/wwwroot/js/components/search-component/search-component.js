@@ -15,36 +15,40 @@ define(['knockout', 'dataService', 'store'], function (ko, ds, store) {
   });
 
   var searchPosts = query => {
-    let index = 0;
-    index++;
+
     ds.searchPosts(query, function(data) {
       if (data == 204) {
         searchResult([]);
       } else {
           searchResult(data);
       }
-
-      setTimeout(function() {
-            if(query.length >= 4 && 4 <= index){
-                $.ajax({
-                  url: userSearchEndpoint + "?q=" + query,
-                  type: "POST",
-                  dataType: "json",
-                  processData: false,
-                  beforeSend: function (xhr) {
-                      xhr.setRequestHeader('Authorization', 'Bearer ' + userAuthToken);
-                  },
-                }).done(function(jData) {
-                  console.log('Successfully stored  user search ', jData);
-
-                }).fail(function(jFail){
-                  console.log(jFail);
-                })
-            }
-      },4000)
-
     });
   };
+/*
+let index = 0;
+index++;
+setTimeout(function() {
+      if(query.length >= 4 && 4 <= index){
+        console.log(userSearchEndpoint + "?q=" + query);
+          $.ajax({
+            url: userSearchEndpoint + "?q=" + query,
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + userAuthToken);
+            },
+          }).done(function(jData) {
+            console.log('Successfully stored  user search ', jData);
+
+          }).fail(function(jFail){
+            console.log(jFail);
+          })
+      }
+},4000)
+
+*/
+
 
 
   $(document).on('click','.markPost', function(event) {

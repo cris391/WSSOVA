@@ -20,7 +20,7 @@ namespace WebApi.Controllers
       _mapper = mapper;
     }
 
-    // [Authorize]
+    [Authorize]
     [HttpGet]
     public ActionResult Search([FromQuery] SearchQuery searchQuery)
     {
