@@ -9,10 +9,6 @@
       component: 'search-component'
     },
     {
-      name: 'Component 1',
-      component: 'component1'
-    },
-    {
       name: 'Component 2',
       component: 'component2'
     },

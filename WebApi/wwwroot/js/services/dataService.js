@@ -20,19 +20,19 @@
   var searchPosts = async function(query, callback) {
     const token = localStorage.getItem('token');
     var finalToken = token.slice(1, token.length - 1);
-    console.log(finalToken);
-
-    var response = await fetch(`api/search?q=${query}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + finalToken
-      },
-    })
-    if (response.status == 204) {
-      callback(response.status);
-    } else {
-      var data = await response.json();
-      callback(data);
+    if(query.length > 2) {
+      var response = await fetch(`api/search?q=${query}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + finalToken
+        },
+      })
+      if (response.status == 204) {
+        callback(response.status);
+      } else {
+        var data = await response.json();
+        callback(data);
+      }
     }
   };
 
