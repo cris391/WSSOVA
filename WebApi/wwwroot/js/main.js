@@ -27,10 +27,7 @@ require(["knockout"], function (ko) {
         viewModel: { require: "components/child/child" },
         template: { require: "text!components/child/child.html" }
     });
-    ko.components.register('component1', {
-        viewModel: { require: "components/component1/component1" },
-        template: { require: "text!components/component1/component1.html" }
-    });
+
     ko.components.register('component2', {
         viewModel: { require: "components/component2/component2" },
         template: { require: "text!components/component2/component2.html" }
@@ -45,7 +42,7 @@ require(["knockout"], function (ko) {
         viewModel: { require: "components/profilecomponent/profile" },
         template: { require: "text!components/profilecomponent/profile.html" }
     });
- 
+
       ko.components.register('home-component', {
  	    viewModel: { require: 'components/home-component/home-component' },
         template: { require: 'text!components/home-component/home-component.html' }
