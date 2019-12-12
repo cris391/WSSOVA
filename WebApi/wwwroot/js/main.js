@@ -60,7 +60,7 @@ require(["knockout"], function (ko) {
     });
 
 
-require(['knockout', 'store', 'navbarApp'], function(ko, store, app) {
+require(['knockout', 'store', 'navbarApp', 'messageApp'], function(ko, store, app, message) {
   store.subscribe(() => console.log(store.getState()));
   ko.applyBindings(app);
 });
