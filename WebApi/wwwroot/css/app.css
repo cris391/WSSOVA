@@ -1,7 +1,7 @@
 /*********************/
 /* Global */
 /*********************/
-﻿* {
+* {
    font-size: 'Helvetica-neue';
    box-sizing: border-box;
 }
@@ -24,7 +24,7 @@ p {
 }
 
 .redbox {
-    border: 2px solid red;
+  border: 2px solid red;
 }
 
 #nextBtn {
@@ -83,6 +83,25 @@ markPost:hover {
 
 .markPost {
     border: none;
+}
+
+code {
+  color: #212529;
+  background-color: rgb(224, 224, 224);
+}
+
+.user-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#post-comments {
+  font-weight: bold;
+}
+
+#post-answers {
+  font-weight: bold;
 }
 
 /*********************/

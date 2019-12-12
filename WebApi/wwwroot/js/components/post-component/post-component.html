@@ -1,1 +1,85 @@
-<div class="container">Post</div>
+<div class="container">
+  
+  <div class="row">
+    <div class="col-md-2">
+      <span data-bind="text: 'Creation date ' + post().question.creationDate"></span>
+      <hr />
+      <span data-bind="text: 'Score ' + post().question.score"></span>
+      <hr />
+      <span data-bind="text: post().question.marking == null ? false: true"></span>
+    </div>
+    <div class="col-10">
+      <h3 data-bind="text: post().question.title"></h3>
+      <span data-bind="html: post().question.body"></span>
+      <span class="font-weight-bold">Tags</span>
+      <span data-bind="text: tags()"></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6"></div>
+    <div class="col-6">
+      <div class="user-container">
+        <span data-bind="text: 'Username: ' + post().question.owner.userDisplayName"></span>
+        <span data-bind="text: 'User creation date: ' + post().question.owner.userCreationDate"></span>
+        <span
+          data-bind="text: post().question.owner.userLocation == null ? '' : 'User location: ' + post().question.owner.userLocation"
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-9">
+      <!-- <span id="post-comments">Question comments</span> -->
+      <span class="font-weight-bold" data-bind="text: 'Question comments: ' + post().question.comments.length"></span>
+      <span data-bind="foreach: post().question.comments">
+        <div class="row">
+          <div class="col-2" data-bind="text: 'Score ' + commentScore"></div>
+          <div class="col-10">
+            <span data-bind="text: commentText + ' - User: ' + userId + ' - create date: ' + commentCreateDate"></span>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+      <span id="post-answers">Answers </span>
+      <span data-bind="foreach: post().answers">
+        <div class="row">
+          <div class="col-2" data-bind="text: 'Score ' + score"></div>
+          <span class="col-10">
+            <span data-bind="html: body"></span>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <div class="user-container">
+
+                  <span data-bind="text: 'Username: ' + owner.userDisplayName"></span>
+                  <span data-bind="text: 'User creation date: ' + owner.userCreationDate"></span>
+                  <span data-bind="text: owner.userLocation == null ? '' : 'User location: ' + owner.userLocation"></span>
+                </div>
+              </div>
+            </div>
+            <span class="font-weight-bold" data-bind="text: 'Answer comments: ' + comments.length"></span>
+            <span data-bind="foreach: comments">
+                <div class="row">
+                  <div class="col-2" data-bind="text: 'Score ' + commentScore"></div>
+                  <div class="col-10">
+                    <span data-bind="text: commentText + ' - User: ' + userId + ' - create date: ' + commentCreateDate"></span>
+                  </div>
+                </div>
+              </span>
+        </span>
+      </div>
+    </span>
+        </div>
+
+        </span>
+      </span>
+    </div>
+  </div>
+</div>

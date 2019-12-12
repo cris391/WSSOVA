@@ -19,7 +19,6 @@ define(['knockout', 'dataService', 'store', 'navbarApp'], function(ko, ds, store
   });
 
   ds.getPosts(function(data) {
-    console.log(data);
     posts(data.items);
     pageOfPosts = data;
   });
@@ -38,9 +37,6 @@ define(['knockout', 'dataService', 'store', 'navbarApp'], function(ko, ds, store
   };
 
   var selectPost = function(post) {
-    // console.log(post)
-    // postObs(post);
-    // isPost(true);
     store.dispatch(store.actions.selectPost(post));
     // store.dispatch(store.actions.selectComponent('post-component'));
     // navbarApp.changeComponentContent('post-component');

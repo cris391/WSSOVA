@@ -3,8 +3,7 @@
 
   <div class="col-12">
     <div class="col-8 search-box">
-       <input class="form-control" data-bind="textInput: search" placeholder="Search for Questions & Answers" />
-     </div>
+       <input class="form-control"  data-bind="value: searchValue, event: { change: search }" placeholder="Search for Questions & Answers" />
 
     <div class="no-content" data-bind="if: searchResult().length == 0"><h5 class="text-center">No content found, start search...<h5></div>
 
