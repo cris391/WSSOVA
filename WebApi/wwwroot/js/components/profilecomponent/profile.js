@@ -39,7 +39,7 @@
                   if(jData[i].queryText.length > 3){
                     $('.search-user-result').append('<tr>' +
                         '<th scope="row">' + i + '</th>' +
-                        '<td>' + '<h5 class="search-q">'+ jData[i].queryText.slice(1,jData[i].queryText.length -1)+ '</h5>' + '<p class="datetime">' + jData[i].searchDate + '</p>'+ '</td>' +
+                        '<td>' + '<h5 class="search-q">'+ jData[i].queryText.slice(0,jData[i].queryText.length -1)+ '</h5>' + '<p class="datetime">' + jData[i].searchDate + '</p>'+ '</td>' +
                         '</tr>');
                               }
                 }
