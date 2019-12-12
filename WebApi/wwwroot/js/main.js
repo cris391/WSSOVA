@@ -36,6 +36,10 @@ require(["knockout"], function(ko) {
         viewModel: { require: "components/component2/component2" },
         template: { require: "text!components/component2/component2.html" }
     });
+    ko.components.register('component3', {
+        viewModel: { require: "components/component3/component3" },
+        template: { require: "text!components/component3/component3.html" }
+    });
 });
 
 

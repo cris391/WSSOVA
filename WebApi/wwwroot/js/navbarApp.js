@@ -8,6 +8,10 @@
         {
             name: "Component 2",
             component: "component2"
+        },
+        {
+            name: "Component 3",
+            component: "component3"
         }
     ];
 
