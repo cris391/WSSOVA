@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>index</title>
+    <title>Stack Viewer App</title>
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="lib/jqcloud2/dist/jqcloud.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous" />
 </head>
 <body>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Stack Overflow Viewer App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -27,7 +29,7 @@
 
 <div data-bind="component: {name: currentComponent}"></div>
 
-<!-- <pre data-bind="text: ko.toJSON($data, null, 2)"></pre> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.3/dist/sweetalert2.all.min.js" integrity="sha256-H1ETG6sfcAls4Yl41c1ogUqbVb1C2igT62igiJ7KmGo=" crossorigin="anonymous"></script>
 <script data-main="js/main.js" src="lib/requirejs/require.js"></script>
 </body>
 </html>

@@ -9,14 +9,20 @@
       component: 'search-component'
     },
     {
-      name: 'Component 1',
-      component: 'component1'
-    },
-    {
       name: 'Component 2',
       component: 'component2'
-    }
+    },
+    {
+      name: "Auth",
+       component: "authcomponent"
+    },
+    {
+       name: "Profile",
+       component: "profilecomponent"
+     }
+
   ];
+
 
   var currentMenu = ko.observable(menuElements[0]);
   var currentPost = ko.observable();
@@ -58,4 +64,5 @@
     isSelected,
     changeComponentContent
   };
+
 });
