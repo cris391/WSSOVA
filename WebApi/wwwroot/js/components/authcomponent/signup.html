@@ -2,19 +2,27 @@
       <div class="auth-container">
 
            <h1 class="headline">Stack Overflow <b>Viewer Application</b> </h1>
-
+              <br/>
            <div class="inner-content">
 
                <div class="auth-breadcrum">
                    <h3 class="headline_2">Login/Signup</h3>
                </div>
-               
-               <div class="auth-form">
+
+               <form class="auth-form" novalidate>
                     <label> Username </label>
-                    <input id="username" class="inputs" type="text" />
-                
+                    <input id="username" class="inputs" type="text" minlength=3 required />
+
                     <label>Password</label>
-                    <input id="password" class="inputs" type="password" />
+                    <input id="password" class="inputs" type="password" minlength=3  required/>
+
+                    <div class="valid-feedback">
+
+                    </div>
+
+                    <div class="invalid-feedback">
+
+                    </div>
 
                    <div class="auth-btns">
                        <button id="signup" class="signup-btn"> Signup </button>
@@ -22,6 +30,6 @@
                    </div>
                </div>
            </div>
-               
+
       </div>
 </div>

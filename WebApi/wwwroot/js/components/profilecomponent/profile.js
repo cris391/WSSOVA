@@ -1,10 +1,7 @@
 ﻿define(['knockout', 'dataService', 'store'], function (ko, ds, store) {
-    var persons = ko.observableArray([]);
 
     $(document).ready(function () {
-
         $('#logout').click(function() {
-            console.log('logout');
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             Swal.fire(
@@ -19,7 +16,6 @@
         var userTokenString = localStorage.getItem('token');
         var userName = localStorage.getItem('username');
         var finalToken = userTokenString.slice(1, userTokenString.length - 1);
-        console.log(finalToken);
 
         $('.welcome').append(userName);
 
@@ -33,7 +29,6 @@
                     xhr.setRequestHeader('Authorization', 'Bearer ' + finalToken);
                 },
             }).done(function (jData) {
-                console.log(jData);
                 for (var i = 0; i < jData.length; i++) {
                   if(jData[i].queryText.length > 4){
                     $('.search-user-result').append('<tr>' +
@@ -59,7 +54,6 @@
             }).done(function (jData) {
               console.log(jData);
                 for (var i = 0; i < jData.items.length; i++) {
-
                     $('.user-mark-annotations').append(
                         '<tr>' +
                         '<th scope="row">' + i + '</th>' +
@@ -76,19 +70,10 @@
     });
 
 
-    var selectPerson = function (person) {
-        store.dispatch(store.actions.selectPerson(person));
-        store.dispatch(store.actions.selectMenu("Component 2"));
-        //postman.publish("selectperson", person);
-    };
 
-
-    ds.getNames(persons);
 
     return function (params) {
         return {
-            persons,
-            selectPerson
         };
     };
 });

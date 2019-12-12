@@ -20,7 +20,6 @@
        name: "Profile",
        component: "profilecomponent"
      }
-
   ];
 
 

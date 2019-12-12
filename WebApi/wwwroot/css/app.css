@@ -77,7 +77,7 @@ svg.mark-star {
 
 
 markPost:hover {
-     0%  {-webkit-transform: rotate(0deg);}
+     0% {-webkit-transform: rotate(0deg);}
      100% {-webkit-transform: rotate(360deg);}
 }
 
@@ -148,6 +148,10 @@ label {
 }
 
 
+.invalid-input{
+  border: 2px solid red;  
+}
+
 
 /*********************/
 /* Profile Component */
@@ -166,4 +170,29 @@ label {
 
 .right{
     margin: 13px;
+}
+
+h2.welcome{
+  color: #3D4F9F;
+}
+
+/*********************/
+/* Auth Component */
+/*********************/
+
+.inner-content {
+    box-shadow: 0 4px 7px 0 rgba(24,24,24,.16);
+    border-radius: 17px;
+}
+
+input {
+    border-radius: 10px;
+    width: 57%;
+    margin: 0 auto !important;
+}
+
+label {
+      margin: 0 auto !important;
+      padding: 15px;
+      color: #3D4F9F;
 }
