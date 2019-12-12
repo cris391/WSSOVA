@@ -38,14 +38,8 @@ define(['knockout', 'dataService', 'store', 'navbarApp'], function(ko, ds, store
 
   var selectPost = function(post) {
     store.dispatch(store.actions.selectPost(post));
-    // store.dispatch(store.actions.selectComponent('post-component'));
-    // navbarApp.changeComponentContent('post-component');
+    navbarApp.currentComponent('post-component');
   };
-
-  store.subscribe(() => {
-    // var state = store.getState();
-    // person(state.selectedPerson);
-  });
 
   return function(params) {
     return {

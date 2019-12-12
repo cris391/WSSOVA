@@ -1,16 +1,11 @@
-define(['knockout', 'dataService', 'store'], function(ko, ds, store) {
+define(['knockout', 'dataService', 'store', 'navbarApp'], function(ko, ds, store, navbarApp) {
   var searchValue = ko.observable('');
   var searchResult = ko.observableArray([]);
   const userSearchHistoryEndpoint = 'http://localhost:5001/api/search';
   const userAuthToken = localStorage.getItem('token');
 
-  searchValue.subscribe(function(data) {
-    console.log(data);
-  });
-
   var search = (data, event) => {
     var sanitizedQuery = searchValue().split(' ').join('+');
-    console.log(sanitizedQuery)
     if (sanitizedQuery.length === 0) {
       searchResult([]);
       return;
@@ -70,12 +65,17 @@ define(['knockout', 'dataService', 'store'], function(ko, ds, store) {
       });
   };
 
+  var selectPost = function(post) {
+    store.dispatch(store.actions.selectPost(post));
+    navbarApp.currentComponent('post-component');
+  };
   return function(params) {
     return {
       search,
       searchValue,
       searchResult,
-      storeMarkingUsers
+      storeMarkingUsers,
+      selectPost
     };
   };
 });

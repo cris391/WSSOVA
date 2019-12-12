@@ -23,23 +23,25 @@
 
   ];
 
-
+console.log(1)
   var currentMenu = ko.observable(menuElements[0]);
   var currentPost = ko.observable();
   var currentComponent = ko.observable(currentMenu().component);
   // var currentComponent = ko.observable();
 
   var changeContent = function(menu) {
+    console.log(123)
+    console.log(currentComponent())
     store.dispatch(store.actions.selectMenu(menu.name));
   };
 
   var changeComponentContent = function(data) {
-    console.log('###')
-    console.log(data)
     store.dispatch(store.actions.selectComponent(data));
   };
 
   store.subscribe(() => {
+    console.log('#######')
+    console.log(store.getState())
     var menuName = store.getState().selectedMenu;
     if (menuName != undefined) {
       var menu = menuElements.find(x => x.name === menuName);
@@ -47,10 +49,11 @@
         currentMenu(menu);
         currentComponent(menu.component);
       }
-    } else {
-      var componentName = store.getState().selectedComponent;
-      currentComponent(componentName);
-    }
+    } 
+    // else {
+    //   var componentName = store.getState().selectedComponent;
+    //   currentComponent(componentName);
+    // }
   });
 
   var isSelected = function(menu) {
