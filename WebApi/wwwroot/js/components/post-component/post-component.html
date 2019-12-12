@@ -1,6 +1,6 @@
 <div class="container">
   
-  <div class="row">
+  <div id="post" class="row">
     <div class="col-md-2">
       <span data-bind="text: 'Creation date ' + post().question.creationDate"></span>
       <hr />
@@ -15,7 +15,6 @@
       <span data-bind="text: tags()"></span>
     </div>
   </div>
-
   <div class="row">
     <div class="col-6"></div>
     <div class="col-6">
@@ -23,11 +22,12 @@
         <span data-bind="text: 'Username: ' + post().question.owner.userDisplayName"></span>
         <span data-bind="text: 'User creation date: ' + post().question.owner.userCreationDate"></span>
         <span
-          data-bind="text: post().question.owner.userLocation == null ? '' : 'User location: ' + post().question.owner.userLocation"
+        data-bind="text: post().question.owner.userLocation == null ? '' : 'User location: ' + post().question.owner.userLocation"
         ></span>
       </div>
     </div>
   </div>
+  <hr>
   <div class="row">
     <div class="col-3"></div>
     <div class="col-9">
