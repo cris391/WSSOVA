@@ -4,11 +4,13 @@
     <title>index</title>
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="lib/jqcloud2/dist/jqcloud.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
     <link href="css/app.css" rel="stylesheet" />
+
     </head>
 
  <body>
-   <div style= "border: 2px solid black">
+   <div>
      <div data-bind="with:home">
      
      </div>
@@ -20,7 +22,7 @@
        <h2 class="headline">Stackoverflow Viewer <br>Applicaition</h2>
        <p class="desc">Our system is built from scratch with high performance for <br> searching our database</p>
 
-     <div id="ellipse-left" class="ellipse" > </div>
+       <div id="ellipse-left" class="ellipse" > </div>
        <div id="ellipse-right" class="ellipse" > </div>
        <div id="ellipse-left-top" class="ellipse" > </div>
        <div id="ellipse-right-top1" class="ellipse" > </div>
@@ -43,72 +45,157 @@
             </div>
     </div>
 
-
+     <div class="section_line"></div>
     
     <div class="about">
-    <div class="about-container">
-        <h5>About us</h5>
-<h3>Read about our SOWA App</h3>
+        <div id="ellipse-a" class="ellipse" > </div>
+            <div id="ellipse-b" class="ellipse" > </div>
+           <div id="ellipse-c" class="ellipse" > </div>
+            <div id="ellipse-d" class="ellipse" > </div>
+             <div id="ellipse-e" class="ellipse" > </div>
+            <div id="ellipse-f"class="ellipse"> </div>
+            <div id="ellipse-g" class="ellipse"> </div>
+            <div id="ellipse-h" class="ellipse" > </div>
+         <div id="ellipse-i" class="ellipse" > </div>
+         <div id="ellipse-j" class="ellipse" > </div>
+        <div class="about-txt">
 
-        <div class="features" style= "border:2px solid black">
+            <h5 id="about">About us</h5>
+            <h3>Read about our SOWA App</h3>
+          </div>
+      <div class="about-container">
+          
 
+        <div class="row">
+          
             
-            <div class="overview" style= "border:2px solid black">
-                <div id="circle-overview" class="circle"> </div>
-
+            <div id="overview" class="col-md" >
+                <div id="circle-overview" class="circle">
+                    <div class="search icon"></div>
+                </div>
 
                 <div class="overview_text">
                     <h4>Overview</h4>
-                <p>Efficient and performancewise fast search</p>
+                    <p id="features-txt">Efficient and performancewise<br /> fast search                 </p>
                 </div>
             </div>
 
+            <div id="files" class="col-md">
+                <div id="circle-files" class="circle">
+                    <div class="folder"></div>
+                </div>
+                <div id="files_text">
+                    <h4>Files</h4>
+                    <p class="features-txt">Our data is built on real stack overflow data, extracted directly from a data dump.</p>
+                </div>
+            </div>
 
+             <div id="grp-software" class="col-md">
+                <div id="circle-grp-software" class="circle">
+                   <div class="chat icon"></div>
+                </div>
+                <div class="grp-software-txt">
+                    <h4>Group Software Project</h4>
+                <p id="features-txt">Part of our Master Computer Sicence Education we established a custom robust system buildt</p>
+                </div>
+            </div>
 
+            <div id="save-event" class="col-md" >
+                <div id="circle-save-event" class="circle">
+                    <div class="upload icon"></div>
+                </div>
+
+                <div class="grp-software-txt">
+                    <h4>Save Events</h4>
+                    <p id="Save-event-txt">Save specific post and mark and add annotations to always secure the best answers</p>
+                </div>
+            </div>
 
         </div>
 
-        <div class="about_btn">
-       
-      <button id="btn_read_more">Read more</button>
-             <div id="line1" class="line" > </div>
-           <p id="OR">OR</p>
-            <div id="line2" class="line" > </div>
-         <button id="btn_get_started">Get started</button>
+
+        
+      </div>
+
+        <div class="row1">
+          <button id="btn_read_more">Read more</button>
+           <p id="OR" class="col-md-5">OR</p>
+          <button id="btn_get_started">Get started</button>
             
-        </div>
-       
+        </div> 
     </div>
+
+
+    
+     <div class="blog"> 
+       <h4 class="blog-h4">Our resources</h4>
+       <h3 class="blog-h3">Try it out with a quick search..</h3>
+          
+       <div id="blog-container">
+         <div class="row">
+
+           <div class="col-lg-3">
+              <img class="img-fluid" id="stack-img" src=https://upload.wikimedia.org/wikipedia/commons/c/c0/Stackoverflow_meaningful_logo.svg alt="Stack" />
+           </div>
+                 <div id="middle-row" class="col-lg-3">   
+                    <div id="sml-code" >
+                      <img id="sml-code1" class="img-fluid" src="https://s3.envato.com/files/261073161/code_1_loop_img.jpg" alt="Code" />
+                     </div>
+                     <br />
+                        <div id="sml-code" >
+                          <img id="sml-code2" class="img-fluid" src="https://p1.pxfuel.com/preview/883/670/349/code-coding-computer-technology.jpg" alt="Code" />
+                         </div>
+                  </div>
+          
+
+              <div id="blog-txt" class="col"> 
+                <h3>Start searching</h3>
+
+                <p>Get ther best help for your coding problem,
+                simply browse through either categorries of a specific issue or do a more narrowed search with multiple keywords for the best match</p>
+                <div id="blog-btn" >
+                <button id="try-it">Try it now</button>
+                <button id="add">Add to your profile</button>
+                </div>
+
+              </div>
+             
+         </div>     
+       </div>
+  
      </div>
 
-    <div class="blog"> 
-        <div class="blog-container">
-<h4 class="blog-h4">Our resources</h4>
-<input class="blog-search" type="text" placeholder="Try it out with a quick search">
-            </div>
-        </div>
 
-<div
-    style= "border:2px solid black">
-    <h3>Start searching</h3>
-    <p>Get ther best help for your coding problem, simply browse through either categorries of a specific issue or do a more narrowed search with multiple keywords for the best match</p>
-    <button>Try it now</button>
-    <button>Add to your profile</button>
-</div>
+     <div class="plan-container">
+         <div id="ellipse1" class="ellipse" > </div>
+            <div id="ellipse2" class="ellipse" > </div>
+           <div id="ellipse3" class="ellipse" > </div>
+            <div id="ellipse4" class="ellipse" > </div>
+             <div id="ellipse5" class="ellipse" > </div>
+            <div id="ellipse6"class="ellipse"> </div>
+            <div id="ellipse7" class="ellipse"> </div>
+            <div id="ellipse8" class="ellipse" > </div>
+         <div id="ellipse9" class="ellipse" > </div>
 
-<div  style= "border:2px solid black">
-    <p>PLAN YOUR LIFE</p>
-    <h2>Get started now</h2>
-    <p>Start by creating an account for extra features, it's simple!</p>
-    <button>Start now</button>
-    <button>Read documentation</button>
-</div>
+       <div id="txt-n-btn">
+            <h4 class="plan-head">PLAN YOUR LIFE</h4>
+            <h2>Get <b>started</b> now</h2>
+        
+            <p>Start by creating an account for extra features, it's simple!</p>
 
+            <div class="plan-btn">
+                <button id="start">Start now</button>
+                <button id="read">Read documentation</button>
+            
+           </div>
+       </div>
 
-    <footer>
-  <p>Created by: RAW7</p>
-</footer>
-     
-</body>
+     </div>
+
+     <footer>
+         <p class="copyright">Copyright © 2019 by Raw7</p>
+     </footer>
+
+ </body>
 
 </html>
