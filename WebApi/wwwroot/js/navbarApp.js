@@ -1,4 +1,4 @@
-﻿define(['knockout', 'store'], function(ko, store) {
+define(['knockout', 'store'], function(ko, store) {
   var menuElements = [
     {
       name: 'Home',
@@ -12,6 +12,10 @@
       name: 'Component 2',
       component: 'component2'
     },
+     {
+            name: "Component 3",
+            component: "component3"
+        },
     {
       name: "Auth",
        component: "authcomponent"
@@ -58,3 +62,4 @@
   };
 
 });
+
