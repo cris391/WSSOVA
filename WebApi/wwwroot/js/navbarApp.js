@@ -12,10 +12,6 @@ define(['knockout', 'store'], function(ko, store) {
       name: 'Component 2',
       component: 'component2'
     },
-     {
-            name: "Component 3",
-            component: "component3"
-        },
     {
       name: "Auth",
        component: "authcomponent"
@@ -46,7 +42,7 @@ define(['knockout', 'store'], function(ko, store) {
         currentMenu(menu);
         currentComponent(menu.component);
       }
-    } 
+    }
   });
 
   var isSelected = function(menu) {
@@ -62,4 +58,3 @@ define(['knockout', 'store'], function(ko, store) {
   };
 
 });
-
