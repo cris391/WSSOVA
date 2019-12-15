@@ -1,7 +1,7 @@
-﻿define(["knockout"], function (ko) {
-    var currentComponent = ko.observable("component1");
-    
-    return {
-        currentComponent
-    };
+﻿define(['knockout'], function(ko) {
+  var currentComponent = ko.observable('search-component');
+  
+  return {
+    currentComponent
+  };
 });
