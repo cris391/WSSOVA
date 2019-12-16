@@ -41,6 +41,10 @@ define(['knockout', 'dataService', 'store', 'navbarApp'], function(ko, ds, store
     navbarApp.currentComponent('post-component');
   };
 
+  navigateToSearch = () => {
+    store.dispatch(store.actions.selectMenu("Search Posts"))
+  }
+
   return function(params) {
     return {
       posts,
@@ -50,7 +54,8 @@ define(['knockout', 'dataService', 'store', 'navbarApp'], function(ko, ds, store
       searchResult,
       postObs,
       selectPost,
-      isPost
+      isPost,
+      navigateToSearch
     };
   };
 });

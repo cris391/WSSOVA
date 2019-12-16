@@ -23,6 +23,7 @@ define(['knockout', 'dataService', 'store', 'navbarApp'], function(ko, ds, store
         searchResult([]);
       } else {
         searchResult(data);
+        $('.search-result-total').text('Your Search Resulted in : ' + data.length + ' Posts Found');
       }
     });
   };
