@@ -1,6 +1,50 @@
 
+/*********************/
+/* Post */
+/*********************/
+.post-body{
+  box-shadow: 0 4px 7px 0 rgba(24, 24, 24, 0.16);
+  padding: 22px;
+}
+
+.post-sidebar{
+  padding: 17px;
+  box-shadow: 0 4px 7px 0 rgba(24, 24, 24, 0.16);
+  height: 196px;
+  border-radius: 6px;
+}
 
 
+code {
+    color: rgb(171, 178, 191) !important;
+    background-color: rgb(224, 224, 224, 0.1) !important;
+}
+
+pre {
+  padding: 15px !important;
+    color: rgb(171,178,191) !important;
+    background-color: rgba(0,0,0,0.8) !important;
+}
+
+
+.commet-container {
+  padding: 13px;
+  box-shadow: 0 4px 7px 0 rgba(24, 24, 24, 0.16);
+}
+
+
+.comment-score {
+  padding: 24px;
+  top: 5px;
+}
+
+.blue-color{
+  color: #3d4f9f;
+}
+
+.question-body{
+  padding: 5px;
+}
 
 /*********************/
 /* Global */
@@ -102,6 +146,8 @@ code {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  width: 356px;
+  border: 1px solid black;
 }
 
 #post-comments {
