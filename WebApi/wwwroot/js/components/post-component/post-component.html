@@ -1,16 +1,16 @@
 <div class="container">
-  
+
   <div id="post" class="row">
-    <div class="col-md-2">
+    <div class="col-md-2 post-sidebar">
       <span data-bind="text: 'Creation date ' + post().question.creationDate"></span>
       <hr />
       <span data-bind="text: 'Score ' + post().question.score"></span>
       <hr />
       <span data-bind="text: post().question.marking == null ? false: true"></span>
     </div>
-    <div class="col-10">
+    <div class="col-10 post-body">
       <h3 data-bind="text: post().question.title"></h3>
-      <span data-bind="html: post().question.body"></span>
+      <span class="question-body" data-bind="html: post().question.body"></span>
       <span class="font-weight-bold">Tags</span>
       <span data-bind="text: tags()"></span>
     </div>
@@ -64,12 +64,12 @@
                 </div>
               </div>
             </div>
-            <span class="font-weight-bold" data-bind="text: 'Answer comments: ' + comments.length"></span>
+            <span class="font-weight-bold blue-color" data-bind="text: 'Answer comments: ' + comments.length"></span>
             <span data-bind="foreach: comments">
                 <div class="row">
-                  <div class="col-2" data-bind="text: 'Score ' + commentScore"></div>
-                  <div class="col-10">
-                    <span data-bind="text: commentText + ' - User: ' + userId + ' - create date: ' + commentCreateDate"></span>
+                  <div class="col-2 comment-score" data-bind="text: 'Score ' + commentScore"></div>
+                  <div class="col-10 commet-container">
+                    <span  data-bind="text: commentText + ' - User: ' + userId + ' - create date: ' + commentCreateDate"></span>
                   </div>
                 </div>
               </span>
