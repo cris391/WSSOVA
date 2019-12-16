@@ -20,7 +20,6 @@ define(['knockout', 'store'], function(ko, store) {
        name: "Profile",
        component: "profilecomponent"
      }
-
   ];
 
   var currentMenu = ko.observable(menuElements[0]);

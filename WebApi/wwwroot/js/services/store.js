@@ -3,6 +3,7 @@
   const selectMenu = 'SELECT_MENU';
   const selectComponent = 'SELECT_COMPONENT';
   const selectPost = 'SELECT_POST';
+  const authenticatedUser = 'AUTHENTICATED_USER';
 
   var subscribers = [];
 
@@ -40,6 +41,13 @@
   };
 
   var actions = {
+
+    authenticateuser: function(user) {
+      return {
+        type: selectUser,
+        selectedUser: user
+      };
+    },
     selectPerson: function(person) {
       return {
         type: selectPerson,
@@ -62,7 +70,7 @@
       return {
         type: selectPost,
         selectedPost: post,
-      
+
       };
     }
   };
