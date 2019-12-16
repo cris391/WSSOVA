@@ -9,7 +9,7 @@ define(['knockout', 'store'], function(ko, store) {
       component: 'search-component'
     },
     {
-      name: 'Component 2',
+      name: 'Word Cloud',
       component: 'component2'
     },
     {
@@ -20,7 +20,6 @@ define(['knockout', 'store'], function(ko, store) {
        name: "Profile",
        component: "profilecomponent"
      },
-    
 
   ];
 
