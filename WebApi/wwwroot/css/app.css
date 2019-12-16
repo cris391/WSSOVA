@@ -269,3 +269,25 @@ label {
       padding: 15px;
       color: #3D4F9F;
 }
+
+
+
+/*********************/
+/* Word Cloud  */
+/*********************/
+#cloud {
+  width: 100%;
+  height: auto;
+}
+
+
+.cloud-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 3fr));
+}
+
+@media screen and (max-width: 480px) {
+  .cloud-container{
+      display: flex;
+  }
+}
