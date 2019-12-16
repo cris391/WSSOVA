@@ -12,8 +12,8 @@
 
    <div class="hero-image animated fadeIn">
 
-       <p class="hero-QA">Search through QA</p>
-       <h2 class="headline">Stack Overflow <b>Viewer <br>Application</b></h2>
+
+       <h2 class="headline" id="headline-home">Stack Overflow <b>Viewer <br>Application</b></h2>
        <p class="desc animated fadeInLeft">Our system is built from scratch with high performance for <br> searching our database</p>
 
        <div id="ellipse-left" class="ellipse" > </div>
@@ -29,7 +29,7 @@
        <div id="ellipse-right-down1" class="ellipse" > </div>
        <div id="ellipse-right-down2" class="ellipse" > </div>
        <div id="ellipse-right-down3" class="ellipse" > </div>
-       <svg id="graphing" viewBox="0 0 1408 465" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <svg class="animated slideInUp fadeIn" id="graphing" viewBox="0 0 1408 465" fill="none" xmlns="http://www.w3.org/2000/svg">
        <path d="M-4 422.51C194.624 422.51 336.479 387.633 466.667 389.758C769.847 394.705 626.685 247.682 937.333 247.682C1275.58 247.682 1194.63 118 1408 118" stroke="#5F82FF" stroke-width="3"/>
        <path d="M466.667 389.758C336.479 387.633 194.624 422.51 -4 422.51V465H1408V118C1194.63 118 1275.58 247.682 937.333 247.682C626.685 247.682 769.847 394.705 466.667 389.758Z" fill="url(#paint0_linear)" fill-opacity="0.4"/>
        <line x1="901.905" y1="200" x2="901.905" y2="389" stroke="#D8E0F7"/>
@@ -203,8 +203,8 @@
                 <p>Get ther best help for your coding problem,
                 simply browse through either categorries of a specific issue or do a more narrowed search with multiple keywords for the best match</p>
                 <div id="blog-btn" >
-                <button id="try-it">Try it now</button>
-                <button id="add">Add to your profile</button>
+                <button data-bind="click: navigateToSearch" id="try-it">Try now</button>
+
                 </div>
 
               </div>
@@ -245,12 +245,12 @@
                <h2 class="text-center headerline">Stack Overflow Posts</h2>
 
                <div class="post-container">
-                 <span data-bind="foreach: posts">
-                   <div
+                 <span data-bind="foreach: posts" >
+                   <div class="animated fadeIn"
                      data-bind="click:
                $parent.selectPost"
                    >
-                     <span class="center" data-bind="text: title"></span>
+                     <span class="center posting" data-bind="text: title"></span>
                    </div>
                    <hr />
                  </span>

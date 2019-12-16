@@ -40,6 +40,14 @@ p {
 /*********************/
 /* Search  Component */
 /*********************/
+
+.search-result-total {
+    text-align: center;
+    font-size: 22px;
+    padding-bottom: 11px;
+    color: #3d4f9f;
+}
+
 h2.headline {
   font-size: 42px;
   color: #3d4f9f;
@@ -169,7 +177,7 @@ label {
 
 
 .invalid-input{
-  border: 2px solid red;  
+  border: 2px solid red;
 }
 
 
