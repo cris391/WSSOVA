@@ -1,73 +1,77 @@
+
+
+
+
 /*********************/
 /* Global */
 /*********************/
-﻿* {
-   font-size: 'Helvetica-neue';
-   box-sizing: border-box;
+* {
+  font-size: 'Helvetica-neue';
+  box-sizing: border-box;
 }
 
-.bg-light{
-  box-shadow: 0 4px 7px 0 rgba(24,24,24,.16) !important;
+.bg-light {
+  box-shadow: 0 4px 7px 0 rgba(24, 24, 24, 0.16) !important;
   margin-bottom: 32px !important;
 }
 
 a {
-  color: #3D4F9F !important;
+  color: #3d4f9f !important;
 }
 
 p {
-  color: #3D4F9F !important;
+  color: #3d4f9f !important;
 }
 
 .greenbox {
-    border: 2px solid green;
+  border: 2px solid green;
 }
 
 .redbox {
-    border: 2px solid red;
+  border: 2px solid red;
 }
 
 #nextBtn {
   right: 100px;
-    /* position: relative; */
+  /* position: relative; */
   float: right;
-  }
+}
 
 /*********************/
 /* Search  Component */
 /*********************/
-h2.headline{
-  font-size:42px;
-  color: #3D4F9F;
+h2.headline {
+  font-size: 42px;
+  color: #3d4f9f;
   font-weight: 200;
   text-align: center;
 }
 
-.search-box{
+.search-box {
   margin: 0 auto;
   padding: 25px;
 }
 
-input{
+input {
   border-radius: 10px;
 }
 
-li.search-result-card{
-  -webkit-box-shadow: 2px 1px 11px -5px rgba(0,0,0,0.75);
-  -moz-box-shadow: 2px 1px 11px -5px rgba(0,0,0,0.75);
-  box-shadow: 2px 1px 11px -5px rgba(0,0,0,0.75);
+li.search-result-card {
+  -webkit-box-shadow: 2px 1px 11px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 2px 1px 11px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 1px 11px -5px rgba(0, 0, 0, 0.75);
   padding: 12px;
   margin: 15px;
   border-radius: 13px;
 }
 
 li.search-result-card:hover {
-    opacity: 0.8;
-    zoom: 1.04;
+  opacity: 0.8;
+  zoom: 1.04;
 }
 
 ul.post-search-result {
-    list-style: none;
+  list-style: none;
 }
 
 svg.mark-star {
@@ -76,13 +80,28 @@ svg.mark-star {
 }
 
 
-markPost:hover {
-     0% {-webkit-transform: rotate(0deg);}
-     100% {-webkit-transform: rotate(360deg);}
-}
 
 .markPost {
-    border: none;
+  border: none;
+}
+
+code {
+  color: #212529;
+  background-color: rgb(224, 224, 224);
+}
+
+.user-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#post-comments {
+  font-weight: bold;
+}
+
+#post-answers {
+  font-weight: bold;
 }
 
 /*********************/
@@ -90,9 +109,10 @@ markPost:hover {
 /*********************/
 
 .auth-container {
-    max-width: 650px;
-    margin: 0 auto;
+  max-width: 650px;
+  margin: 0 auto;
 }
+
 
 h1.headline{
     font-size:40px;
@@ -102,49 +122,49 @@ h1.headline{
 }
 
 h3.headline_2 {
-    ont-size: 31px;
-    color: #3D4F9F;
-    font-weight: 200;
-    font-size: 25px;
-    text-align: center;
-    padding: 17px;
+  font-size: 31px;
+  color: #3d4f9f;
+  font-weight: 200;
+  font-size: 25px;
+  text-align: center;
+  padding: 17px;
 }
 
-.auth-form{
-    display: flex;
-    flex-direction: column;
+.auth-form {
+  display: flex;
+  flex-direction: column;
 }
 
 .inputs {
-    border-radius: 13px;
-    height: 39px;
-    margin: 17px;
-    box-shadow: 0 4px 7px 0 rgba(24,24,24,.16);
-    border: none;
+  border-radius: 13px;
+  height: 39px;
+  margin: 17px;
+  box-shadow: 0 4px 7px 0 rgba(24, 24, 24, 0.16);
+  border: none;
 }
 
 label {
-    font-size: 19px;
-    margin-left: 32px;
+  font-size: 19px;
+  margin-left: 32px;
 }
 
 .auth-btns {
-    display: flex;
-    padding: 32px;
+  display: flex;
+  padding: 32px;
 }
 
-.signup-btn{
-    width: 50%;
-    height: 54.01px;
-    background: #FFD7D7;
-    border-radius: 2px;
+.signup-btn {
+  width: 50%;
+  height: 54.01px;
+  background: #ffd7d7;
+  border-radius: 2px;
 }
 
-.login-btn{
-    height: 54.01px;
-    width: 50%;
-    background: #D2E1FF;
-    border-radius: 2px;
+.login-btn {
+  height: 54.01px;
+  width: 50%;
+  background: #d2e1ff;
+  border-radius: 2px;
 }
 
 
@@ -153,23 +173,22 @@ label {
 }
 
 
+
 /*********************/
 /* Profile Component */
 /*********************/
 
-
-.main-container{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(545px, 2fr));
+.main-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(545px, 2fr));
 }
-
 
 .left {
-    margin: 13px;
+  margin: 13px;
 }
 
-.right{
-    margin: 13px;
+.right {
+  margin: 13px;
 }
 
 h2.welcome{

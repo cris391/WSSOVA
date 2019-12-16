@@ -28,7 +28,7 @@
       case selectComponent:
         return Object.assign({}, state, { selectedComponent: action.selectComponent });
       case selectPost:
-        return Object.assign({}, state, { selectedPost: action.selectedPost, selectedComponent: 'post-component' });
+        return Object.assign({}, state, { selectedPost: action.selectedPost });
       default:
         return state;
     }
@@ -36,7 +36,6 @@
 
   var dispatch = function(action) {
     currentState = reducer(currentState, action);
-    console.log(action)
 
     subscribers.forEach(callback => callback());
   };

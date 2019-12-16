@@ -1,18 +1,268 @@
-<div class="container">
-  <!-- <post-component data-bind="visible: true" params="post: postObs"></post-component> -->
 
-  <div id="home">
-    <h2 class="text-center">Stack Overflow Posts</h2>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+  </head>
 
-    <ul data-bind="foreach: posts">
-      <li
-        data-bind="click:
-      $parent.selectPost"
-      >
-        <span data-bind="text: title"></span>
-      </li>
-    </ul>
-    <button class="btn btn-info" data-bind="click: prev">Prev</button>
-    <button class="btn btn-info" id="nextBtn" data-bind="click: next">Next</button>
-  </div>
-</div>
+ <body>
+   <div>
+     <div data-bind="with:home">
+
+     </div>
+   </div>
+
+   <div class="hero-image animated fadeIn">
+
+       <p class="hero-QA">Search through QA</p>
+       <h2 class="headline">Stack Overflow <b>Viewer <br>Application</b></h2>
+       <p class="desc animated fadeInLeft">Our system is built from scratch with high performance for <br> searching our database</p>
+
+       <div id="ellipse-left" class="ellipse" > </div>
+       <div id="ellipse-right" class="ellipse" > </div>
+       <div id="ellipse-left-top" class="ellipse" > </div>
+       <div id="ellipse-right-top1" class="ellipse" > </div>
+       <div id="ellipse-right-top2" class="ellipse" > </div>
+       <div id="ellipse-right-top3" class="ellipse" > </div>
+       <div id="ellipse-left-down1" class="ellipse" > </div>
+       <div id="ellipse-left-down2" class="ellipse" > </div>
+       <div id="ellipse-left-down3" class="ellipse" > </div>
+       <div id="ellipse-left-down4" class="ellipse" > </div>
+       <div id="ellipse-right-down1" class="ellipse" > </div>
+       <div id="ellipse-right-down2" class="ellipse" > </div>
+       <div id="ellipse-right-down3" class="ellipse" > </div>
+       <svg id="graphing" viewBox="0 0 1408 465" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M-4 422.51C194.624 422.51 336.479 387.633 466.667 389.758C769.847 394.705 626.685 247.682 937.333 247.682C1275.58 247.682 1194.63 118 1408 118" stroke="#5F82FF" stroke-width="3"/>
+       <path d="M466.667 389.758C336.479 387.633 194.624 422.51 -4 422.51V465H1408V118C1194.63 118 1275.58 247.682 937.333 247.682C626.685 247.682 769.847 394.705 466.667 389.758Z" fill="url(#paint0_linear)" fill-opacity="0.4"/>
+       <line x1="901.905" y1="200" x2="901.905" y2="389" stroke="#D8E0F7"/>
+       <g filter="url(#filter0_d)">
+       <ellipse cx="901.894" cy="248.5" rx="7.34906" ry="7.5" fill="white"/>
+       <path d="M908.244 248.5C908.244 252.109 905.382 255 901.894 255C898.407 255 895.545 252.109 895.545 248.5C895.545 244.891 898.407 242 901.894 242C905.382 242 908.244 244.891 908.244 248.5Z" stroke="#5E80FE" stroke-width="2"/>
+       </g>
+       <line x1="1301.69" x2="1301.69" y2="317" stroke="#D8E0F7"/>
+       <g filter="url(#filter1_d)">
+       <ellipse cx="1301.68" cy="134.5" rx="7.34906" ry="7.5" fill="white"/>
+       <path d="M1308.03 134.5C1308.03 138.109 1305.17 141 1301.68 141C1298.2 141 1295.33 138.109 1295.33 134.5C1295.33 130.891 1298.2 128 1301.68 128C1305.17 128 1308.03 130.891 1308.03 134.5Z" stroke="#5E80FE" stroke-width="2"/>
+       </g>
+       <line x1="501.136" y1="378" x2="501.136" y2="437" stroke="#D8E0F7"/>
+       <line x1="101.347" y1="262" x2="101.347" y2="452" stroke="#D8E0F7"/>
+       <g filter="url(#filter2_d)">
+       <ellipse cx="101.337" cy="419.5" rx="7.34906" ry="7.5" fill="white"/>
+       <path d="M107.686 419.5C107.686 423.109 104.824 426 101.337 426C97.8492 426 94.9875 423.109 94.9875 419.5C94.9875 415.891 97.8492 413 101.337 413C104.824 413 107.686 415.891 107.686 419.5Z" stroke="#5E80FE" stroke-width="2"/>
+       </g>
+       <defs>
+       <filter id="filter0_d" x="879.545" y="226" width="44.6981" height="45" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+       <feOffset/>
+       <feGaussianBlur stdDeviation="7.5"/>
+       <feColorMatrix type="matrix" values="0 0 0 0 0.323144 0 0 0 0 0.512664 0 0 0 0 1 0 0 0 0.25 0"/>
+       <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+       <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+       </filter>
+       <filter id="filter1_d" x="1279.33" y="112" width="44.6981" height="45" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+       <feOffset/>
+       <feGaussianBlur stdDeviation="7.5"/>
+       <feColorMatrix type="matrix" values="0 0 0 0 0.323144 0 0 0 0 0.512664 0 0 0 0 1 0 0 0 0.25 0"/>
+       <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+       <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+       </filter>
+       <filter id="filter2_d" x="78.9875" y="397" width="44.6981" height="45" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+       <feOffset/>
+       <feGaussianBlur stdDeviation="7.5"/>
+       <feColorMatrix type="matrix" values="0 0 0 0 0.323144 0 0 0 0 0.512664 0 0 0 0 1 0 0 0 0.25 0"/>
+       <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+       <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+       </filter>
+       <linearGradient id="paint0_linear" x1="268.862" y1="465.443" x2="268.862" y2="10.0051" gradientUnits="userSpaceOnUse">
+       <stop stop-color="#4B71FF" stop-opacity="0"/>
+       <stop offset="1" stop-color="#6B89F8"/>
+       </linearGradient>
+       </defs>
+       </svg>
+    </div>
+
+    <div class="RUC">
+            <div class="ruc-container">
+              <img class="img-fluid animated fadeInDown" src="https://dit-roskilde.dk/wp-content/uploads/2017/11/RUC_ROSKILDE_UNIVERSITY_BLACK_TEKST-UNDER-LOGO_CMYK.png" alt="RUC logo" />
+            </div>
+    </div>
+
+     <div class="section_line"></div>
+
+    <div class="about">
+        <div id="ellipse-a" class="ellipse" > </div>
+            <div id="ellipse-b" class="ellipse" > </div>
+           <div id="ellipse-c" class="ellipse" > </div>
+            <div id="ellipse-d" class="ellipse" > </div>
+             <div id="ellipse-e" class="ellipse" > </div>
+            <div id="ellipse-f"class="ellipse"> </div>
+            <div id="ellipse-g" class="ellipse"> </div>
+            <div id="ellipse-h" class="ellipse" > </div>
+         <div id="ellipse-i" class="ellipse" > </div>
+         <div id="ellipse-j" class="ellipse" > </div>
+        <div class="about-txt">
+
+            <h5 id="about">About us</h5>
+            <h3>Read about our SOWA App</h3>
+          </div>
+
+      <div class="about-container container">
+
+
+        <div class="overview-parrent row">
+
+
+            <div id="overview" class="col-12 col-md-3 col-lg-3">
+                <div id="circle-overview" class="circle">
+                    <div class="search icon"></div>
+                </div>
+                <div class="overview_text">
+                    <h4>Overview</h4>
+                    <p id="features-txt">Efficient and performancewise<br /> fast search                 </p>
+                </div>
+            </div>
+
+            <div id="files" class="col-12 col-md-3 col-lg-3">
+                <div id="circle-files" class="circle">
+                    <div class="folder"></div>
+                </div>
+                <div id="files_text">
+                    <h4>Files</h4>
+                    <p class="features-txt">Our data is built on real stack overflow data, extracted directly from a data dump.</p>
+                </div>
+            </div>
+
+             <div id="grp-software" class="col-12 col-md-3 col-lg-3">
+                <div id="circle-grp-software" class="circle">
+                   <div class="chat icon"></div>
+                </div>
+                <div class="grp-software-txt">
+                    <h4>Group Software Project</h4>
+                <p id="features-txt">Part of our Master Computer Sicence Education we established a custom robust system buildt</p>
+                </div>
+            </div>
+
+            <div id="save-event" class="col-12 col-md-3 col-lg-3">
+                <div id="circle-save-event" class="circle">
+                    <div class="upload icon"></div>
+                </div>
+
+                <div class="grp-software-txt">
+                    <h4>Save Events</h4>
+                    <p id="Save-event-txt">Save specific post and mark and add annotations to always secure the best answers</p>
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+
+      </div>
+
+        <div class="row1">
+          <button id="btn_read_more">Read more</button>
+           <p id="OR" class="col-md-5">OR</p>
+          <button id="btn_get_started">Get started</button>
+
+
+    </div>
+
+
+
+     <div class="blog">
+       <h4 class="blog-h4">Our resources</h4>
+       <h3 class="blog-h3">Try it out with a quick search..</h3>
+
+       <div id="blog-container">
+         <div class="row blog-parrent">
+
+           <div class="col-lg-3">
+              <img class="img-fluid" id="stack-img" src=https://upload.wikimedia.org/wikipedia/commons/c/c0/Stackoverflow_meaningful_logo.svg alt="Stack" />
+           </div>
+
+                 <div id="middle-row" class="col-lg-3">
+                    <div id="sml-code" >
+                      <img id="sml-code1" class="img-fluid" src="https://s3.envato.com/files/261073161/code_1_loop_img.jpg" alt="Code" />
+                 </div>
+
+                     <br/>
+
+                        <div id="sml-code" >
+                          <img id="sml-code2" class="img-fluid" src="https://p1.pxfuel.com/preview/883/670/349/code-coding-computer-technology.jpg" alt="Code" />
+                        </div>
+
+                  </div>
+
+
+              <div id="blog-txt" class="col">
+                <h3>Start searching</h3>
+
+                <p>Get ther best help for your coding problem,
+                simply browse through either categorries of a specific issue or do a more narrowed search with multiple keywords for the best match</p>
+                <div id="blog-btn" >
+                <button id="try-it">Try it now</button>
+                <button id="add">Add to your profile</button>
+                </div>
+
+              </div>
+
+         </div>
+       </div>
+
+     </div>
+
+
+     <div class="plan-container">
+         <div id="ellipse1" class="ellipse" > </div>
+            <div id="ellipse2" class="ellipse" > </div>
+           <div id="ellipse3" class="ellipse" > </div>
+            <div id="ellipse4" class="ellipse" > </div>
+             <div id="ellipse5" class="ellipse" > </div>
+            <div id="ellipse6"class="ellipse"> </div>
+            <div id="ellipse7" class="ellipse"> </div>
+            <div id="ellipse8" class="ellipse" > </div>
+         <div id="ellipse9" class="ellipse" > </div>
+
+       <div id="txt-n-btn">
+            <h4 class="plan-head">Start Browsing through questions</h4>
+            <h2>Get <b>started</b> now</h2>
+
+            <!--- click event to auth  -->
+            <p>Start by creating an account for extra features, it's simple!</p>
+
+            <div class="plan-btn">
+                <button id="start">Start now</button>
+                <button id="read">Read documentation</button>
+           </div>
+
+           <div class="container">
+             <!-- <post-component data-bind="visible: true" params="post: postObs"></post-component> -->
+
+             <div id="home">
+               <h2 class="text-center headerline">Stack Overflow Posts</h2>
+
+               <div class="post-container">
+                 <span data-bind="foreach: posts">
+                   <div
+                     data-bind="click:
+               $parent.selectPost"
+                   >
+                     <span class="center" data-bind="text: title"></span>
+                   </div>
+                   <hr />
+                 </span>
+               </div>
+               <button class="btn-custom left" data-bind="click: prev">Prev</button>
+               <button class="btn-custom right" id="nextBtn" data-bind="click: next">Next</button>
+             </div>
+           </div>
+       </div>
+
+     </div>
+
+     <footer>
+         <p class="copyright text-center">Copyright © 2019 by Raw7</p>
+     </footer>

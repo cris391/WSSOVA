@@ -33,6 +33,12 @@ require(["knockout"], function (ko) {
         template: { require: "text!components/component2/component2.html" }
     });
 
+    ko.components.register('component3', {
+        viewModel: { require: "components/component3/component3" },
+        template: { require: "text!components/component3/component3.html" }
+    });
+
+
     ko.components.register('authcomponent', {
         viewModel: { require: "components/authcomponent/signup" },
         template: { require: "text!components/authcomponent/signup.html" }
@@ -60,7 +66,8 @@ require(["knockout"], function (ko) {
     });
 
 
-require(['knockout', 'store', 'navbarApp'], function(ko, store, app) {
+
+require(['knockout', 'store', 'navbarApp', 'messageApp'], function(ko, store, app, message) {
   store.subscribe(() => console.log(store.getState()));
   ko.applyBindings(app);
 });

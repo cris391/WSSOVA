@@ -1,4 +1,4 @@
-﻿define(['knockout', 'store'], function(ko, store) {
+define(['knockout', 'store'], function(ko, store) {
   var menuElements = [
     {
       name: 'Home',
@@ -22,19 +22,14 @@
      }
   ];
 
-
   var currentMenu = ko.observable(menuElements[0]);
-  var currentPost = ko.observable();
   var currentComponent = ko.observable(currentMenu().component);
-  // var currentComponent = ko.observable();
 
   var changeContent = function(menu) {
     store.dispatch(store.actions.selectMenu(menu.name));
   };
 
   var changeComponentContent = function(data) {
-    console.log('###')
-    console.log(data)
     store.dispatch(store.actions.selectComponent(data));
   };
 
@@ -46,11 +41,6 @@
         currentMenu(menu);
         currentComponent(menu.component);
       }
-    } else {
-      console.log('@@@');
-      console.log(store.getState());
-      var componentName = store.getState().selectedComponent;
-      currentComponent(componentName);
     }
   });
 

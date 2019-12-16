@@ -34,6 +34,7 @@
                     $('.search-user-result').append('<tr>' +
                         '<th scope="row">' + i + '</th>' +
                         '<td class="title">' + '<h6 class="search-q">'+ jData[i].queryText.slice(1,jData[i].queryText.length -1)+ '</h6>' + '<p class="datetime">' + jData[i].searchDate + '</p>'+ '</td>' +
+
                         '</tr>');
                   }
                 }

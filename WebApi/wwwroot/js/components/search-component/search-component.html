@@ -3,8 +3,7 @@
 
   <div class="col-12">
     <div class="col-8 search-box">
-       <input class="form-control" data-bind="textInput: search" placeholder="Search for Questions & Answers" />
-     </div>
+       <input class="form-control"  data-bind="value: searchValue, event: { change: search }" placeholder="Search for Questions & Answers" />
 
     <div class="no-content" data-bind="if: searchResult().length == 0"><h5 class="text-center">No content found, start search...<h5></div>
 
@@ -25,7 +24,8 @@
             <path d="m285.16 67.03-19.319-44.86c-3.72-8.638-15.967-8.638-19.686 0l-53.126 123.36-133.74 12.405c-9.365 0.868-13.149 12.516-6.084 18.723l100.91 88.646-29.531 131.03c-2.068 9.175 7.841 16.373 15.927 11.572l15.371-9.127c25.199-163.12 96.041-282.86 129.28-331.75z" fill="#FFC850"/>
             </svg>
         </button>
-          <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a>
+          <!-- <a data-bind="attr: { href: $data.linkPost }, text: $data.title"></a> -->
+          <div data-bind="text: title, click: $parent.selectPost"></div>
       </li>
     </ul>
 
