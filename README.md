@@ -1,4 +1,15 @@
 # StackOverflow Service
+
+This project is a full-stack application as a service with data built on top of - StackOverflow. This includes functionality like searching through Posts
+& Marking specific posts to save for later retrieval. After sucessfull authentication, the search history will also be stored in the app.
+
+- The app is a Single Page App, built using pure js, jquery and knockout js framework, with Bootstrap.
+
+- All the data is served from our C# .Net backend. With custom fast
+search built on pure SQL queries and with inverted indexes...
+
+
+
 ### Setup the client
 1. install libman
 2. go to /WebApi/wwwroot
