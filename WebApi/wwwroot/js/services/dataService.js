@@ -1,5 +1,6 @@
 ﻿define(['jquery'], function($) {
-
+        const userSearchEndpoint = 'http://localhost:5001/api/search/history';
+        const userAnnotationEndpoint = 'http://localhost:5001/api/markings';
 /*
   var authenticateUser = function(callback) {
     const token = localStorage.getItem('token');
@@ -76,6 +77,37 @@
     $.getJSON(url, callback);
   };
 
+
+  var getUserSearchHistory = async function(callback){
+      const token = localStorage.getItem('token');
+      var finalToken = token.slice(1, token.length - 1);
+        var response = await fetch(userSearchEndpoint, {
+          method: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + finalToken
+          }
+        });
+
+        var data = await response.json();
+        callback(data);
+  }
+
+
+  var getMarkingAnnotationData = async function(callback){
+    const token = localStorage.getItem('token');
+    var finalToken = token.slice(1, token.length - 1);
+
+    var response = await fetch(userAnnotationEndpoint, {
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + finalToken
+      }
+    });
+    var data = await response.json();
+    callback(data);
+  }
+
+
   return {
     getNames,
     getWords,
@@ -83,6 +115,8 @@
     getPost,
     getPostsWithJQuery,
     searchPosts,
-    getHistory
+    getHistory,
+    getUserSearchHistory,
+    getMarkingAnnotationData
   };
 });
