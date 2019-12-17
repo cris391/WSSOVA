@@ -1,5 +1,7 @@
 ﻿define(['knockout', 'dataService', 'store'], function (ko, ds, store) {
 
+  var userSearchHistory = ko.observableArray([]);
+
     $(document).ready(function () {
         $('#logout').click(function() {
             localStorage.removeItem('token');
@@ -19,55 +21,35 @@
 
         $('.welcome').append(userName);
 
-        // Request User Search History Data
-        requestUserSearchHistory = () => {
-            $.ajax({
-                url: userSearchEndpoint,
-                dataType: 'JSON',
-                type: 'GET',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + finalToken);
-                },
-            }).done(function (jData) {
-                for (var i = 0; i < jData.length; i++) {
-                  if(jData[i].queryText.length > 4){
-                    $('.search-user-result').append('<tr>' +
-                        '<th scope="row">' + i + '</th>' +
-                        '<td class="title">' + '<h6 class="search-q">'+ jData[i].queryText.slice(1,jData[i].queryText.length -1)+ '</h6>' + '<p class="datetime">' + jData[i].searchDate + '</p>'+ '</td>' +
 
-                        '</tr>');
-                  }
+        var reqUserHistory = query =>  {
+            ds.getUserSearchHistory(function(data){
+              userSearchHistory(data);
+              for (var i = 0; i < data.length; i++) {
+              if(data[i].queryText.length > 4){
+                $('.search-user-result').append('<tr>' +
+                    '<th scope="row">' + i + '</th>' +
+                    '<td class="title">' + '<h6 class="search-q">'+ data[i].queryText.slice(1,data[i].queryText.length -1)+ '</h6>' + '<p class="datetime">' + data[i].searchDate + '</p>'+ '</td>' +
+                    '</tr>');
                 }
-            }).fail(function (jFail) {
-                console.log(jFail);
-            })
-          }
-
-      // Request User Annotation & Markings
-        requestMarkingAnnotationUserData = () => {
-            $.ajax({
-                url: userAnnotationEndpoint,
-                dataType: 'JSON',
-                type: 'GET',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + finalToken);
-                },
-            }).done(function (jData) {
-              console.log(jData);
-                for (var i = 0; i < jData.items.length; i++) {
-                    $('.user-mark-annotations').append(
-                        '<tr>' +
-                        '<th scope="row">' + i + '</th>' +
-                        '<td class="title"><a href="'+ jData.items[i].linkPost + '">' + jData.items[i].title + '</a></td>' +
-                        '</tr>');
-                }
-            }).fail(function (jFail) {
-                console.log(jFail);
-            })
+              }
+            });
         }
 
+        var requestMarkingAnnotationUserData = query => {
+            ds.getMarkingAnnotationData(function(data) {
+              for (var i = 0; i < data.items.length; i++) {
+                  $('.user-mark-annotations').append(
+                      '<tr>' +
+                      '<th scope="row">' + i + '</th>' +
+                      '<td class="title"><a href="'+ data.items[i].linkPost + '">' + data.items[i].title + '</a></td>' +
+                      '</tr>');
+                }
+            });
+      }
+
+        reqUserHistory();
         requestMarkingAnnotationUserData();
-        requestUserSearchHistory();
     });
 
 
