@@ -30,7 +30,8 @@ namespace DatabaseService
 
       optionsBuilder
       .UseLoggerFactory(MyLoggerFactory)
-      .UseNpgsql(connectionString: "host=localhost;db=stack_overflow;uid=postgres;pwd=");
+      // .UseNpgsql(connectionString: "host=rawdata.ruc.dk;db=raw7;uid=raw7;pwd=inYwAni(");
+      .UseNpgsql(connectionString: "host=localhost;db=stackoverflow;uid=postgres;pwd=root");
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
