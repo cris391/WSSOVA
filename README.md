@@ -9,26 +9,27 @@ This project is a full-stack application as a service with data built on top of 
 search built on pure SQL queries and with inverted indexes...
 
 
-### Setup the database
-## On Windows
+### Setup the Database
+#### On Windows
 1. Install PostgreSQL 
 1. Open Terminal to create database and execute `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -c "create database stackoverflow"`
 1. Load database file by running `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -f <your directory path>\stackoverflow_universal.backup`
 1. Scaffold normalized schema. Go to project location DatabaseService > DatabaseModels and run in the Terminal `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -a -f stackoverflow-normalized.sql`
 1. Scaffold functions, indexes, weights etc.(this will take around 1 minute) by running `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -a -f functions-indexes-weights.sql`
 
-### Setup the client
+### Setup the Client
 1. go to /WebApi/wwwroot
 1. install libman `dotnet tool install -g Microsoft.Web.LibraryManager.Cli`
 3. execute command `libman restore` (installs required dependencies)
 
 
-### WebApi
-1. dotnet restore
-2. dotnet watch run --no-build (*development*)
+### Web Service
+1. go to the WebApi folder in your Terminal
+1. run `dotnet run`
+1. or `dotnet watch run --no-build` (*development*)
 
 
-### API USAGE
+### API Usage
 
 > Questions endpoints
 
