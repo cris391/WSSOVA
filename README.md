@@ -11,10 +11,10 @@ search built on pure SQL queries and with inverted indexes...
 
 ### Setup the Database
 #### On Windows
-1. Download the initial schema with data from [here](https://drive.google.com/file/d/1Ur8tU8aQAT_CSvg4weYzyNXlpA9K8Yjq/view?usp=sharing)
 1. Install PostgreSQL 
 1. Open Terminal to create database and execute `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -c "create database stackoverflow"`
-1. Load database and data you downloaded by running `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -f <your directory path>\stackoverflow_universal.backup`
+1. Go to WSSOVA/DatabaseService/DataModels
+1. Load database and data you downloaded by running `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -f stackoverflow_universal.backup`
 1. Scaffold normalized schema. Go to project location DatabaseService > DatabaseModels and run in the Terminal `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -a -f stackoverflow-normalized.sql`
 1. Scaffold functions, indexes, weights etc.(this will take around 1 minute) by running `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -a -f functions-indexes-weights.sql`
 
