@@ -9,17 +9,18 @@ This project is a full-stack application as a service with data built on top of 
 search built on pure SQL queries and with inverted indexes...
 
 
+### Setup the database
+## On Windows
+1. Install PostgreSQL 
+1. Open Terminal to create database and execute `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -c "create database stackoverflow"`
+1. Load database file by running `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -f <your directory path>\stackoverflow_universal.backup`
+1. Scaffold normalized schema. Go to project location DatabaseService > DatabaseModels and run in the Terminal `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -a -f stackoverflow-normalized.sql`
+1. Scaffold functions, indexes, weights etc.(this will take around 1 minute) by running `& 'C:\Program Files\PostgreSQL\12\bin\psql.exe' -U postgres -d stackoverflow -a -f functions-indexes-weights.sql`
 
 ### Setup the client
-1. install libman
-2. go to /WebApi/wwwroot
-3. execute command ```libman restore``` (installs required dependencies)
-
-
-### Setup the Data service
-
-1. Scaffold schema from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/stackoverflow-normalized-schema.sql).
-2. Scaffold functions, indexes, etc from [here](https://github.com/cris391/Portfolio_Projects/blob/master/InformationRetrievalDatabase/add-tfidf-weights.sql).(this might take up to 10 minutes)
+1. go to /WebApi/wwwroot
+1. install libman `dotnet tool install -g Microsoft.Web.LibraryManager.Cli`
+3. execute command `libman restore` (installs required dependencies)
 
 
 ### WebApi
